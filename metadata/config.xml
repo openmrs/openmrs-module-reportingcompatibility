@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//OpenMRS//DTD OpenMRS Config 1.2//EN" "../lib-common/config-1.2.dtd">
+
+<module configVersion="1.2">
+	
+	<!-- Base Module Properties -->
+	
+	<id>reportingcompatibility</id>
+	<name>Reporting Compatibility</name>
+	<version>1.0</version>
+	<package>org.openmrs.module.@MODULE_ID@</package>
+	<author>Michael Seaton</author>
+	<description>Provides access to the deprecated reporting API from OpenMRS version 1.5 and earlier</description>
+	<activator>@MODULE_PACKAGE@.ModuleActivator</activator>	
+	<require_version>1.5.0.7357</require_version>
+
+	<!-- Internationalization -->
+	
+	<extension>
+		<point>org.openmrs.admin.list</point>
+		<class>org.openmrs.module.reportingcompatibility.extension.html.AdminList</class>
+	</extension>
+	<extension>
+		<point>org.openmrs.gutter.tools</point>
+		<class>org.openmrs.module.reportingcompatibility.extension.html.CohortBuilderHeader</class>
+	</extension>
+	
+	<dwr>
+		<allow>
+			<convert converter="bean" match="org.openmrs.report.Parameter"/>
+			<convert converter="bean" match="org.openmrs.cohort.CohortSearchHistory"/>
+			
+			<create creator="new" javascript="DWRCohortBuilderService">
+				<param name="class" value="org.openmrs.web.dwr.DWRCohortBuilderService" />
+				<include method="getMissingParameters"/>
+				<include method="evaluateCohortDefinition"/>
+				<include method="getResultCountForFilterId"/>
+				<include method="getResultCountForSearch"/>
+				<include method="getResultForSearch"/>
+				<include method="getResultCombineWithAnd"/>
+				<include method="getResultCombineWithOr"/>
+				<include method="getLastResult"/>
+				<include method="getSavedFilters"/>
+				<include method="getSavedSearches"/>
+				<include method="getSavedCohorts"/>
+				<include method="getFilterResultAsCommaSeparatedIds"/>
+				<include method="getCohortAsCommaSeparatedIds"/>
+				<include method="getSearchHistories"/>
+				<include method="saveSearchHistory"/>
+				<include method="loadSearchHistory"/>
+				<include method="getUserSearchHistory"/>
+				<include method="saveCohort"/>
+				<include method="saveHistoryElement"/>
+			</create>
+		</allow>
+	</dwr>
+	
+	<servlet>
+		<servlet-name>dataExportServlet</servlet-name>
+		<servlet-class>org.openmrs.web.servlet.DataExportServlet</servlet-class>
+	</servlet>	
+	<servlet>
+		<servlet-name>timelineGraphServlet</servlet-name>
+		<servlet-class>org.openmrs.web.servlet.TimelineGraphServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>pieChartServlet</servlet-name>
+		<servlet-class>org.openmrs.web.servlet.PieChartServlet</servlet-class>
+	</servlet>
+	
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	<messages>
+		<lang>en_GB</lang>
+		<file>messages_en_GB.properties</file>
+	</messages>
+	<messages>
+		<lang>es</lang>
+		<file>messages_es.properties</file>
+	</messages>
+	<messages>
+		<lang>fr</lang>
+		<file>messages_fr.properties</file>
+	</messages>
+	<messages>
+		<lang>it</lang>
+		<file>messages_it.properties</file>
+	</messages>
+	<messages>
+		<lang>pt</lang>
+		<file>messages_pt.properties</file>
+	</messages>
+	
+	<mappingFiles>
+		Report.hbm.xml
+		ReportObject.hbm.xml
+		ReportSchemaXml.hbm.xml
+	</mappingFiles>
+	
+	<!--  Privileges:
+		public static final String PRIV_VIEW_REPORTS = "View Reports";
+	
+	public static final String PRIV_ADD_REPORTS = "Add Reports";
+	
+	public static final String PRIV_EDIT_REPORTS = "Edit Reports";
+	
+	public static final String PRIV_DELETE_REPORTS = "Delete Reports";
+	
+	public static final String PRIV_RUN_REPORTS = "Run Reports";
+	
+	public static final String PRIV_VIEW_REPORT_OBJECTS = "View Report Objects";
+	
+	public static final String PRIV_ADD_REPORT_OBJECTS = "Add Report Objects";
+	
+	public static final String PRIV_EDIT_REPORT_OBJECTS = "Edit Report Objects";
+	
+	public static final String PRIV_DELETE_REPORT_OBJECTS = "Delete Report Objects";
+	
+				
+			CORE_PRIVILEGES.put(PRIV_VIEW_REPORTS, "Able to view reports");
+			CORE_PRIVILEGES.put(PRIV_ADD_REPORTS, "Able to add reports");
+			CORE_PRIVILEGES.put(PRIV_EDIT_REPORTS, "Able to edit reports");
+			CORE_PRIVILEGES.put(PRIV_DELETE_REPORTS, "Able to delete reports");
+			CORE_PRIVILEGES.put(PRIV_RUN_REPORTS, "Able to run reports");
+			
+			CORE_PRIVILEGES.put(PRIV_VIEW_REPORT_OBJECTS, "Able to view report objects");
+			CORE_PRIVILEGES.put(PRIV_ADD_REPORT_OBJECTS, "Able to add report objects");
+			CORE_PRIVILEGES.put(PRIV_EDIT_REPORT_OBJECTS, "Able to edit report objects");
+			CORE_PRIVILEGES.put(PRIV_DELETE_REPORT_OBJECTS, "Able to delete report objects");
+	
+			props
+		        .add(new GlobalProperty(GLOBAL_PROPERTY_REPORT_XML_MACROS, "",
+		                "Macros that will be applied to Report Schema XMLs when they are interpreted. This should be java.util.properties format."));
+		
+	
+	
+	 -->
+
+</module>
+
