@@ -47,182 +47,19 @@
 			</list>
 		</property>
 	</bean>
-	<bean parent="serviceContext">
-		<property name="moduleService">
-			<list>
-				<value>org.openmrs.api.DataSetService</value> 
-				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-					<property name="transactionManager"><ref bean="transactionManager"/></property>
-					<property name="target">
-						<bean class="org.openmrs.report.impl.DataSetServiceImpl">
-							<property name="providers">
-								<list>
-									<bean class="org.openmrs.report.CohortDataSetProvider"/>
-									<bean class="org.openmrs.report.RowPerObsDataSetProvider"/>
-									<bean class="org.openmrs.report.RowPerProgramEnrollmentDataSetProvider"/>
-								</list>
-							</property>
-						</bean>
-					</property>
-					<property name="preInterceptors">
-						<list>
-							<ref bean="authorizationInterceptor"/>
-							<ref bean="loggingInterceptor"/>
-						</list>
-					</property>
-					<property name="transactionAttributeSource">
-						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
-					</property>
-				</bean>
-			</list>
-		</property>
-	</bean>
-	<bean parent="serviceContext">
-		<property name="moduleService">
-			<list>
-				<value>org.openmrs.api.ReportService</value> 
-				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-					<property name="transactionManager"><ref bean="transactionManager"/></property>
-					<property name="target">
-						<bean class="org.openmrs.report.impl.ReportServiceImpl">
-							<property name="reportDAO">
-							    <bean id="reportDAO" class="org.openmrs.report.db.hibernate.HibernateReportDAO">
-									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
-								</bean>
-							</property>	
-							<property name="renderers">
-								<map>
-									<entry>
-										<key><value>org.openmrs.report.impl.TsvReportRenderer</value></key>
-										<bean class="org.openmrs.report.impl.TsvReportRenderer"/>
-									</entry>
-									<entry>
-										<key><value>org.openmrs.report.impl.CsvReportRenderer</value></key>
-										<bean class="org.openmrs.report.impl.CsvReportRenderer"/>
-									</entry>
-									<entry>
-										<key><value>org.openmrs.web.report.CohortReportWebRenderer</value></key>
-										<bean class="org.openmrs.web.report.CohortReportWebRenderer"/>
-									</entry>
-								</map>
-							</property>
-						</bean>
-					</property>
-					<property name="preInterceptors">
-						<list>
-							<ref bean="authorizationInterceptor"/>
-							<ref bean="loggingInterceptor"/>
-						</list>
-					</property>
-					<property name="transactionAttributeSource">
-						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
-					</property>
-				</bean>
-			</list>
-		</property>
-	</bean>
-	<bean parent="serviceContext">
-		<property name="moduleService">
-			<list>
-				<value>org.openmrs.reporting.ReportObjectService</value> 
-				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-					<property name="transactionManager"><ref bean="transactionManager"/></property>
-					<property name="target">
-						<bean id="reportObjectServiceTarget" class="org.openmrs.reporting.impl.ReportObjectServiceImpl">
-							<property name="reportObjectDAO">
-								<bean class="org.openmrs.reporting.db.hibernate.HibernateReportObjectDAO">
-									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
-								</bean>
-							</property>	
-						</bean>
-					</property>
-					<property name="preInterceptors">
-						<list>
-							<ref bean="authorizationInterceptor"/>
-							<ref bean="loggingInterceptor"/>
-						</list>
-					</property>
-					<property name="transactionAttributeSource">
-						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
-					</property>
-				</bean>		
-			</list>
-		</property>
-	</bean>
-
-	<!--  **************************  REPORT OBJECT FACTORY CONFIGURATION  *************************  -->
-
-	<!-- Configuration for reporting module - sets up the report object factory and admin interface
-		USAGE: To add/create a report object to use in the reporting system, you need to do 3 things:
-		1) Create the class for the report object - preferably put it in org.openmrs.api.reporting.*
-		2) Create a validator for the report object (one that is used whenever somebody tries to create a 
-		new object of that type, and populate it with initial values - these values should be validated).
-		Preferably put that in the same directory mentioned above.
-		3) Register it as a module to the ReportObjectFactory below and also be sure to make a bean def
-		for the module (CALLEN)
-	-->
-
-	<bean id="reportObjectFactory" class="org.openmrs.reporting.ReportObjectFactory">
-		<property name="defaultValidator"><value>org.openmrs.web.controller.report.ReportObjectValidator</value></property>
-		<property name="modules">
-			<list>
-				<ref bean="patientCharacteristicFilterModule" />
-				<ref bean="drugOrderFilterModule" />
-				<ref bean="numericObsPatientFilterModule" />
-				<ref bean="locationFilterModule" />
-				<ref bean="textObsPatientFilterModule" />
-			</list>
-		</property>
-	</bean>
-
-	<bean id="patientCharacteristicFilterModule"
-		class="org.openmrs.reporting.ReportObjectFactoryModule">
-		<property name="name"><value>PatientCharacteristicFilter</value></property>
-		<property name="displayName"><value>Patient Characteristic Filter</value></property>
-		<property name="className"><value>org.openmrs.reporting.PatientCharacteristicFilter</value></property>
-		<property name="type"><value>Patient Filter</value></property>
-		<property name="validatorClass"><value>org.openmrs.reporting.PatientCharacteristicFilterValidator</value></property>
-	</bean>
-
-	<bean id="drugOrderFilterModule" class="org.openmrs.reporting.ReportObjectFactoryModule">
-		<property name="name"><value>DrugOrderFilter</value></property>
-		<property name="displayName"><value>Regimen Filter</value></property>
-		<property name="className"><value>org.openmrs.reporting.DrugOrderPatientFilter</value></property>
-		<property name="type"><value>Patient Filter</value></property>
-		<property name="validatorClass"><value>org.openmrs.reporting.DrugOrderPatientFilterValidator</value></property>
-	</bean>
-
-	<bean id="numericObsPatientFilterModule"
-		class="org.openmrs.reporting.ReportObjectFactoryModule">
-		<property name="name"><value>NumericObsPatientFilter</value></property>
-		<property name="displayName"><value>Numeric Observation Patient Filter</value></property>
-		<property name="className"><value>org.openmrs.reporting.NumericObsPatientFilter</value></property>
-		<property name="type"><value>Patient Filter</value></property>
-		<property name="validatorClass"><value>org.openmrs.reporting.NumericObsPatientFilterValidator</value></property>
-	</bean>
-
-	<bean id="locationFilterModule" class="org.openmrs.reporting.ReportObjectFactoryModule">
-		<property name="name"><value>LocationFilter</value></property>
-		<property name="displayName"><value>Location Filter</value></property>
-		<property name="className"><value>org.openmrs.reporting.LocationFilter</value></property>
-		<property name="type"><value>Patient Filter</value></property>
-		<property name="validatorClass"><value>org.openmrs.reporting.LocationFilterValidator</value></property>
-	</bean>
-
-	<bean id="textObsPatientFilterModule" class="org.openmrs.reporting.ReportObjectFactoryModule">
-		<property name="name"><value>TextObsPatientFilter</value></property>
-		<property name="displayName"><value>Text Observation Patient Filter</value></property>
-		<property name="className"><value>org.openmrs.reporting.TextObsPatientFilter</value></property>
-		<property name="type"><value>Patient Filter</value></property>
-		<property name="validatorClass"><value>org.openmrs.reporting.TextObsPatientFilterValidator</value></property>
-	</bean>
 	
-	<bean id="shortDescriptionProducerModule" class="org.openmrs.reporting.ReportObjectFactoryModule">
-		<property name="name"><value>ShortDescriptionProducer</value></property>
-		<property name="displayName"><value>Short Description Producer</value></property>
-		<property name="className"><value>org.openmrs.reporting.ShortDescriptionProducer</value></property>
-		<property name="type"><value>Patient Data Producer</value></property>
-		<property name="validatorClass"><value>org.openmrs.reporting.ShortDescriptionProducerValidator</value></property>
+	<!-- REPORT RENDERER SECTION -->
+	<!-- Add the web specific report renderers to the list of renderers available to the ReportService -->
+	<!-- A module adding renderers must this exact parent id --> 
+	<bean parent="reportServiceTarget">
+		<property name="renderers">
+			<map>
+				<entry>
+					<key><value>org.openmrs.web.report.CohortReportWebRenderer</value></key>
+					<bean class="org.openmrs.web.report.CohortReportWebRenderer"/>
+				</entry>
+			</map>
+		</property>
 	</bean>
 	
 	<!--  **************************  WEB MAPPINGS  *************************  -->

@@ -7,7 +7,7 @@
 	
 	<id>reportingcompatibility</id>
 	<name>Reporting Compatibility</name>
-	<version>1.0</version>
+	<version>1.5.1</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Michael Seaton</author>
 	<description>Provides access to the deprecated reporting API from OpenMRS version 1.5 and earlier</description>
@@ -92,51 +92,6 @@
 		<lang>pt</lang>
 		<file>messages_pt.properties</file>
 	</messages>
-	
-	<mappingFiles>
-		Report.hbm.xml
-		ReportObject.hbm.xml
-		ReportSchemaXml.hbm.xml
-	</mappingFiles>
-	
-	<!--  Privileges:
-		public static final String PRIV_VIEW_REPORTS = "View Reports";
-	
-	public static final String PRIV_ADD_REPORTS = "Add Reports";
-	
-	public static final String PRIV_EDIT_REPORTS = "Edit Reports";
-	
-	public static final String PRIV_DELETE_REPORTS = "Delete Reports";
-	
-	public static final String PRIV_RUN_REPORTS = "Run Reports";
-	
-	public static final String PRIV_VIEW_REPORT_OBJECTS = "View Report Objects";
-	
-	public static final String PRIV_ADD_REPORT_OBJECTS = "Add Report Objects";
-	
-	public static final String PRIV_EDIT_REPORT_OBJECTS = "Edit Report Objects";
-	
-	public static final String PRIV_DELETE_REPORT_OBJECTS = "Delete Report Objects";
-	
-				
-			CORE_PRIVILEGES.put(PRIV_VIEW_REPORTS, "Able to view reports");
-			CORE_PRIVILEGES.put(PRIV_ADD_REPORTS, "Able to add reports");
-			CORE_PRIVILEGES.put(PRIV_EDIT_REPORTS, "Able to edit reports");
-			CORE_PRIVILEGES.put(PRIV_DELETE_REPORTS, "Able to delete reports");
-			CORE_PRIVILEGES.put(PRIV_RUN_REPORTS, "Able to run reports");
-			
-			CORE_PRIVILEGES.put(PRIV_VIEW_REPORT_OBJECTS, "Able to view report objects");
-			CORE_PRIVILEGES.put(PRIV_ADD_REPORT_OBJECTS, "Able to add report objects");
-			CORE_PRIVILEGES.put(PRIV_EDIT_REPORT_OBJECTS, "Able to edit report objects");
-			CORE_PRIVILEGES.put(PRIV_DELETE_REPORT_OBJECTS, "Able to delete report objects");
-	
-			props
-		        .add(new GlobalProperty(GLOBAL_PROPERTY_REPORT_XML_MACROS, "",
-		                "Macros that will be applied to Report Schema XMLs when they are interpreted. This should be java.util.properties format."));
-		
-	
-	
-	 -->
 
 </module>
 

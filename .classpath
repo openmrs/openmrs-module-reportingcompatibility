@@ -32,12 +32,12 @@
 	<classpathentry kind="lib" path="lib-common/velocity-1.6-beta1.jar"/>
 	<classpathentry kind="lib" path="lib-common/xmlunit-1.2.jar"/>
 	<classpathentry kind="lib" path="lib-common/xstream-1.3.jar"/>
-	<classpathentry kind="lib" path="lib-common/openmrs-api-1.5.0.7360-dev.jar"/>
-	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.5.0.7360-dev.jar"/>
-	<classpathentry kind="lib" path="lib-common/web-openmrs-api-1.5.0.7360-dev.jar"/>
 	<classpathentry kind="lib" path="lib-common/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/Acme.jar"/>
 	<classpathentry kind="lib" path="lib/itext-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/reports.jar"/>
+	<classpathentry kind="lib" path="lib-common/openmrs-api-1.5.0.7396-dev.jar"/>
+	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.5.0.7396-dev.jar"/>
+	<classpathentry kind="lib" path="lib-common/web-openmrs-api-1.5.0.7396-dev.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

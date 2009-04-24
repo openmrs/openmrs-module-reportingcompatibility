@@ -5,7 +5,7 @@
 <!-- ** @author Michael Seaton                              ** -->
 <!-- ** @version 1.0                                        ** -->
 <!-- ********************************************************* -->
-<project name="ReportingCompatibility" default="package-module">
+<project name="ReportingCompatibility-1.5.x" default="package-module">
 		
 	<!-- *********************************************************** -->
 	<!-- **                     TARGETS                           ** -->
