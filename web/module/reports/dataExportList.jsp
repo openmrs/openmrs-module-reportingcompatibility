@@ -29,7 +29,7 @@
 				<td valign="top">${dataExport.description}</td>
 				<td>
 					<c:if test="${generatedDates[dataExport] != null}">
-						<a href="${pageContext.request.contextPath}/dataExportServlet?dataExportId=${dataExport.reportObjectId}"><spring:message code="general.download"/></a>
+						<a href="${pageContext.request.contextPath}/moduleServlet/reportingcompatibility/dataExportServlet?dataExportId=${dataExport.reportObjectId}"><spring:message code="general.download"/></a>
 						<span class="smallMessage">(${generatedSizes[dataExport]} <spring:message code="reportingcompatibility.DataExport.generatedOn"/> <openmrs:formatDate date="${generatedDates[dataExport]}" type="long" />)</span>
 					</c:if>
 				</td>

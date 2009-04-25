@@ -80,8 +80,8 @@ public class ReportObjectListController extends SimpleFormController {
 			MessageSourceAccessor msa = getMessageSourceAccessor();
 			String deleted = msa.getMessage("general.deleted");
 			String notDeleted = msa.getMessage("general.cannot.delete");
-			String textReport = msa.getMessage("ReportObject.reportObject");
-			String noneDeleted = msa.getMessage("ReportObject.nonedeleted");
+			String textReport = msa.getMessage("reportingcompatibility.ReportObject.reportObject");
+			String noneDeleted = msa.getMessage("reportingcompatibility.ReportObject.nonedeleted");
 			if (reportObjectList != null) {
 				for (String p : reportObjectList) {
 					try {

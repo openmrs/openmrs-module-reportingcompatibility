@@ -8,9 +8,9 @@
 <script type="text/javascript">
 	function maybeEnableDeleteButton(val) {
 		if (val == '')
-			$('deleteButton').disabled = true;
+			document.getElementById('deleteButton').disabled = true;
 		else
-			$('deleteButton').disabled = false;
+			document.getElementById('deleteButton').disabled = false;
 	}
 </script>
 

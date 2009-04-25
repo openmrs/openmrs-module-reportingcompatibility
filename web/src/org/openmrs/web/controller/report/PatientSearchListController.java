@@ -70,10 +70,10 @@ public class PatientSearchListController extends SimpleFormController {
 			String deleted = msa.getMessage("general.deleted");
 			String notDeleted = msa.getMessage("general.cannot.delete");
 			String textPatientSearch = msa.getMessage("Patient.search");
-			String noneDeleted = msa.getMessage("PatientSearch.nonedeleted");
-			String isInComp = msa.getMessage("PatientSearch.isAnElementInSavedComposition");
+			String noneDeleted = msa.getMessage("reportingcompatibility.PatientSearch.nonedeleted");
+			String isInComp = msa.getMessage("reportingcompatibility.PatientSearch.isAnElementInSavedComposition");
 			
-			if (msa.getMessage("PatientSearch.delete").equals(action)) {
+			if (msa.getMessage("reportingcompatibility.PatientSearch.delete").equals(action)) {
 				if (reportList != null) {
 					ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 					List<AbstractReportObject> savedSearches = rs.getReportObjectsByType(
