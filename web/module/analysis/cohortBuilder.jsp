@@ -239,9 +239,9 @@
 					var loadBox = $('loadBox');
 					loadBox.innerHTML = '';
 					if (histories.length == 0)
-						loadBox.innerHTML = '<spring:message javaScriptEscape="true" code="CohortBuilder.searchHistory.load.none"/>';
+						loadBox.innerHTML = '<spring:message javaScriptEscape="true" code="reportingcompatibility.CohortBuilder.searchHistory.load.none"/>';
 					else {
-						var str = '<h4><u><spring:message javaScriptEscape="true" code="CohortBuilder.searchHistory.load"/></u></h4>';
+						var str = '<h4><u><spring:message javaScriptEscape="true" code="reportingcompatibility.CohortBuilder.searchHistory.load"/></u></h4>';
 						str += '<ul>';
 						for (var i = 0; i < histories.length; ++i) {
 							str += '<li><a href="javascript:loadSearchHistory(' + histories[i].id + ')">' + histories[i].name + ' <small>(' + histories[i].description + ')</small></a></li>';

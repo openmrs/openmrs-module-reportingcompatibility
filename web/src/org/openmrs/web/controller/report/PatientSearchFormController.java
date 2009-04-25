@@ -66,7 +66,7 @@ public class PatientSearchFormController extends SimpleFormController {
 		if (Context.isAuthenticated()) {
 			MessageSourceAccessor msa = getMessageSourceAccessor();
 			String action = request.getParameter("action");
-			if (msa.getMessage("PatientSearch.save").equals(action)) {
+			if (msa.getMessage("reportingcompatibility.PatientSearch.save").equals(action)) {
 				PatientSearchReportObject psroBinded = (PatientSearchReportObject) obj;
 				String hiddenName = request.getParameter("hiddenName");
 				String hiddenDesc = request.getParameter("hiddenDesc");
@@ -88,10 +88,10 @@ public class PatientSearchFormController extends SimpleFormController {
 						needsUpdate.add(i);
 				}
 				
-				String saved = msa.getMessage("PatientSearch.saved");
-				String notsaved = msa.getMessage("PatientSearch.notsaved");
-				String invalidXML = msa.getMessage("PatientSearch.invalidXML");
-				String title = msa.getMessage("PatientSearch.title");
+				String saved = msa.getMessage("reportingcompatibility.PatientSearch.saved");
+				String notsaved = msa.getMessage("reportingcompatibility.PatientSearch.notsaved");
+				String invalidXML = msa.getMessage("reportingcompatibility.PatientSearch.invalidXML");
+				String title = msa.getMessage("reportingcompatibility.PatientSearch.title");
 				
 				boolean hasNewSearchArg = false;
 				String newSearchArgName = (String) request.getParameter("newSearchArgName");
@@ -152,10 +152,10 @@ public class PatientSearchFormController extends SimpleFormController {
 								    Class.forName(newSearchArgClass));
 							}
 							catch (Exception e) {
-								error += msa.getMessage("PatientSearch.invalidSearchArgument");
+								error += msa.getMessage("reportingcompatibility.PatientSearch.invalidSearchArgument");
 							}
 						} else {
-							error += msa.getMessage("PatientSearch.invalidSearchArgument");
+							error += msa.getMessage("reportingcompatibility.PatientSearch.invalidSearchArgument");
 						}
 						log.debug("Patient Search now has arguments: " + psroBinded.getPatientSearch().getArguments());
 					}

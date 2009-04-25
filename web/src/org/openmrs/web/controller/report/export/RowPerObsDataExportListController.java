@@ -93,14 +93,14 @@ public class RowPerObsDataExportListController extends SimpleFormController {
 			MessageSourceAccessor msa = getMessageSourceAccessor();
 			String deleted = msa.getMessage("general.deleted");
 			String notDeleted = msa.getMessage("general.cannot.delete");
-			String textDataExport = msa.getMessage("DataExport.dataExport");
-			String noneDeleted = msa.getMessage("DataExport.nonedeleted");
+			String textDataExport = msa.getMessage("reportingcompatibility.DataExport.dataExport");
+			String noneDeleted = msa.getMessage("reportingcompatibility.DataExport.nonedeleted");
 			
-			String generated = msa.getMessage("DataExport.generated");
-			String notGenerated = msa.getMessage("DataExport.notGenerated");
-			String noneGenerated = msa.getMessage("DataExport.noneGenerated");
+			String generated = msa.getMessage("reportingcompatibility.DataExport.generated");
+			String notGenerated = msa.getMessage("reportingcompatibility.DataExport.notGenerated");
+			String noneGenerated = msa.getMessage("reportingcompatibility.DataExport.noneGenerated");
 			
-			if (msa.getMessage("DataExport.generate").equals(action)) {
+			if (msa.getMessage("reportingcompatibility.DataExport.generate").equals(action)) {
 				if (reportList == null)
 					success = noneGenerated;
 				else {
@@ -128,7 +128,7 @@ public class RowPerObsDataExportListController extends SimpleFormController {
 						}
 					}
 				}
-			} else if (msa.getMessage("DataExport.delete").equals(action)) {
+			} else if (msa.getMessage("reportingcompatibility.DataExport.delete").equals(action)) {
 				
 				if (reportList != null) {
 					for (String p : reportList) {

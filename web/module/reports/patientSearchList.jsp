@@ -12,7 +12,7 @@
 <br />
 
 <b class="boxHeader"><spring:message
-	code="PatientSearch.manage.list.title" /></b>
+	code="reportingcompatibility.PatientSearch.manage.list.title" /></b>
 <form method="post" class="box">
 <table cellpadding="2" cellspacing="0">
 	<tr>

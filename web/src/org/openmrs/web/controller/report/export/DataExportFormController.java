@@ -183,11 +183,11 @@ public class DataExportFormController extends SimpleFormController {
 			
 			String action = ServletRequestUtils.getRequiredStringParameter(request, "action");
 			MessageSourceAccessor msa = getMessageSourceAccessor();
-			if (action.equals(msa.getMessage("DataExport.save"))) {
+			if (action.equals(msa.getMessage("reportingcompatibility.DataExport.save"))) {
 				view = getSuccessView();
-				httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "DataExport.saved");
+				httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "reportingcompatibility.DataExport.saved");
 			} else {
-				view = request.getContextPath() + "/dataExportServlet?dataExportId=" + report.getReportObjectId();
+				view = request.getContextPath() + "/moduleServlet/reportingcompatibility/dataExportServlet?dataExportId=" + report.getReportObjectId();
 			}
 		}
 		
