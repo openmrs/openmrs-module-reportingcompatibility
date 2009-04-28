@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="dist"/>
 	<classpathentry kind="src" path="web/src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -39,5 +40,11 @@
 	<classpathentry kind="lib" path="lib-common/openmrs-api-1.5.0.7396-dev.jar"/>
 	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.5.0.7396-dev.jar"/>
 	<classpathentry kind="lib" path="lib-common/web-openmrs-api-1.5.0.7396-dev.jar"/>
+	<classpathentry kind="lib" path="/openmrs-trunk/lib/antlr/antlr_2.7.6.jar"/>
+	<classpathentry kind="lib" path="/openmrs-trunk/lib/jstl/jstl-1.1.jar"/>
+	<classpathentry kind="lib" path="/openmrs-trunk/lib/dwr/dwr-205.jar"/>
+	<classpathentry kind="lib" path="/openmrs-trunk/lib/jakarta-taglibs/taglibs-standard-1.1.jar"/>
+	<classpathentry kind="lib" path="/openmrs-trunk/lib/hl7api/hapi-0.5.jar"/>
+	<classpathentry kind="lib" path="/openmrs-trunk/lib/commons-fileupload/commons-fileupload-1.1.1.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
