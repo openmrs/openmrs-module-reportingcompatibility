@@ -42,7 +42,6 @@ import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.cohort.CohortUtil;
-import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
 import org.openmrs.report.CohortDataSetDefinition;
 import org.openmrs.report.DataSetDefinition;
 import org.openmrs.report.Parameter;
@@ -51,6 +50,7 @@ import org.openmrs.report.ReportSchemaXml;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.simpleframework.xml.Serializer;
 import org.springframework.util.StringUtils;
@@ -194,7 +194,7 @@ public class CohortReportFormController extends SimpleFormController implements 
 		
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 		List<AbstractReportObject> searches = rs.getReportObjectsByType(
-		    ReportingCompatibilityConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+		    OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		for (AbstractReportObject o : searches) {
 			if (o instanceof PatientSearchReportObject) {

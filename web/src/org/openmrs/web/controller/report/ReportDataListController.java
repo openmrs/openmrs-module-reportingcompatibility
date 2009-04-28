@@ -27,6 +27,7 @@ import org.openmrs.Person;
 import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
 import org.openmrs.report.DataSet;
 import org.openmrs.report.ReportData;
+import org.openmrs.util.OpenmrsConstants;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;

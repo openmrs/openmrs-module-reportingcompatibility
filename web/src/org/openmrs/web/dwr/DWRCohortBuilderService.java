@@ -23,12 +23,11 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
+import org.openmrs.api.CohortService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.cohort.CohortSearchHistory;
 import org.openmrs.cohort.CohortUtil;
-import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
-import org.openmrs.module.reportingcompatibility.ReportingCompatibilityService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
 import org.openmrs.reporting.AbstractReportObject;
@@ -37,6 +36,7 @@ import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObject;
 import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 
 public class DWRCohortBuilderService {
@@ -95,7 +95,7 @@ public class DWRCohortBuilderService {
 		List<ListItem> ret = new ArrayList<ListItem>();
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 		List<AbstractReportObject> savedSearches = rs.getReportObjectsByType(
-				ReportingCompatibilityConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+				OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 		for (ReportObject ps : savedSearches) {
 			if (includeParameterized || ((PatientSearchReportObject) ps).getPatientSearch().getParameters().size() == 0) {
 				ListItem li = new ListItem();
@@ -307,7 +307,7 @@ public class DWRCohortBuilderService {
 				evalContext.addParameterValue(p, v);
 			}
 		}
-		ReportingCompatibilityService rs = (ReportingCompatibilityService) Context.getService(ReportingCompatibilityService.class);
-		return rs.evaluate(def, evalContext);
+		CohortService svc = Context.getCohortService();
+		return svc.evaluate(def, evalContext);
 	}
 }

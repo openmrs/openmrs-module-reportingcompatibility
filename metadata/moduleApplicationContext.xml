@@ -6,47 +6,6 @@
 <beans>
 
 	<!--  **************************  SERVICES  *************************  -->
-
-	<bean parent="serviceContext">
-		<property name="moduleService">
-			<list>
-				<value>org.openmrs.module.reportingcompatibility.ReportingCompatibilityService</value> 
-				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-					<property name="transactionManager"><ref bean="transactionManager"/></property>
-					<property name="target">
-						<bean class="org.openmrs.module.reportingcompatibility.impl.ReportingCompatibilityServiceImpl">
-							<property name="reportingCompatibilityDAO">
-							    <bean class="org.openmrs.module.reportingcompatibility.db.hibernate.HibernateReportingCompatibilityDAO">
-									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
-								</bean>
-							</property>	
-							<property name="cohortDefinitionProviders">
-								<map>
-									<entry>
-										<key><value>org.openmrs.reporting.PatientSearch</value></key>
-										<bean class="org.openmrs.cohort.impl.PatientSearchCohortDefinitionProvider"/>
-									</entry>
-									<entry>
-										<key><value>org.openmrs.cohort.StaticCohortDefinition</value></key>
-										<bean class="org.openmrs.cohort.impl.StaticCohortDefinitionProvider"/>
-									</entry>
-								</map>
-							</property>
-						</bean>
-					</property>
-					<property name="preInterceptors">
-						<list>
-							<ref bean="authorizationInterceptor"/>
-							<ref bean="loggingInterceptor"/>
-						</list>
-					</property>
-					<property name="transactionAttributeSource">
-						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
-					</property>
-				</bean>
-			</list>
-		</property>
-	</bean>
 	
 	<!-- REPORT RENDERER SECTION -->
 	<!-- Add the web specific report renderers to the list of renderers available to the ReportService -->
