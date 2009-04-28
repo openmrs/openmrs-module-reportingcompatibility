@@ -7,12 +7,12 @@
 	
 	<id>reportingcompatibility</id>
 	<name>Reporting Compatibility</name>
-	<version>1.5.1</version>
+	<version>1.5.0.1</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Michael Seaton</author>
 	<description>Provides access to the deprecated reporting web components from OpenMRS version 1.5 and earlier</description>
 	<activator>@MODULE_PACKAGE@.ModuleActivator</activator>	
-	<require_version>1.5.0.7357</require_version>
+	<require_version>1.5.0.7475</require_version>
 
 	<!-- Internationalization -->
 	
