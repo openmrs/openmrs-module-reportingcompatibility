@@ -10,13 +10,13 @@
 	<bean parent="serviceContext">
 		<property name="moduleService">
 			<list>
-				<value>@MODULE_PACKAGE@.ReportingCompatibilityService</value> 
+				<value>org.openmrs.module.reportingcompatibility.ReportingCompatibilityService</value> 
 				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager"><ref bean="transactionManager"/></property>
 					<property name="target">
-						<bean class="@MODULE_PACKAGE@.impl.ReportingCompatibilityServiceImpl">
+						<bean class="org.openmrs.module.reportingcompatibility.impl.ReportingCompatibilityServiceImpl">
 							<property name="reportingCompatibilityDAO">
-							    <bean class="@MODULE_PACKAGE@.db.hibernate.HibernateReportingCompatibilityDAO">
+							    <bean class="org.openmrs.module.reportingcompatibility.db.hibernate.HibernateReportingCompatibilityDAO">
 									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
 								</bean>
 							</property>	

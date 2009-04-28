@@ -16,6 +16,7 @@ package org.openmrs.module.reportingcompatibility.extension.html;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.openmrs.api.context.Context;
 import org.openmrs.module.Extension;
 import org.openmrs.module.web.extension.AdministrationSectionExt;
 
@@ -55,17 +56,42 @@ public class AdminList extends AdministrationSectionExt {
 	public Map<String, String> getLinks() {
 		
 		Map<String, String> map = new LinkedHashMap<String, String>();
-		
-		map.put("/admin/reports/runReport.list", "reportingcompatibility.Report.list.title");
-		map.put("/admin/reports/reportSchemaXml.list", "reportingcompatibility.Report.manage.title");
-		map.put("/admin/reports/reportMacros.form", "reportingcompatibility.Report.macros.title");
-		map.put("/admin/reports/dataExport.list", "reportingcompatibility.DataExport.manage");
-		map.put("/admin/reports/rowPerObsDataExport.list", "reportingcompatibility.RowPerObsDataExport.manage");
-		map.put("/admin/reports/cohorts.list", "Cohort.manage");
-		map.put("/admin/reports/patientSearch.list", "reportingcompatibility.PatientSearch.manage");
-		map.put("/admin/reports/reportObject.list", "reportingcompatibility.ReportObject.manage");
+
+		addLink(map, "Run Reports", "/admin/reports/runReport.list", "reportingcompatibility.Report.list.title");
+		addLink(map, "Manage Reports", "/admin/reports/reportSchemaXml.list", "reportingcompatibility.Report.manage.title");
+		addLink(map, "Manage Reports", "/admin/reports/reportMacros.form", "reportingcompatibility.Report.macros.title");
+		addLink(map, "Add Report Objects,Edit Report Objects,Delete Report Objects,View Report Objects", 
+					 "/admin/reports/dataExport.list", "reportingcompatibility.DataExport.manage");
+		addLink(map, "Add Report Objects,Edit Report Objects,Delete Report Objects,View Report Objects", 
+					 "/admin/reports/rowPerObsDataExport.list", "reportingcompatibility.RowPerObsDataExport.manage");
+		addLink(map, "Add Cohorts,Edit Cohorts,Delete Cohorts,View Cohorts", "/admin/reports/cohorts.list", "Cohort.manage");
+		addLink(map, "Add Patient Searches,Edit Patient Searches,Delete Patient Searches,View Patient Searches", 
+					 "/admin/reports/patientSearch.list", "reportingcompatibility.PatientSearch.manage");
+		addLink(map, "Add Report Objects,Edit Report Objects,Delete Report Objects,View Report Objects", 
+					 "/admin/reports/reportObject.list", "reportingcompatibility.ReportObject.manage");
 
 		return map;
 	}
 	
+	/**
+	 * Private method to add a link to the AdminList if there are sufficient privileges
+	 * @param m
+	 * @param privileges
+	 * @param messageKey
+	 * @param link
+	 */
+	private void addLink(Map<String, String> m, String privileges, String link, String messageKey) {
+		boolean hasPrivilege = false;
+		if (privileges != null) {
+			for (String p : privileges.split(",")) {
+				if (Context.hasPrivilege(p)) {
+					hasPrivilege = true;
+					break;
+				}
+			}
+		}
+		if (hasPrivilege) {
+			m.put(link, messageKey);
+		}
+	}
 }
