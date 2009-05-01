@@ -13,8 +13,6 @@
 	<description>Provides access to the deprecated reporting API from OpenMRS version 1.5 and earlier</description>
 	<activator>@MODULE_PACKAGE@.ModuleActivator</activator>	
 	<require_version>1.5.0.7475</require_version>
-
-	<!-- Internationalization -->
 	
 	<extension>
 		<point>org.openmrs.admin.list</point>
@@ -24,6 +22,51 @@
 		<point>org.openmrs.gutter.tools</point>
 		<class>org.openmrs.module.reportingcompatibility.extension.html.CohortBuilderHeader</class>
 	</extension>
+	
+	<privilege>
+		<name>View Reports</name>
+		<description>Able to view reports</description>
+	</privilege>
+	<privilege>
+		<name>Add Reports</name>
+		<description>Able to add reports</description>
+	</privilege>
+	<privilege>
+		<name>Edit Reports</name>
+		<description>Able to edit reports</description>
+	</privilege>
+	<privilege>
+		<name>Delete Reports</name>
+		<description>Able to delete reports</description>
+	</privilege>
+	<privilege>
+		<name>Run Reports</name>
+		<description>Able to run reports</description>
+	</privilege>
+	<privilege>
+		<name>View Report Objects</name>
+		<description>Able to View Report Objects</description>
+	</privilege>
+	<privilege>
+		<name>Add Report Objects</name>
+		<description>Able to Add Report Objects</description>
+	</privilege>
+	<privilege>
+		<name>Edit Report Objects</name>
+		<description>Able to Edit Report Objects</description>
+	</privilege>
+	<privilege>
+		<name>Delete Report Objects</name>
+		<description>Able to Delete Report Objects</description>
+	</privilege>
+	
+	<globalProperty>
+		<property>report.xmlMacros</property>
+		<description>
+			Macros that will be applied to Report Schema XMLs when they are interpreted. 
+			This should be java.util.properties format.
+		</description>
+	</globalProperty>
 	
 	<dwr>
 		<allow>
@@ -90,45 +133,6 @@
 		ReportObject.hbm.xml
 		ReportSchemaXml.hbm.xml
 	</mappingFiles>
-	
-	<!--  Privileges:
-		public static final String PRIV_VIEW_REPORTS = "View Reports";
-	
-	public static final String PRIV_ADD_REPORTS = "Add Reports";
-	
-	public static final String PRIV_EDIT_REPORTS = "Edit Reports";
-	
-	public static final String PRIV_DELETE_REPORTS = "Delete Reports";
-	
-	public static final String PRIV_RUN_REPORTS = "Run Reports";
-	
-	public static final String PRIV_VIEW_REPORT_OBJECTS = "View Report Objects";
-	
-	public static final String PRIV_ADD_REPORT_OBJECTS = "Add Report Objects";
-	
-	public static final String PRIV_EDIT_REPORT_OBJECTS = "Edit Report Objects";
-	
-	public static final String PRIV_DELETE_REPORT_OBJECTS = "Delete Report Objects";
-	
-				
-			CORE_PRIVILEGES.put(PRIV_VIEW_REPORTS, "Able to view reports");
-			CORE_PRIVILEGES.put(PRIV_ADD_REPORTS, "Able to add reports");
-			CORE_PRIVILEGES.put(PRIV_EDIT_REPORTS, "Able to edit reports");
-			CORE_PRIVILEGES.put(PRIV_DELETE_REPORTS, "Able to delete reports");
-			CORE_PRIVILEGES.put(PRIV_RUN_REPORTS, "Able to run reports");
-			
-			CORE_PRIVILEGES.put(PRIV_VIEW_REPORT_OBJECTS, "Able to view report objects");
-			CORE_PRIVILEGES.put(PRIV_ADD_REPORT_OBJECTS, "Able to add report objects");
-			CORE_PRIVILEGES.put(PRIV_EDIT_REPORT_OBJECTS, "Able to edit report objects");
-			CORE_PRIVILEGES.put(PRIV_DELETE_REPORT_OBJECTS, "Able to delete report objects");
-	
-			props
-		        .add(new GlobalProperty(GLOBAL_PROPERTY_REPORT_XML_MACROS, "",
-		                "Macros that will be applied to Report Schema XMLs when they are interpreted. This should be java.util.properties format."));
-		
-	
-	
-	 -->
 
 </module>
 
