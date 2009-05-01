@@ -28,12 +28,11 @@ import org.openmrs.reporting.PatientSearch;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.SkipBaseSetup;
 import org.openmrs.test.Verifies;
-import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 
 /**
  * Tests methods in the CohortService class TODO add all the rest of the tests
  */
-public class ReportingCompatibilityServiceTest extends BaseModuleWebContextSensitiveTest {
+public class ReportingCompatibilityServiceTest extends BaseModuleContextSensitiveTest {
 	
 	protected static final String CREATE_PATIENT_XML = "org/openmrs/api/include/PatientServiceTest-createPatient.xml";
 	
