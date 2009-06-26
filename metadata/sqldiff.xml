@@ -21,7 +21,7 @@
 			Create default schema for module
 		</description>
 		<sql>
-			CREATE TABLE `report_object` (
+			CREATE TABLE IF NOT EXISTS `report_object` (
 			  `report_object_id` int(11) NOT NULL auto_increment,
 			  `name` varchar(255) NOT NULL default '',
 			  `description` varchar(1000),
@@ -42,7 +42,7 @@
 			  CONSTRAINT `user_who_voided_report_object` FOREIGN KEY (`voided_by`) REFERENCES `users` (`user_id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 			
-			CREATE TABLE `report_schema_xml` (
+			CREATE TABLE IF NOT EXISTS `report_schema_xml` (
 			  `report_schema_id` int(11) NOT NULL auto_increment,
 			  `name` varchar(255) NOT NULL default '',
 			  `description` varchar(1000) NOT NULL default '',
