@@ -35,10 +35,7 @@
 						</bean>
 					</property>
 					<property name="preInterceptors">
-						<list>
-							<ref bean="authorizationInterceptor"/>
-							<ref bean="loggingInterceptor"/>
-						</list>
+						<ref local="serviceInterceptors" />
 					</property>
 					<property name="transactionAttributeSource">
 						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
