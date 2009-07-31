@@ -6,11 +6,11 @@
 <%@ include file="localHeader.jsp"%>
 
 <openmrs:htmlInclude file="/dwr/interface/DWRCohortService.js" />
-<openmrs:htmlInclude file="/scripts/jquery/jquery-1.2.6.min.js" />
-<openmrs:htmlInclude file="/scripts/jquery/jquery.ui-1.5/ui/packed/ui.core.packed.js" />
-<openmrs:htmlInclude file="/scripts/jquery/jquery.ui-1.5/ui/packed/ui.tabs.packed.js" />
-<openmrs:htmlInclude file="/scripts/jquery/jquery.ui-1.5/ui/packed/ui.draggable.packed.js" />
-<openmrs:htmlInclude file="/scripts/jquery/jquery.ui-1.5/themes/flora/flora.tabs.css" />
+<openmrs:htmlInclude file="/moduleResources/reportingcompatibility/jquery/jquery-1.2.6.min.js" />
+<openmrs:htmlInclude file="/moduleResources/reportingcompatibility/jquery/jquery.ui-1.5/ui/packed/ui.core.packed.js" />
+<openmrs:htmlInclude file="/moduleResources/reportingcompatibility/jquery/jquery.ui-1.5/ui/packed/ui.tabs.packed.js" />
+<openmrs:htmlInclude file="/moduleResources/reportingcompatibility/jquery/jquery.ui-1.5/ui/packed/ui.draggable.packed.js" />
+<openmrs:htmlInclude file="/moduleResources/reportingcompatibility/jquery/jquery.ui-1.5/themes/flora/flora.tabs.css" />
 
 <script type="text/javascript">
 
