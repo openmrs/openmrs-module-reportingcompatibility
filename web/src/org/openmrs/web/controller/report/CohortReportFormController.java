@@ -116,7 +116,6 @@ public class CohortReportFormController extends SimpleFormController implements 
 				command.setName(schema.getName());
 				command.setDescription(schema.getDescription());
 				command.getParameters().addAll(schema.getReportParameters());
-				command.setUuid(schemaXml.getUuid());
 				
 				// populate command.rows, directly from XML
 				Document xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
@@ -297,6 +296,7 @@ public class CohortReportFormController extends SimpleFormController implements 
 	protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object commandObj,
 	                                BindException errors) throws Exception {
 		CommandObject command = (CommandObject) commandObj;
+		
 		// do simpleframework serialization of everything but 'rows', and add those via handcoded xml, since
 		// serializing them is not reversible
 		
@@ -375,17 +375,13 @@ public class CohortReportFormController extends SimpleFormController implements 
 		DOMSource source = new DOMSource(xml);
 		trans.transform(source, result);
 		String schemaXml = out.toString();
-		ReportService rptSvc = (ReportService) Context.getService(ReportService.class);
 		
-		ReportSchemaXml rsx = null;
-
-		rsx = new ReportSchemaXml();
+		ReportSchemaXml rsx = new ReportSchemaXml();
 		rsx.populateFromReportSchema(rs);
 		rsx.setXml(schemaXml);
 		rsx.updateXmlFromAttributes();
-		rsx.setUuid(request.getParameter("parentUUID"));
-
 		
+		ReportService rptSvc = (ReportService) Context.getService(ReportService.class);
 		if (rsx.getReportSchemaId() != null) {
 			rptSvc.saveReportSchemaXml(rsx);
 		} else {
@@ -492,19 +488,9 @@ public class CohortReportFormController extends SimpleFormController implements 
 		
 		private List<CohortReportRow> rows;
 		
-		private String uuid;
-		
 		public CommandObject() {
 			parameters = new ArrayList<Parameter>();
 			rows = new ArrayList<CohortReportRow>();
-		}
-		
-		public String getUuid(){
-		    return uuid;
-		}
-		
-		public void setUuid(String uuid){
-		    this.uuid = uuid;
 		}
 		
 		public Integer getReportId() {
