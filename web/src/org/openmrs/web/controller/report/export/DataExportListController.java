@@ -129,7 +129,19 @@ public class DataExportListController extends SimpleFormController {
 					for (String p : reportList) {
 						// TODO convenience method deleteDataExport(Integer) ??
 						try {
+							try {
+								ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
+								DataExportReportObject dataExport = (DataExportReportObject) rs.getReportObject(Integer.valueOf(p));
+								File file = DataExportUtil.getGeneratedFile(dataExport);
+								if (file != null && file.exists()) {
+									file.delete();
+								}
+							} catch (Exception ex) {
+								// pass
+								// (if this failed for any reason, we still want to delete the data export if we can)
+							}
 							as.deleteReportObject(Integer.valueOf(p));
+							
 							if (!success.equals(""))
 								success += "<br/>";
 							success += textDataExport + " " + p + " " + deleted;
