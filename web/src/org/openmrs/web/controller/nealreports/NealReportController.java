@@ -294,7 +294,7 @@ public class NealReportController implements Controller {
 		// Hiv.TREATMENT_STATUS
 		// General.HIV_POSITIVE_P
 		// General.TB_ACTIVE_P 
-		Program hivProgram = Context.getProgramWorkflowService().getProgramByName("HIV PROGRAM");
+		Program hivProgram = Context.getProgramWorkflowService().getProgram("HIV PROGRAM");
 		if (hivProgram != null) {
 			Map<Integer, PatientProgram> progs = pss.getCurrentPatientPrograms(ps, hivProgram);
 			for (Map.Entry<Integer, PatientProgram> e : progs.entrySet()) {
@@ -302,7 +302,7 @@ public class NealReportController implements Controller {
 				patientDataHolder.get(e.getKey()).put(General.ENROLL_DATE, formatDate(e.getValue().getDateEnrolled()));
 				//log.debug(e.getValue().getDateEnrolled());
 			}
-			ProgramWorkflow wf = hivProgram.getWorkflowByName("TREATMENT STATUS"); 
+			ProgramWorkflow wf = Context.getProgramWorkflowService().getWorkflow(hivProgram, "TREATMENT STATUS");
 			log.debug("worlflow is " + wf + " and patientSet is " + ps);
 			Map<Integer, PatientState> states = pss.getCurrentStates(ps, wf);
 			if (states != null) {
@@ -329,7 +329,7 @@ public class NealReportController implements Controller {
 				log.debug("states is null, can't proceed");
 			}
 			
-			wf = hivProgram.getWorkflowByName("TREATMENT GROUP");
+			wf = Context.getProgramWorkflowService().getWorkflow(hivProgram, "TREATMENT GROUP");
 			log.debug("worlflow is " + wf + " and patientSet is " + ps);
 			states = pss.getCurrentStates(ps, wf);
 			if (states != null) {
@@ -359,14 +359,14 @@ public class NealReportController implements Controller {
 			log.debug("Couldn't find HIV PROGRAM");
 		}
 		
-		Program tbProgram = Context.getProgramWorkflowService().getProgramByName("TUBERCULOSIS PROGRAM");
+		Program tbProgram = Context.getProgramWorkflowService().getProgram("TUBERCULOSIS PROGRAM");
 		if (tbProgram != null) {
 			Map<Integer, PatientProgram> progs = pss.getCurrentPatientPrograms(ps, tbProgram);
 			for (Map.Entry<Integer, PatientProgram> e : progs.entrySet()) {
 				patientDataHolder.get(e.getKey()).put(General.TB_ACTIVE_P, "t");
 				patientDataHolder.get(e.getKey()).put(TB.TB_ENROLL_DATE, formatDate(e.getValue().getDateEnrolled()));
 			}
-			ProgramWorkflow wf = tbProgram.getWorkflowByName("TREATMENT STATUS");
+			ProgramWorkflow wf = Context.getProgramWorkflowService().getWorkflow(tbProgram, "TREATMENT STATUS");
 			log.debug("worlflow is " + wf + " and patientSet is " + ps);
 			Map<Integer, PatientState> states = pss.getCurrentStates(ps, wf);
 			if (states != null) {
@@ -392,7 +392,7 @@ public class NealReportController implements Controller {
 			} else {
 				log.debug("states is null, can't proceed");
 			}
-			wf = tbProgram.getWorkflowByName("TUBERCULOSIS TREATMENT GROUP");
+			wf = Context.getProgramWorkflowService().getWorkflow(tbProgram, "TUBERCULOSIS TREATMENT GROUP");
 			log.debug("worlflow is " + wf + " and patientSet is " + ps);
 			states = pss.getCurrentStates(ps, wf);
 			if (states != null) {
@@ -426,12 +426,12 @@ public class NealReportController implements Controller {
 		{
 			
 			PersonService personService = Context.getPersonService();
-			RelationshipType relType = personService.getRelationshipTypeByName("Accompagnateur/Patient");
+			RelationshipType relType = personService.findRelationshipType("Accompagnateur/Patient");
 			
 			if (relType != null) {
 				// get the accomp leader as well
 				RelationshipType accompLeaderType = personService
-				        .getRelationshipTypeByName("Accompagnateur Leader/Opposite of Accompagnateur Leader");
+				        .findRelationshipType("Accompagnateur Leader/Opposite of Accompagnateur Leader");
 				Map<Integer, List<Person>> accompRelations = null;
 				if (accompLeaderType != null)
 					accompRelations = pss.getRelatives(null, accompLeaderType, false);
@@ -552,10 +552,10 @@ public class NealReportController implements Controller {
 		{
 			// ALL REGIMENS
 			Map<Integer, List<DrugOrder>> regimens = pss.getDrugOrders(ps, null);
-			List<Concept> unwantedHiv = Context.getConceptService().getConceptsByConceptSet(
-			    Context.getConceptService().getConcept("ANTIRETROVIRAL DRUGS"));
-			List<Concept> unwantedTb = Context.getConceptService().getConceptsByConceptSet(
-			    Context.getConceptService().getConcept("TUBERCULOSIS TREATMENT DRUGS"));
+			List<Concept> unwantedHiv = Context.getConceptService().getConceptsInSet(
+			    Context.getConceptService().getConceptByIdOrName("ANTIRETROVIRAL DRUGS"));
+			List<Concept> unwantedTb = Context.getConceptService().getConceptsInSet(
+			    Context.getConceptService().getConceptByIdOrName("TUBERCULOSIS TREATMENT DRUGS"));
 			
 			for (Map.Entry<Integer, List<DrugOrder>> e : regimens.entrySet()) {
 				Date earliestStart = null;

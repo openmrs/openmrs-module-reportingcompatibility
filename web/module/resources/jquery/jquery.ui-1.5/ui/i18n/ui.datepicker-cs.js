@@ -1,21 +1,21 @@
-???/* Czech initialisation for the jQuery UI date picker plugin. */
+﻿/* Czech initialisation for the jQuery UI date picker plugin. */
 /* Written by Tomas Muller (tomas@tomas-muller.net). */
 jQuery(function($){
-	$.datepicker.regional['cs'] = {clearText: 'Vymazat', clearStatus: 'Vyma??e zadan?? datum',
-		closeText: 'Zav????t',  closeStatus: 'Zav??e kalend???? beze zm??ny',
-		prevText: '&#x3c;D????ve', prevStatus: 'P??ej??t na p??edchoz?? m??s??',
-		nextText: 'Pozd??ji&#x3e;', nextStatus: 'P??ej??t na dal???? m??s??c',
-		currentText: 'Nyn??', currentStatus: 'P??ejde na aktu??ln?? m??s??c',
-		monthNames: ['leden','??nor','b??ezen','duben','kv??ten','??erven',
-        '??ervenec','srpen','z??????','????jen','listopad','prosinec'],
-		monthNamesShort: ['led','??no','b??e','dub','kv??','??er',
-		'??vc','srp','z????','????j','lis','pro'],
-		monthStatus: 'P??ej??t na jin?? m??s??c', yearStatus: 'P??ej??t na jin?? rok',
-		weekHeader: 'T??d', weekStatus: 'T??den v roce',
-		dayNames: ['ned??le', 'pond??l??', '??ter??', 'st??eda', '??tvrtek', 'p??tek', 'sobota'],
-		dayNamesShort: ['ne', 'po', '??t', 'st', '??t', 'p??', 'so'],
-		dayNamesMin: ['ne','po','??t','st','??t','p??','so'],
-		dayStatus: 'Nastavit DD jako prvn?? den v t??dnu', dateStatus: '\'Vyber\' DD, M d',
+	$.datepicker.regional['cs'] = {clearText: 'Vymazat', clearStatus: 'Vymaže zadané datum',
+		closeText: 'Zavřít',  closeStatus: 'Zavře kalendář beze změny',
+		prevText: '&#x3c;Dříve', prevStatus: 'Přejít na předchozí měsí',
+		nextText: 'Později&#x3e;', nextStatus: 'Přejít na další měsíc',
+		currentText: 'Nyní', currentStatus: 'Přejde na aktuální měsíc',
+		monthNames: ['leden','únor','březen','duben','květen','červen',
+        'červenec','srpen','září','říjen','listopad','prosinec'],
+		monthNamesShort: ['led','úno','bře','dub','kvě','čer',
+		'čvc','srp','zář','říj','lis','pro'],
+		monthStatus: 'Přejít na jiný měsíc', yearStatus: 'Přejít na jiný rok',
+		weekHeader: 'Týd', weekStatus: 'Týden v roce',
+		dayNames: ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'],
+		dayNamesShort: ['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'],
+		dayNamesMin: ['ne','po','út','st','čt','pá','so'],
+		dayStatus: 'Nastavit DD jako první den v týdnu', dateStatus: '\'Vyber\' DD, M d',
 		dateFormat: 'dd.mm.yy', firstDay: 1, 
 		initStatus: 'Vyberte datum', isRTL: false};
 	$.datepicker.setDefaults($.datepicker.regional['cs']);

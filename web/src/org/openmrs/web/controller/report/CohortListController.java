@@ -27,7 +27,6 @@ import javax.servlet.http.HttpSession;
 
 import org.openmrs.Cohort;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
@@ -85,7 +84,7 @@ public class CohortListController extends SimpleFormController {
 			if (toDelete != null) {
 				ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 				List<AbstractReportObject> savedSearches = rs.getReportObjectsByType(
-				    ReportingCompatibilityConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+				    OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 				for (String s : toDelete) {
 					int compositeTest = 0;
 					for (ReportObject ro : savedSearches) {

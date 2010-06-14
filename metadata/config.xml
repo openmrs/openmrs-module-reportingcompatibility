@@ -7,12 +7,15 @@
 	
 	<id>reportingcompatibility</id>
 	<name>Reporting Compatibility</name>
-	<version>1.6.0.1</version>
+	<version>1.5.0.3</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Michael Seaton</author>
-	<description>Provides access to the deprecated reporting API from OpenMRS version 1.5 and earlier</description>
+	<description>Provides access to the deprecated reporting web components from OpenMRS version 1.5 and earlier</description>
 	<activator>@MODULE_PACKAGE@.ModuleActivator</activator>	
+	<updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL>
 	<require_version>1.5.0.7475</require_version>
+
+	<!-- Internationalization -->
 	
 	<extension>
 		<point>org.openmrs.admin.list</point>
@@ -22,51 +25,6 @@
 		<point>org.openmrs.gutter.tools</point>
 		<class>org.openmrs.module.reportingcompatibility.extension.html.CohortBuilderHeader</class>
 	</extension>
-	
-	<privilege>
-		<name>View Reports</name>
-		<description>Able to view reports</description>
-	</privilege>
-	<privilege>
-		<name>Add Reports</name>
-		<description>Able to add reports</description>
-	</privilege>
-	<privilege>
-		<name>Edit Reports</name>
-		<description>Able to edit reports</description>
-	</privilege>
-	<privilege>
-		<name>Delete Reports</name>
-		<description>Able to delete reports</description>
-	</privilege>
-	<privilege>
-		<name>Run Reports</name>
-		<description>Able to run reports</description>
-	</privilege>
-	<privilege>
-		<name>View Report Objects</name>
-		<description>Able to View Report Objects</description>
-	</privilege>
-	<privilege>
-		<name>Add Report Objects</name>
-		<description>Able to Add Report Objects</description>
-	</privilege>
-	<privilege>
-		<name>Edit Report Objects</name>
-		<description>Able to Edit Report Objects</description>
-	</privilege>
-	<privilege>
-		<name>Delete Report Objects</name>
-		<description>Able to Delete Report Objects</description>
-	</privilege>
-	
-	<globalProperty>
-		<property>report.xmlMacros</property>
-		<description>
-			Macros that will be applied to Report Schema XMLs when they are interpreted. 
-			This should be java.util.properties format.
-		</description>
-	</globalProperty>
 	
 	<dwr>
 		<allow>
@@ -127,12 +85,6 @@
 		<lang>pt</lang>
 		<file>messages_pt.properties</file>
 	</messages>
-	
-	<mappingFiles>
-		Report.hbm.xml
-		ReportObject.hbm.xml
-		ReportSchemaXml.hbm.xml
-	</mappingFiles>
 
 </module>
 

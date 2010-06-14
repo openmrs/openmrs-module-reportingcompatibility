@@ -24,14 +24,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
+import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
-import org.openmrs.module.reportingcompatibility.ReportingCompatibilityService;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObject;
 import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.web.WebConstants;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -63,7 +63,7 @@ public class PatientSearchListController extends SimpleFormController {
 		if (Context.isAuthenticated()) {
 			String[] reportList = request.getParameterValues("patientSearchId");
 			String action = request.getParameter("action");
-			ReportingCompatibilityService as = (ReportingCompatibilityService) Context.getService(ReportingCompatibilityService.class);
+			AdministrationService as = Context.getAdministrationService();
 			String success = "";
 			String error = "";
 			MessageSourceAccessor msa = getMessageSourceAccessor();
@@ -77,7 +77,7 @@ public class PatientSearchListController extends SimpleFormController {
 				if (reportList != null) {
 					ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 					List<AbstractReportObject> savedSearches = rs.getReportObjectsByType(
-					    ReportingCompatibilityConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+					    OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 					for (String p : reportList) {
 						int compositeTest = 0;
 						String psUsedInTheseCompositeSearches = "";
@@ -142,7 +142,7 @@ public class PatientSearchListController extends SimpleFormController {
 		
 		if (Context.isAuthenticated()) {
 			ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
-			searches = rs.getReportObjectsByType(ReportingCompatibilityConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+			searches = rs.getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 			
 		}
 		return searches;

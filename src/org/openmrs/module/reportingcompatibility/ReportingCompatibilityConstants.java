@@ -18,22 +18,6 @@ package org.openmrs.module.reportingcompatibility;
  */
 public class ReportingCompatibilityConstants {
 	
-	public static final String PRIV_VIEW_REPORTS = "View Reports";
-	public static final String PRIV_ADD_REPORTS = "Add Reports";
-	public static final String PRIV_EDIT_REPORTS = "Edit Reports";	
-	public static final String PRIV_DELETE_REPORTS = "Delete Reports";	
-	public static final String PRIV_RUN_REPORTS = "Run Reports";	
-	public static final String PRIV_VIEW_REPORT_OBJECTS = "View Report Objects";	
-	public static final String PRIV_ADD_REPORT_OBJECTS = "Add Report Objects";	
-	public static final String PRIV_EDIT_REPORT_OBJECTS = "Edit Report Objects";	
-	public static final String PRIV_DELETE_REPORT_OBJECTS = "Delete Report Objects";
-
-	public static final String REPORT_OBJECT_TYPE_PATIENTFILTER = "Patient Filter";
-	public static final String REPORT_OBJECT_TYPE_PATIENTSEARCH = "Patient Search";
-	public static final String REPORT_OBJECT_TYPE_PATIENTDATAPRODUCER = "Patient Data Producer";
-	
-	public static final String GLOBAL_PROPERTY_REPORT_XML_MACROS = "report.xmlMacros";
-	
 	public static final String OPENMRS_REPORT_DATA = "__openmrs_report_data";
 	public static final String OPENMRS_REPORT_ARGUMENT = "__openmrs_report_argument";
 

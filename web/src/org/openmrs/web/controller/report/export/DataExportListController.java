@@ -28,8 +28,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
+import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.reportingcompatibility.ReportingCompatibilityService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
 import org.openmrs.reporting.AbstractReportObject;
@@ -81,7 +81,7 @@ public class DataExportListController extends SimpleFormController {
 			String[] reportList = request.getParameterValues("dataExportId");
 			String action = request.getParameter("action");
 			
-			ReportingCompatibilityService as = (ReportingCompatibilityService) Context.getService(ReportingCompatibilityService.class);
+			AdministrationService as = Context.getAdministrationService();
 			String success = "";
 			String error = "";
 			
@@ -129,19 +129,7 @@ public class DataExportListController extends SimpleFormController {
 					for (String p : reportList) {
 						// TODO convenience method deleteDataExport(Integer) ??
 						try {
-							try {
-								ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
-								DataExportReportObject dataExport = (DataExportReportObject) rs.getReportObject(Integer.valueOf(p));
-								File file = DataExportUtil.getGeneratedFile(dataExport);
-								if (file != null && file.exists()) {
-									file.delete();
-								}
-							} catch (Exception ex) {
-								// pass
-								// (if this failed for any reason, we still want to delete the data export if we can)
-							}
 							as.deleteReportObject(Integer.valueOf(p));
-							
 							if (!success.equals(""))
 								success += "<br/>";
 							success += textDataExport + " " + p + " " + deleted;

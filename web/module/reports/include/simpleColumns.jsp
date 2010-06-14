@@ -27,7 +27,7 @@
 				<option value="$!{fn.getPatientAttr('PatientIdentifier', 'identifierType').getName()}">&nbsp; <spring:message code="reportingcompatibility.DataExport.simple.preferredIdentifierType" /></option>
 				<option value="$!{fn.getPatientAttr('PatientIdentifier', 'location').getName()}">&nbsp; <spring:message code="reportingcompatibility.DataExport.simple.preferredIdentifierLocation" /></option>
 				<option value=""> </option>
-				<option disabled><spring:message code="reportingcompatibility.DateExport.simple.personName"/></option>		
+				<option disabled><spring:message code="reportingcompatibility.DataExport.simple.personName"/></option>		
 				<option value="$!{fn.getPatientAttr('PersonName', 'givenName')}">&nbsp; <spring:message code="PersonName.givenName" /></option>
 				<option value="$!{fn.getPatientAttr('PersonName', 'middleName')}">&nbsp; <spring:message code="PersonName.middleName" /></option>
 				<option value="$!{fn.getPatientAttr('PersonName', 'familyName')}">&nbsp; <spring:message code="PersonName.familyName" /></option>

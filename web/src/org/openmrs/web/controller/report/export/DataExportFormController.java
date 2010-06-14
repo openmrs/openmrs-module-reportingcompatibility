@@ -13,7 +13,6 @@
  */
 package org.openmrs.web.controller.report.export;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -33,7 +32,6 @@ import org.openmrs.layout.web.address.AddressTemplate;
 import org.openmrs.propertyeditor.LocationEditor;
 import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.reporting.export.DataExportReportObject;
-import org.openmrs.reporting.export.DataExportUtil;
 import org.openmrs.reporting.export.ExportColumn;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.web.WebConstants;
@@ -182,12 +180,6 @@ public class DataExportFormController extends SimpleFormController {
 			
 			ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 			rs.saveReportObject(report);
-			
-			// if there are cached results for this report, delete them 
-			File cachedLastReportRun = DataExportUtil.getGeneratedFile(report); 
-			if (cachedLastReportRun != null && cachedLastReportRun.exists()) { 
-				cachedLastReportRun.delete(); 
-			}
 			
 			String action = ServletRequestUtils.getRequiredStringParameter(request, "action");
 			MessageSourceAccessor msa = getMessageSourceAccessor();

@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
+import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.reportingcompatibility.ReportingCompatibilityService;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.ReportObjectList;
 import org.openmrs.reporting.ReportObjectService;
@@ -71,7 +71,7 @@ public class ReportObjectListController extends SimpleFormController {
 		String view = getFormView();
 		if (Context.isAuthenticated()) {
 			String[] reportObjectList = request.getParameterValues("reportObjectId");
-			ReportingCompatibilityService as = (ReportingCompatibilityService) Context.getService(ReportingCompatibilityService.class);
+			AdministrationService as = Context.getAdministrationService();
 			
 			String success = "";
 			String error = "";

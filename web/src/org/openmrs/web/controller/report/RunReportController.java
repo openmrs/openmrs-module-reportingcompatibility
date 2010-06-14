@@ -31,6 +31,7 @@ import org.openmrs.report.RenderingMode;
 import org.openmrs.report.ReportData;
 import org.openmrs.report.ReportRenderer;
 import org.openmrs.report.ReportSchema;
+import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.web.report.WebReportRenderer;
 import org.springframework.util.StringUtils;

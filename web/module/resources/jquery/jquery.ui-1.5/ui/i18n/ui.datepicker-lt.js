@@ -4,20 +4,20 @@
  * @author Arturas Paleicikas <arturas@avalon.lt>
  */
 jQuery(function($){
-	$.datepicker.regional['lt'] = {clearText: 'I????valyti', clearStatus: '',
-		closeText: 'U????daryti', closeStatus: '',
+	$.datepicker.regional['lt'] = {clearText: 'Išvalyti', clearStatus: '',
+		closeText: 'Uždaryti', closeStatus: '',
 		prevText: '&lt;Atgal',  prevStatus: '',
 		nextText: 'Pirmyn&gt;', nextStatus: '',
-		currentText: '????iandien', currentStatus: '',
-		monthNames: ['Sausis','Vasaris','Kovas','Balandis','Gegu????????','Bir????elis',
-		'Liepa','Rugpj????tis','Rugs????jis','Spalis','Lapkritis','Gruodis'],
+		currentText: 'Šiandien', currentStatus: '',
+		monthNames: ['Sausis','Vasaris','Kovas','Balandis','Gegužė','Birželis',
+		'Liepa','Rugpjūtis','Rugsėjis','Spalis','Lapkritis','Gruodis'],
 		monthNamesShort: ['Sau','Vas','Kov','Bal','Geg','Bir',
 		'Lie','Rugp','Rugs','Spa','Lap','Gru'],
 		monthStatus: '', yearStatus: '',
 		weekHeader: '', weekStatus: '',
-		dayNames: ['sekmadienis','pirmadienis','antradienis','tre????iadienis','ketvirtadienis','penktadienis','????e????tadienis'],
-		dayNamesShort: ['sek','pir','ant','tre','ket','pen','????e????'],
-		dayNamesMin: ['Se','Pr','An','Tr','Ke','Pe','????e'],
+		dayNames: ['sekmadienis','pirmadienis','antradienis','trečiadienis','ketvirtadienis','penktadienis','šeštadienis'],
+		dayNamesShort: ['sek','pir','ant','tre','ket','pen','šeš'],
+		dayNamesMin: ['Se','Pr','An','Tr','Ke','Pe','Še'],
 		dayStatus: 'DD', dateStatus: 'D, M d',
 		dateFormat: 'yy-mm-dd', firstDay: 1, 
 		initStatus: '', isRTL: false};
