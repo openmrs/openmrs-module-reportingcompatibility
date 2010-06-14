@@ -13,6 +13,7 @@
  */
 package org.openmrs.web.controller.report.export;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!-- ********************************************************* -->
-<!-- ** Reporting Compatibility 1.5 Module                  ** -->
+<!-- ** Reporting Compatibility Module                      ** -->
 <!-- **	                                                    ** -->
 <!-- ** @author Michael Seaton                              ** -->
 <!-- ** @version 1.0                                        ** -->
 <!-- ********************************************************* -->
-<project name="ReportingCompatibility-1.5.x" default="package-module">
+<project name="ReportingCompatibility" default="package-module">
 		
 	<!-- *********************************************************** -->
 	<!-- **                     TARGETS                           ** -->
