@@ -104,7 +104,7 @@
 	
 	<target name="deploy-web" depends="package-module">
 		<property environment="env"/>
-		<copy todir="/usr/emr/java/apache-tomcat-6.0.16/webapps/openmrs/WEB-INF/view/module/${module.id}">
+		<copy todir="${env.CATALINA_HOME}/webapps/openmrs/WEB-INF/view/module/${module.id}">
 			<fileset dir="web/module" includes="**/*" />
 		</copy>
 	</target>

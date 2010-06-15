@@ -34,10 +34,12 @@ import org.openmrs.ConceptAnswer;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortSearchHistory;
+import org.openmrs.module.reportingcompatibility.CohortBuilderLinkProvider;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.util.HandlerUtil;
 import org.openmrs.web.WebConstants;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,9 +53,7 @@ public class CohortBuilderController implements Controller {
 	private String formView;
 	
 	private String successView;
-	
-	private List<String> links;
-	
+		
 	public CohortBuilderController() {
 	}
 	
@@ -74,13 +74,15 @@ public class CohortBuilderController implements Controller {
 	}
 	
 	public List<String> getLinks() {
-		return links;
+		List<String> ret = new ArrayList<String>();
+		for (CohortBuilderLinkProvider p : HandlerUtil.getHandlersForType(CohortBuilderLinkProvider.class, null)) {
+			List<String> links = p.getLinkSpecifications();
+			if (links != null)
+				ret.addAll(links);
+		}
+		return ret;
 	}
-	
-	public void setLinks(List<String> links) {
-		this.links = links;
-	}
-	
+		
 	private void setMySearchHistory(HttpServletRequest request, CohortSearchHistory history) {
 		Context.setVolatileUserData("CohortBuilderSearchHistory", history);
 	}
@@ -530,7 +532,7 @@ public class CohortBuilderController implements Controller {
 	
 	private List<LinkSpec> linkHelper() {
 		List<LinkSpec> ret = new ArrayList<LinkSpec>();
-		for (String spec : links) {
+		for (String spec : getLinks()) {
 			ret.add(new LinkSpec(spec));
 		}
 		return ret;

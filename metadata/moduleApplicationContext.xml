@@ -47,7 +47,6 @@
 				<prop key="cohortBuilder.list">cohortBuilderController</prop>
 				<prop key="cohortBuilder.form">cohortBuilderActionController</prop>
 				<prop key="**/patientSet.portlet">patientSetPortletController</prop>
-				<prop key="nealreport.form">nealReportController</prop>
 			</props>
 		</property>
 	</bean>
@@ -55,7 +54,6 @@
 		<!--  **************************  WEB CONTROLLERS  *************************  -->
 
 	<bean id="patientSetPortletController" class="org.openmrs.web.controller.PatientSetPortletController" />
-	<bean id="nealReportController" class="org.openmrs.web.controller.nealreports.NealReportController" />
 	
 	<bean id="reportsList" class="org.openmrs.web.controller.report.ReportsListController">
         <property name="commandName"><value>reports</value></property>
@@ -178,30 +176,6 @@
 	<bean id="cohortBuilderController" class="org.openmrs.web.controller.analysis.CohortBuilderController">
 		<property name="formView"><value>/module/@MODULE_ID@/analysis/cohortBuilder</value></property>
 		<property name="successView"><value>cohortBuilder.list</value></property>
-		<property name="links">
-			<list>
-				<value>nealreport.form:reportingcompatibility.nealreport.ConsultReport.name:reportType=Consult Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.IncentiveReport.name:reportType=Incentive Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.ShortReport.name:reportType=Short Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.TbReport.name:reportType=TB Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.Cd4Report.name:reportType=CD4 Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.DeclineReport.name:reportType=Decline Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.Month6Report.name:reportType=Month6 Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.AlertReport.name:reportType=Alert Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.PmtctReport.name:reportType=PMTCT Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.PedReport.name:reportType=Ped Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.LongReport.name:reportType=Long Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.TracReport.name:reportType=TRAC Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.ExceptionReport.name:reportType=Exception Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.LostReport.name:reportType=Lost Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.FlatReport.name:reportType=Flat Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.FoodPatientsReport.name:reportType=Food Patients Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.AccompLeaderReport.name:reportType=Accompagnateur Leader Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.TracRegisterReport.name:reportType=Trac Register Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.ChaiReport.name:reportType=CHAI Report</value>
-				<value>nealreport.form:reportingcompatibility.nealreport.DataDumpReport.name:reportType=Data Dump</value>
-			</list>
-		</property>
 	</bean>
     <bean id="cohortBuilderActionController" class="org.springframework.web.servlet.mvc.multiaction.MultiActionController">
 		<property name="methodNameResolver"><ref bean="defaultMethodParamResolver"/></property>

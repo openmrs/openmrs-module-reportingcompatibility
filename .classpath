@@ -34,9 +34,6 @@
 	<classpathentry kind="lib" path="lib-common/xmlunit-1.2.jar"/>
 	<classpathentry kind="lib" path="lib-common/xstream-1.3.jar"/>
 	<classpathentry kind="lib" path="lib-common/jsp-api.jar"/>
-	<classpathentry kind="lib" path="lib/Acme.jar"/>
-	<classpathentry kind="lib" path="lib/itext-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/reports.jar"/>
 	<classpathentry kind="lib" path="/openmrs-trunk/lib/antlr/antlr_2.7.6.jar"/>
 	<classpathentry kind="lib" path="/openmrs-trunk/lib/jstl/jstl-1.1.jar"/>
 	<classpathentry kind="lib" path="/openmrs-trunk/lib/dwr/dwr-205.jar"/>
