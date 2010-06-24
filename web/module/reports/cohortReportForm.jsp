@@ -182,7 +182,7 @@
 	</ul>
 	
 	<form method="post">
-		
+		<input type="hidden" value="${command.uuid}" name="parentUUID">
 		<div id="reportTab1">
 			<span style="color:blue;">
 				<c:if test="${empty command.reportId}"><spring:message code="reportingcompatibility.Report.cohortReport.help.newDetails" /></c:if>

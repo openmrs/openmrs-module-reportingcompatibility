@@ -523,7 +523,16 @@
 						<c:if test="${!shortcut.hasPromptArgs}">
 							<a href="javascript:document.getElementById('shortcut${shortcut.label}').submit()">
 						</c:if>
-						<spring:message code="${shortcut.label}"/>
+						<spring:message code="reportingcompatibility.${shortcut.label}" var="reportingcompatibilityLabel"/>
+						<c:set var="reportingcompatibilityLabelDefault" value="reportingcompatibility.${shortcut.label}"/>
+						<c:choose>
+							<c:when test="${reportingcompatibilityLabel == reportingcompatibilityLabelDefault}" > 
+								<spring:message code="${shortcut.label}"/>
+							</c:when>
+							<c:otherwise> 
+								<c:out value="${reportingcompatibilityLabel}"/>
+							</c:otherwise>
+						</c:choose>
 						<c:if test="${!shortcut.hasPromptArgs}">
 							</a>
 						</c:if>
@@ -540,7 +549,16 @@
 										<input type="hidden" name="${arg.argName}" value="${arg.argValue}"/>
 									</c:when>
 									<c:otherwise>
-										<spring:message code="${shortcut.label}.${arg.argName}"/>
+										<spring:message code="reportingcompatibility.${shortcut.label}.${arg.argName}" var="reportingcompatibilityArgLabel"/>
+										<c:set var="reportingcompatibilityArgLabelDefault" value="reportingcompatibility.${shortcut.label}.${arg.argName}"/>
+										<c:choose>
+											<c:when test="${reportingcompatibilityArgLabel == reportingcompatibilityLabelArgDefault}" > 
+												<spring:message code="${shortcut.label}.${arg.argName}"/>
+											</c:when>
+											<c:otherwise> 
+												<c:out value="${reportingcompatibilityArgLabel}"/>
+											</c:otherwise>
+										</c:choose>
 										<openmrs:fieldGen type="${arg.argClass.name}" formFieldName="${arg.argName}" val="" parameters="optionHeader=[blank]|fieldLength=10" />
 									</c:otherwise>
 								</c:choose>

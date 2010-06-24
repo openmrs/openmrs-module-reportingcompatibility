@@ -112,7 +112,7 @@ public class ReportSchemaXmlFormController extends SimpleFormController implemen
 		}
 		
 		HttpSession httpSession = request.getSession();
-		httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Report.manageSchema.saved");
+		httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "reportingcompatibility.Report.manageSchema.saved");
 		return new ModelAndView(new RedirectView(getSuccessView()));
 	}
 	

@@ -24,6 +24,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -116,6 +117,7 @@ public class CohortReportFormController extends SimpleFormController implements 
 				command.setName(schema.getName());
 				command.setDescription(schema.getDescription());
 				command.getParameters().addAll(schema.getReportParameters());
+				command.setUuid(schemaXml.getUuid());
 				
 				// populate command.rows, directly from XML
 				Document xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
@@ -380,6 +382,7 @@ public class CohortReportFormController extends SimpleFormController implements 
 		rsx.populateFromReportSchema(rs);
 		rsx.setXml(schemaXml);
 		rsx.updateXmlFromAttributes();
+		rsx.setUuid(request.getParameter("parentUUID"));
 		
 		ReportService rptSvc = (ReportService) Context.getService(ReportService.class);
 		if (rsx.getReportSchemaId() != null) {
@@ -488,10 +491,21 @@ public class CohortReportFormController extends SimpleFormController implements 
 		
 		private List<CohortReportRow> rows;
 		
-		public CommandObject() {
-			parameters = new ArrayList<Parameter>();
-			rows = new ArrayList<CohortReportRow>();
-		}
+		private String uuid;
+        
+        public CommandObject() {
+            parameters = new ArrayList<Parameter>();
+            rows = new ArrayList<CohortReportRow>();
+            uuid = UUID.randomUUID().toString();
+        }
+        
+        public String getUuid(){
+            return uuid;
+        }
+        
+        public void setUuid(String uuid){
+            this.uuid = uuid;
+        }
 		
 		public Integer getReportId() {
 			return reportId;

@@ -94,8 +94,8 @@
 				<option value=""> </option>
 				<option disabled><spring:message code="reportingcompatibility.DataExport.simple.relationships"/></option>
 				<option value="$!{fn.getRelationshipNames('')}">&nbsp; <spring:message code="All Relationships" /></option>
-				<option value="$!{fn.getRelationshipNames('Accompagnateur')}">&nbsp; <spring:message code="provider.chw.names" /></option>
-				<option value="$!{fn.getRelationshipIds('Accompagnateur')}">&nbsp; <spring:message code="provider.chw.id" /></option>
+				<option value="$!{fn.getRelationshipNames('Accompagnateur/Patient')}">&nbsp; <spring:message code="provider.chw.names" /></option>
+				<option value="$!{fn.getRelationshipIds('Accompagnateur/Patient')}">&nbsp; <spring:message code="provider.chw.id" /></option>
 				<option value="$!{fn.getRelationshipIdentifiers('Mother')}">&nbsp; <spring:message code="RelationshipType.mother" /></option>
 				
 				<option disabled> </option>
