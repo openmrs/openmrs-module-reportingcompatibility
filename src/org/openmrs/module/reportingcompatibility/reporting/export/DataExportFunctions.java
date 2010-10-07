@@ -573,6 +573,10 @@ public class DataExportFunctions {
 		return patientIdProgramMap.get(patientId);
 	}
 	
+	////////DRUG ORDERS////////////////
+	////////////////////////
+	
+	
 	public List<DrugOrder> getCurrentDrugOrders(String drugSetName) {
 		Map<Integer, List<DrugOrder>> patientIdDrugOrderMap;
 		if (currentDrugOrderMap.containsKey(drugSetName)) {
@@ -602,6 +606,25 @@ public class DataExportFunctions {
 		return ret.toString();
 	}
 	
+	public String getCurrentFullDrugOrders(String drugSetName) {
+        List<DrugOrder> patientOrders = getCurrentDrugOrders(drugSetName);
+        if (patientOrders == null)
+            return "";
+        StringBuilder ret = new StringBuilder();
+        SimpleDateFormat sdf = Context.getDateFormat();
+        for (Iterator<DrugOrder> i = patientOrders.iterator(); i.hasNext();) {
+            DrugOrder o = i.next();
+            if (o.getDrug() != null)
+                ret.append(o.getDrug().getName());
+            else
+                ret.append(o.getConcept().getBestName(Context.getLocale()).getName());
+            ret.append("(" + (o.getStartDate() != null ? sdf.format(o.getStartDate()) : "") + " " + o.getDose()+" " + o.getUnits() + " " + o.getFrequency() + ")");
+            if (i.hasNext())
+                ret.append("\n");
+        }
+        return ret.toString();
+    }
+	
 	public List<DrugOrder> getDrugOrders(String drugSetName) {
 		Map<Integer, List<DrugOrder>> patientIdDrugOrderMap;
 		if (drugOrderMap.containsKey(drugSetName)) {
@@ -625,6 +648,21 @@ public class DataExportFunctions {
 		}
 		return earliest;
 	}
+	
+	public Date getLastDrugStart(String drugSetName) {
+        List<DrugOrder> patientOrders = getDrugOrders(drugSetName);
+        if (patientOrders == null)
+            return null;
+        Date latest = null;
+        for (DrugOrder o : patientOrders) {
+            System.out.println(o.getStartDate());
+            if (OpenmrsUtil.compareWithNullAsEarliest(o.getStartDate(), latest) > 0)
+                latest = o.getStartDate();
+        }
+        return latest;
+    }
+	
+	///////////////////////////////////////
 	
 	public List<Relationship> getRelationships(String relationshipTypeName) {
 		Map<Integer, List<Relationship>> patientIdRelationshipMap;

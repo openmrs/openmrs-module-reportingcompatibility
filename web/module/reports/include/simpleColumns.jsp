@@ -10,8 +10,6 @@
 		<td><spring:message code="reportingcompatibility.DataExport.columnValue"/></td>
 		<td>
 			<input type="text" name="simpleValue" size="50"/>
-		
-			<==
 			
 			<select name="simplePatient" onclick="updateSimpleColumn(this)">
 				
@@ -70,7 +68,17 @@
 					</c:forEach>
 					<c:forEach var="drugSet" items="${drugSetConcepts}">
 						<openmrs:concept conceptName="${drugSet}" var="drugSetConcept">
+							<option value="$!{fn.getCurrentFullDrugOrders('${drugSetConcept.name}')}">&nbsp; <spring:message code="Current Full Drug Orders {0}" arguments="${drugSetConcept.name}"/></option>
+						</openmrs:concept>
+					</c:forEach>
+					<c:forEach var="drugSet" items="${drugSetConcepts}">
+						<openmrs:concept conceptName="${drugSet}" var="drugSetConcept">
 							<option value="$!{fn.formatDate('ymd', $fn.getEarliestDrugStart('${drugSetConcept.name}'))}">&nbsp; <spring:message code="reportingcompatibility.DataExport.earliestDrugStart" arguments="${drugSetConcept.name}" /></option>
+						</openmrs:concept>
+					</c:forEach>
+					<c:forEach var="drugSet" items="${drugSetConcepts}">
+						<openmrs:concept conceptName="${drugSet}" var="drugSetConcept">
+							<option value="$!{fn.formatDate('ymd', $fn.getLastDrugStart('${drugSetConcept.name}'))}">&nbsp; <spring:message code="Most Recent Regimen Change {0}" arguments="${drugSetConcept.name}" /></option>
 						</openmrs:concept>
 					</c:forEach>
 				</c:if>
