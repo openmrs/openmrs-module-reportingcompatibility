@@ -11,7 +11,7 @@
 		<td>
 			<input type="text" name="simpleValue" size="50"/>
 			
-			<select name="simplePatient" onclick="updateSimpleColumn(this)">
+			<select name="simplePatient" onchange="updateSimpleColumn(this)">
 				
 				<option value=""> </option>
 				<option disabled><spring:message code="reportingcompatibility.DataExport.simple.identifiers"/></option>

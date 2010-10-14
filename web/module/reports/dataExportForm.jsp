@@ -9,6 +9,7 @@
 
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
 <openmrs:htmlInclude file="/scripts/dojo/dojo.js" />
+<openmrs:htmlInclude file="/dwr/interface/DWRConceptService.js" />
 
 <script type="text/javascript">
 	dojo.require("dojo.widget.openmrs.PatientSearch");
@@ -690,7 +691,7 @@
 				<%@ include file="include/cohortColumns.jsp" %>
 			</div>
 		</div>
-		<input type="button" onClick="return addNew(this, 'newColumn');" class="addNew" id="newColumnButtom" value='<spring:message code="reportingcompatibility.DataExport.addColumn" />' />
+		<input type="button" onClick="return addNew(this, 'newColumn');" class="addNew" id="newColumnButton" value='<spring:message code="reportingcompatibility.DataExport.addColumn" />' />
 	</div>
 	
 </div>
@@ -710,7 +711,7 @@
 
 	function propertySetup() {
 		<c:if test="${dataExport.reportObjectId != null}">
-			var btn = $('newColumnButtom');
+			var btn = document.getElementById('newColumnButton');
 			var obj;
 			<c:forEach items="${dataExport.columns}" var="column">
 				obj = addNew(btn, "newColumn");
@@ -773,7 +774,7 @@
 			</c:forEach>
 			
 			dwr.engine.setOrdered(true);
-			var btn = $('newPatientButton');
+			var btn = document.getElementById('newPatientButton');
 			<c:forEach items="${dataExport.patientIds}" var="id">
 				addNew(btn, "newPatient", '${id}');
 			</c:forEach>
