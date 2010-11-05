@@ -92,7 +92,7 @@ public class DataExportFunctions {
 	protected Map<String, Map<Integer, ?>> patientEncounterMap = new HashMap<String, Map<Integer, ?>>();
 	
 	// Map<PatientIdentifierType, Map<patientId, PatientIdentifier>>
-	protected Map<String, Map<Integer, PatientIdentifier>> patientIdentifierMap = new HashMap<String, Map<Integer, PatientIdentifier>>();
+	protected Map<String, Map<Integer, String>> patientIdentifierMap = new HashMap<String, Map<Integer, String>>();
 	
 	// Map<EncounterType, Map<patientId, Encounter>>
 	protected Map<String, Map<Integer, ?>> patientFirstEncounterMap = new HashMap<String, Map<Integer, ?>>();
@@ -1060,7 +1060,7 @@ public class DataExportFunctions {
 	public Object getPatientIdentifier(String typeName) {
 		
 		log.debug("Identifier Type: " + typeName);
-		Map<Integer, PatientIdentifier> patientIdentifiers;
+		Map<Integer, String> patientIdentifiers;
 		if (patientIdentifierMap.containsKey(typeName)) {
 			patientIdentifiers = patientIdentifierMap.get(typeName);
 		} else {
@@ -1075,8 +1075,23 @@ public class DataExportFunctions {
 			if (type == null) {
 				type = patientService.getPatientIdentifierTypeByName(typeName);
 			}
+			
 			// Get identifiers by type 
-			patientIdentifiers = patientSetService.getPatientIdentifiersByType(getPatientSetIfNotAllPatients(), type);
+			try {
+				// this is a 1.8+ only method.  Uses less memory and cpu than the previous
+				// one that is in the catch block
+				patientIdentifiers = patientSetService.getPatientIdentifierStringsByType(getPatientSetIfNotAllPatients(), type);
+			}
+			catch (NoSuchMethodError e) {
+				// this catch block is so that the module can still be installed on 1.5/1.6/1.7 and
+				// so that we don't have to bump up the 'required version' in config.xml
+				Map<Integer, PatientIdentifier> patientIdentifierObjects = patientSetService.getPatientIdentifiersByType(getPatientSetIfNotAllPatients(), type);
+				
+				patientIdentifiers = new HashMap<Integer, String>();
+				for (Map.Entry<Integer, PatientIdentifier> entry : patientIdentifierObjects.entrySet()) {
+					patientIdentifiers.put(entry.getKey(), entry.getValue().getIdentifier());
+				}
+			}
 			
 			log.debug("Found identifiers for patient identifier " + type + " = " + patientIdentifiers);
 			

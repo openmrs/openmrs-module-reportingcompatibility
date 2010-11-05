@@ -32,7 +32,7 @@
 				<option value="$!{fn.getPatientAttr('PersonName', 'degree')}">&nbsp; <spring:message code="PersonName.degree" /></option>
 
 				<option disabled> </option>
-				<option disabled><spring:message code="reportingcompatibility.DateExport.simple.demographics"/></option>
+				<option disabled><spring:message code="reportingcompatibility.DataExport.simple.demographics"/></option>
 				<option value="$!{fn.getPatientAttr('Person', 'gender')}">&nbsp; <spring:message code="Patient.gender" /></option>
 				<option value="$!{fn.calculateAge($fn.getPatientAttr('Person', 'birthdate'))}">&nbsp; <spring:message code="Person.age" /></option>
 				<option value="$!{fn.formatDate('short', $fn.getPatientAttr('Person', 'birthdate'))}">&nbsp; <spring:message code="Person.birthdate" /></option>

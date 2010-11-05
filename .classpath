@@ -34,13 +34,13 @@
 	<classpathentry kind="lib" path="lib-common/xmlunit-1.2.jar"/>
 	<classpathentry kind="lib" path="lib-common/xstream-1.3.jar"/>
 	<classpathentry kind="lib" path="lib-common/jsp-api.jar"/>
-	<classpathentry kind="lib" path="/openmrs-trunk/lib/antlr/antlr_2.7.6.jar"/>
-	<classpathentry kind="lib" path="/openmrs-trunk/lib/jstl/jstl-1.1.jar"/>
-	<classpathentry kind="lib" path="/openmrs-trunk/lib/dwr/dwr-205.jar"/>
-	<classpathentry kind="lib" path="/openmrs-trunk/lib/jakarta-taglibs/taglibs-standard-1.1.jar"/>
-	<classpathentry kind="lib" path="/openmrs-trunk/lib/hl7api/hapi-0.5.jar"/>
-	<classpathentry kind="lib" path="/openmrs-trunk/lib/commons-fileupload/commons-fileupload-1.1.1.jar"/>
-	<classpathentry kind="lib" path="lib-common/openmrs-api-1.5.0.10342-.jar"/>
+	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/antlr/antlr_2.7.6.jar"/>
+	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/jstl/jstl-1.1.jar"/>
+	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/dwr/dwr-205.jar"/>
+	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/jakarta-taglibs/taglibs-standard-1.1.jar"/>
+	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/hl7api/hapi-0.5.jar"/>
+	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/commons-fileupload/commons-fileupload-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib-common/openmrs-api-1.8.0.16365.jar"/>
 	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.5.0.10342-.jar"/>
 	<classpathentry kind="lib" path="lib-common/web-openmrs-api-1.5.0.10342-.jar"/>
 	<classpathentry kind="output" path="build"/>
