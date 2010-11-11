@@ -15,6 +15,7 @@ package org.openmrs.module.reportingcompatibility.reporting.export;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -63,6 +64,8 @@ public class DataExportFunctions {
 	
 	public final Log log = LogFactory.getLog(this.getClass());
 	
+	public final Integer BATCH_SIZE = 2500; // the number of patients fetched at a time
+	
 	protected Integer patientId;
 	
 	protected Patient patient;
@@ -70,9 +73,9 @@ public class DataExportFunctions {
 	//protected PatientSet patientSet;
 	protected Cohort patientSet;
 	
-	protected boolean isAllPatients = false;
-	
-	private Integer patientCounter = 0; // used for garbage collection (Clean up every x patients)
+	// a temporary store used by this functions class if we have a defined patientSet by the user
+	// and it is still large and needs to be batched
+	private List<Integer> overallPatientSetMemberIds;
 	
 	protected String separator = "	";
 	
@@ -162,47 +165,37 @@ public class DataExportFunctions {
 		dateFormatYmd = new SimpleDateFormat("yyyy-MM-dd", locale);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void clear() {
-		for (Map map : patientEncounterMap.values())
-			map.clear();
-		patientEncounterMap.clear();
-		patientEncounterMap = null;
-		for (Map map : patientIdentifierMap.values())
-			map.clear();
-		patientIdentifierMap.clear();
-		patientIdentifierMap = null;
-		for (Map map : patientFirstEncounterMap.values())
-			map.clear();
-		patientFirstEncounterMap.clear();
-		patientFirstEncounterMap = null;
+	public void clearAllMaps() {
+		long start = System.currentTimeMillis();
+		clearMap(patientEncounterMap);
+		clearMap(patientIdentifierMap);
+		clearMap(patientFirstEncounterMap);
 		conceptNameMap.clear();
-		for (Map map : conceptAttrObsMap.values())
-			map.clear();
-		conceptAttrObsMap.clear();
-		for (Map map : relationshipMap.values())
-			map.clear();
-		relationshipMap.clear();
-		for (Map map : programMap.values())
-			map.clear();
-		programMap.clear();
-		for (Map map : drugOrderMap.values())
-			map.clear();
-		drugOrderMap.clear();
-		for (Map map : currentDrugOrderMap.values())
-			map.clear();
-		currentDrugOrderMap.clear();
-		currentDrugOrderMap = null;
-		for (Map map : patientAttributeMap.values())
-			map.clear();
-		patientAttributeMap.clear();
-		patientAttributeMap = null;
+		clearMap(conceptAttrObsMap);
+		clearMap(relationshipMap);
+		clearMap(programMap);
+		clearMap(drugOrderMap);
+		clearMap(currentDrugOrderMap);
+		clearMap(patientAttributeMap);
+		clearMap(personAttributeMap);
+		cohortMap.clear();
+		log.error("Time spent in clear map: " + (System.currentTimeMillis() - start));
+	}
 		
+	public void clear() {
+		clearAllMaps();
 		patientSetService = null;
 		patientService = null;
 		conceptService = null;
 		encounterService = null;
 		personService = null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void clearMap(Map<?, ? extends Map> mapOfMaps) {
+		for (Map map : mapOfMaps.values())
+			map.clear();
+		mapOfMaps.clear();
 	}
 	
 	/**
@@ -212,7 +205,8 @@ public class DataExportFunctions {
 	 */
 	@Override
 	protected void finalize() throws Throwable {
-		log.debug("GC is collecting the data export functions..." + this);
+		if (log.isDebugEnabled())
+			log.debug("GC is collecting the data export functions..." + this);
 		super.finalize();
 	}
 	
@@ -238,33 +232,8 @@ public class DataExportFunctions {
 	}
 	
 	public void setPatientId(Integer patientId) {
-		// remove last patient from maps to allow for garbage collection
-		if (this.patientId != null) {
-			for (Map<Integer, ?> map : patientEncounterMap.values())
-				map.remove(this.patientId);
-			for (Map<Integer, ?> map : patientFirstEncounterMap.values())
-				map.remove(this.patientId);
-			for (Map<Integer, Object> map : patientAttributeMap.values())
-				map.remove(this.patientId);
-			for (Map<Integer, ?> map : patientIdentifierMap.values())
-				map.remove(this.patientId);
-		}
-		
-		// reclaim some memory
-		garbageCollect();
-		
 		setPatient(null);
 		this.patientId = patientId;
-	}
-	
-	/**
-	 * Call the system garbage collecter. This method only calls every 500 patients
-	 */
-	protected void garbageCollect() {
-		if (patientCounter++ % 500 == 0) {
-			System.gc();
-			System.gc();
-		}
 	}
 	
 	/**
@@ -283,16 +252,18 @@ public class DataExportFunctions {
 	
 	/**
 	 * @return the isAllPatients
+	 * @deprecated a null patientSet means we need all patients now
 	 */
 	public boolean isAllPatients() {
-		return isAllPatients;
+		return getPatientSet() == null;
 	}
 	
 	/**
 	 * @param isAllPatients the isAllPatients to set
+	 * @deprecated a null patientSet means we need all patients now
 	 */
 	public void setAllPatients(boolean isAllPatients) {
-		this.isAllPatients = isAllPatients;
+		// do nothing now
 	}
 	
 	/**
@@ -1260,9 +1231,68 @@ public class DataExportFunctions {
 	 * @return PatientSet object with patients or null if it isn't needed
 	 */
 	public Cohort getPatientSetIfNotAllPatients() {
-		if (isAllPatients)
-			return null;
 		return getPatientSet();
 	}
 	
+	/**
+	 * Gets the number of batches of patients this data export will have.
+	 * 
+	 * @return
+	 */
+	public Integer getPatientSetBatchCount() {
+		Integer patientCount;
+		
+		if (patientSet == null) {
+			// we're dealing with all patients, so get that count
+			patientCount = patientSetService.getCountOfPatients();
+		}
+		else {
+			patientCount = patientSet.getSize();
+			
+			// if we need to batch this already-defined patientSet, copy the
+			// var so that we can trim it down and execute it in batches
+			overallPatientSetMemberIds = new ArrayList<Integer>(patientSet.getMemberIds());
+			
+		}
+		
+		int numberOfBatches = patientCount / BATCH_SIZE;
+		
+		// if the patientCount happens to be an exact multiple of batch size, don't add the extra batch
+		// e.g. 400 patients in batches of 500 is 1 batch
+		//      600 patients in batches of 500 is 2 batches
+		//      1000 patients in batches of 500 is still just 2 batches
+		if (patientCount > BATCH_SIZE && patientCount % BATCH_SIZE != 0) {
+			numberOfBatches++;
+		}
+		
+		log.debug("Getting batch count: " + numberOfBatches);
+		
+		return numberOfBatches;
+	}
+	
+	/**
+	 * Sets the patientSet var with {@link #BATCH_SIZE} patients for use in queries
+	 * 
+	 * @param batchIndex
+	 */
+	public void setPatientSetFromBatch(Integer batchIndex) {
+		
+		// if the user defined a patientSet and its larger than BATCH_SIZE
+		if (overallPatientSetMemberIds != null) {
+			// if we're dealing with a small pre-defined patientSet, this does nothing
+			int start = batchIndex * BATCH_SIZE;
+			int end = start + BATCH_SIZE;
+			if (end > overallPatientSetMemberIds.size())
+				end = overallPatientSetMemberIds.size();
+			patientSet = new Cohort(overallPatientSetMemberIds.subList(start, end));
+		}
+		else {
+			// if we're dealing with all patients in the db
+			int start = batchIndex * BATCH_SIZE;
+			patientSet = patientSetService.getPatients(start, BATCH_SIZE);
+		}
+		
+		// empty the maps so we can reclaim some memory
+		clearAllMaps();
+	}
 }

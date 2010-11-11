@@ -156,6 +156,7 @@ public class DataExportUtil {
 		// Set up list of patients if one wasn't passed into this method
 		if (patientSet == null) {
 			patientSet = dataExport.generatePatientSet(context);
+			functions.setPatientSet(patientSet);
 			functions.setAllPatients(dataExport.isAllPatients());
 		}
 		
@@ -241,6 +242,8 @@ public class DataExportUtil {
 		dir.mkdirs();
 		
 		String filename = dataExport.getName().replace(" ", "_");
+		filename = filename.replace("/", "_");
+		filename = filename.replace("\\", "_");
 		filename += "_" + Context.getLocale().toString().toLowerCase();
 		
 		File file = new File(dir, filename);
