@@ -29,8 +29,10 @@ import org.apache.velocity.app.event.MethodExceptionEventHandler;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.log.CommonsLogLogChute;
 import org.openmrs.Cohort;
+import org.openmrs.GlobalProperty;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.export.DataExportReportObject;
 import org.openmrs.util.OpenmrsUtil;
@@ -157,8 +159,10 @@ public class DataExportUtil {
 		if (patientSet == null) {
 			patientSet = dataExport.generatePatientSet(context);
 			functions.setPatientSet(patientSet);
-			functions.setAllPatients(dataExport.isAllPatients());
 		}
+		
+		Integer batchSize = Context.getAdministrationService().getGlobalPropertyValue(ReportingCompatibilityConstants.BATCH_SIZE_GP, ReportingCompatibilityConstants.BATCH_SIZE_GP_DEFAULT);
+		functions.setBatchSize(batchSize);
 		
 		// add the error handler
 		EventCartridge ec = new EventCartridge();

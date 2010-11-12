@@ -27,9 +27,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.GlobalProperty;
 import org.openmrs.api.APIException;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
 import org.openmrs.module.reportingcompatibility.reporting.export.DataExportUtil;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
@@ -78,83 +80,95 @@ public class DataExportListController extends SimpleFormController {
 		
 		String view = getFormView();
 		if (Context.isAuthenticated()) {
-			String[] reportList = request.getParameterValues("dataExportId");
 			String action = request.getParameter("action");
 			
 			AdministrationService as = Context.getAdministrationService();
+			MessageSourceAccessor msa = getMessageSourceAccessor();
 			String success = "";
 			String error = "";
 			
-			MessageSourceAccessor msa = getMessageSourceAccessor();
-			String deleted = msa.getMessage("general.deleted");
-			String notDeleted = msa.getMessage("general.cannot.delete");
-			String textDataExport = msa.getMessage("reportingcompatibility.DataExport.dataExport");
-			String noneDeleted = msa.getMessage("reportingcompatibility.DataExport.nonedeleted");
-			
-			String generated = msa.getMessage("reportingcompatibility.DataExport.generated");
-			String notGenerated = msa.getMessage("reportingcompatibility.DataExport.notGenerated");
-			String noneGenerated = msa.getMessage("reportingcompatibility.DataExport.noneGenerated");
-			
-			if (msa.getMessage("reportingcompatibility.DataExport.generate").equals(action)) {
-				if (reportList == null)
-					success = noneGenerated;
-				else {
-					ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
-					EvaluationContext evalContext = new EvaluationContext();
-					evalContext.addParameterValue(new Parameter("general.user", "Authenticated User",
-					        org.openmrs.User.class, null), Context.getAuthenticatedUser());
-					for (String id : reportList) {
-						DataExportReportObject report = null;
-						try {
-							report = (DataExportReportObject) rs.getReportObject(Integer.valueOf(id));
-							DataExportUtil.generateExport(report, null, evalContext);
-							if (!success.equals(""))
-								success += "<br/>";
-							success += textDataExport + " '" + report.getName() + "' " + generated;
-						}
-						catch (Exception e) {
-							log.warn("Error generating report object", e);
-							if (!error.equals(""))
-								error += "<br/>";
-							if (report == null)
-								error += textDataExport + " #" + id + " " + notGenerated;
-							else
-								error += textDataExport + " '" + report.getName() + "' " + notGenerated;
-						}
-					}
-				}
-			} else if (msa.getMessage("reportingcompatibility.DataExport.delete").equals(action)) {
+			if ("saveProperties".equals(action)) {
+				String dataExportBatchSize = request.getParameter("dataExportBatchSize");
+				GlobalProperty gp = new GlobalProperty(ReportingCompatibilityConstants.BATCH_SIZE_GP, dataExportBatchSize);
+				as.saveGlobalProperty(gp);
+				success = msa.getMessage("reportingcompatibility.DataExport.propertiesSaved");
+			}
+			else {
+				String[] reportList = request.getParameterValues("dataExportId");
 				
-				if (reportList != null) {
-					for (String p : reportList) {
-						// TODO convenience method deleteDataExport(Integer) ??
-						try {
-							try { 
-								ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class); 
-								DataExportReportObject dataExport = (DataExportReportObject) rs.getReportObject(Integer.valueOf(p)); 
-								File file = DataExportUtil.getGeneratedFile(dataExport); 
-								if (file != null && file.exists()) { 
-									file.delete(); 
-								} 
-							} catch (Exception ex) { 
-								// pass 
-								// (if this failed for any reason, we still want to delete the data export if we can) 
-							} 
-							as.deleteReportObject(Integer.valueOf(p));
-							
-							if (!success.equals(""))
-								success += "<br/>";
-							success += textDataExport + " " + p + " " + deleted;
-						}
-						catch (APIException e) {
-							log.warn("Error deleting report object", e);
-							if (!error.equals(""))
-								error += "<br/>";
-							error += textDataExport + " " + p + " " + notDeleted;
+				String deleted = msa.getMessage("general.deleted");
+				String notDeleted = msa.getMessage("general.cannot.delete");
+				String textDataExport = msa.getMessage("reportingcompatibility.DataExport.dataExport");
+				String noneDeleted = msa.getMessage("reportingcompatibility.DataExport.nonedeleted");
+				
+				String notGenerated = msa.getMessage("reportingcompatibility.DataExport.notGenerated");
+				String noneGenerated = msa.getMessage("reportingcompatibility.DataExport.noneGenerated");
+				
+				if (msa.getMessage("reportingcompatibility.DataExport.generate").equals(action)) {
+					if (reportList == null)
+						success = noneGenerated;
+					else {
+						ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
+						EvaluationContext evalContext = new EvaluationContext();
+						evalContext.addParameterValue(new Parameter("general.user", "Authenticated User",
+						        org.openmrs.User.class, null), Context.getAuthenticatedUser());
+						for (String id : reportList) {
+							DataExportReportObject report = null;
+							try {
+								report = (DataExportReportObject) rs.getReportObject(Integer.valueOf(id));
+								
+								Long start = System.currentTimeMillis();
+								DataExportUtil.generateExport(report, null, evalContext);
+								Long timeToGenerate = (System.currentTimeMillis() - start) / 1000;
+								
+								if (!success.equals(""))
+									success += "<br/>";
+								success += msa.getMessage("reportingcompatibility.DataExport.generated", new String[] {report.getName(), timeToGenerate.toString()});
+							}
+							catch (Exception e) {
+								log.warn("Error generating report object", e);
+								if (!error.equals(""))
+									error += "<br/>";
+								if (report == null)
+									error += textDataExport + " #" + id + " " + notGenerated;
+								else
+									error += textDataExport + " '" + report.getName() + "' " + notGenerated;
+							}
 						}
 					}
-				} else {
-					success += noneDeleted;
+				} else if (msa.getMessage("reportingcompatibility.DataExport.delete").equals(action)) {
+					
+					if (reportList != null) {
+						for (String p : reportList) {
+							// TODO convenience method deleteDataExport(Integer) ??
+							try {
+								try { 
+									ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class); 
+									DataExportReportObject dataExport = (DataExportReportObject) rs.getReportObject(Integer.valueOf(p)); 
+									File file = DataExportUtil.getGeneratedFile(dataExport); 
+									if (file != null && file.exists()) { 
+										file.delete(); 
+									} 
+								} catch (Exception ex) { 
+									// pass 
+									// (if this failed for any reason, we still want to delete the data export if we can) 
+								} 
+								as.deleteReportObject(Integer.valueOf(p));
+								
+								if (!success.equals(""))
+									success += "<br/>";
+								success += textDataExport + " " + p + " " + deleted;
+							}
+							catch (APIException e) {
+								log.warn("Error deleting report object", e);
+								if (!error.equals(""))
+									error += "<br/>";
+								error += textDataExport + " " + p + " " + notDeleted;
+							}
+						}
+					} else {
+						success += noneDeleted;
+					}
 				}
 			}
 			
@@ -222,6 +236,10 @@ public class DataExportListController extends SimpleFormController {
 		
 		map.put("generatedDates", generatedDates);
 		map.put("generatedSizes", generatedSizes);
+		
+		AdministrationService as = Context.getAdministrationService();
+		String batchSize = as.getGlobalProperty(ReportingCompatibilityConstants.BATCH_SIZE_GP);
+		map.put("batchSize", batchSize);
 		
 		return map;
 		

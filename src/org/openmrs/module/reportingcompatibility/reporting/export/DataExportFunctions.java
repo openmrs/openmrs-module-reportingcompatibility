@@ -64,7 +64,7 @@ public class DataExportFunctions {
 	
 	public final Log log = LogFactory.getLog(this.getClass());
 	
-	public final Integer BATCH_SIZE = 2500; // the number of patients fetched at a time
+	public Integer batchSize = 2500; // the number of patients fetched at a time
 	
 	protected Integer patientId;
 	
@@ -166,7 +166,6 @@ public class DataExportFunctions {
 	}
 	
 	public void clearAllMaps() {
-		long start = System.currentTimeMillis();
 		clearMap(patientEncounterMap);
 		clearMap(patientIdentifierMap);
 		clearMap(patientFirstEncounterMap);
@@ -179,7 +178,6 @@ public class DataExportFunctions {
 		clearMap(patientAttributeMap);
 		clearMap(personAttributeMap);
 		cohortMap.clear();
-		log.error("Time spent in clear map: " + (System.currentTimeMillis() - start));
 	}
 		
 	public void clear() {
@@ -496,17 +494,36 @@ public class DataExportFunctions {
 		return patientIdObsMap.get(patientId);
 	}
 	*/
-
+	
+	@Deprecated
 	public List<List<Object>> getObsWithValues(Concept c, List<String> attrs) {
+		return getObsWithValues(c, attrs, null, true);
+	}
+	
+	public List<List<Object>> getObsWithValues(Concept c, List<String> attrs, Integer size, boolean mostRecentFirst) {
 		if (attrs == null)
 			attrs = new Vector<String>();
 		
 		String key = c.getConceptId() + "";
 		Map<Integer, List<List<Object>>> patientIdObsMap = conceptAttrObsMap.get(key);
 		if (patientIdObsMap == null) {
+			long start = System.currentTimeMillis();
 			//log.debug("getting obs list for concept: " + c + " and attr: " + attr);
-			patientIdObsMap = patientSetService.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs);
+			
+			boolean needToFlipTheResults = false;
+			try {
+				patientIdObsMap = patientSetService.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs, size, mostRecentFirst);
+			}
+			catch (NoSuchMethodError e) {
+				// for backwards compatibility
+				patientIdObsMap = patientSetService.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs);
+			}
+			
 			conceptAttrObsMap.put(key, patientIdObsMap);
+			
+			// some timing testing
+			if (log.isDebugEnabled())
+				log.debug("Time spent in db getting obs/patients for concept: " + key + ": " + (System.currentTimeMillis() - start));
 		}
 		return patientIdObsMap.get(patientId);
 	}
@@ -823,7 +840,7 @@ public class DataExportFunctions {
 		
 		attrs.add(0, null);
 		
-		List<List<Object>> returnList = getObsWithValues(concept, attrs);
+		List<List<Object>> returnList = getObsWithValues(concept, attrs, n, true);
 		
 		if (returnList == null)
 			returnList = new Vector<List<Object>>();
@@ -919,7 +936,7 @@ public class DataExportFunctions {
 	 * @throws Exception
 	 */
 	public Object getFirstObs(Concept concept) throws Exception {
-		List<List<Object>> obs = getObsWithValues(concept, null);
+		List<List<Object>> obs = getObsWithValues(concept, null, 1, false);
 		
 		if (obs != null && obs.size() > 0) {
 			List<Object> o = obs.get(obs.size() - 1);
@@ -957,7 +974,7 @@ public class DataExportFunctions {
 		// add a null first column for the actual obs value
 		attrs.add(0, null);
 		
-		List<List<Object>> obs = getObsWithValues(concept, attrs);
+		List<List<Object>> obs = getObsWithValues(concept, attrs, 1, false);
 		
 		if (obs == null) {
 			List<Object> blankRow = new Vector<Object>();
@@ -990,24 +1007,41 @@ public class DataExportFunctions {
 		// add a null first column for the actual obs value
 		attrs.add(0, null);
 		
-		List<List<Object>> obs = getObsWithValues(concept, attrs);
+		List<List<Object>> obs = getObsWithValues(concept, attrs, n, false);
 		
-		if (obs == null)
-			obs = new Vector<List<Object>>();
+		List<List<Object>> rList;
 		
-		if (n.equals(-1))
-			return obs;
-		
-		List<Object> blankRow = new Vector<Object>();
-		for (String attr : attrs)
-			blankRow.add("");
-		while (obs.size() < n)
-			obs.add(0, blankRow);
-		
-		int size = obs.size();
-		List<List<Object>> rList = obs.subList(size - n, size);
-		
-		Collections.reverse(rList);
+		// hacky hack in case someone installed this newer module in a pre 1.8 openmrs 
+		// and the list isn't getting reversed before it comes back to us here
+		if (null == patientSetService.getClass().getMethod("getObservationsValues", Cohort.class, Concept.class, List.class, Integer.class, boolean.class)) {
+			// this if block can be removed when the "required version" is upped to 1.8+ (keep the 'else' block)
+			List<Object> blankRow = new Vector<Object>();
+			for (String attr : attrs)
+				blankRow.add("");
+			while (obs.size() < n)
+				obs.add(0, blankRow);
+			
+			int size = obs.size();
+			rList = obs.subList(size - n, size);
+			
+			Collections.reverse(rList);
+		}
+		else {
+			if (obs == null)
+				obs = new Vector<List<Object>>();
+			
+			if (n.equals(-1))
+				return obs;
+			
+			// bring the list size up to 'n'
+			List<Object> blankRow = new Vector<Object>();
+			for (String attr : attrs)
+				blankRow.add("");
+			while (obs.size() < n)
+				obs.add(blankRow);
+			
+			rList = obs.subList(0, n);
+		}
 		
 		return rList;
 	}
@@ -1255,13 +1289,13 @@ public class DataExportFunctions {
 			
 		}
 		
-		int numberOfBatches = patientCount / BATCH_SIZE;
+		int numberOfBatches = patientCount / batchSize;
 		
 		// if the patientCount happens to be an exact multiple of batch size, don't add the extra batch
 		// e.g. 400 patients in batches of 500 is 1 batch
 		//      600 patients in batches of 500 is 2 batches
 		//      1000 patients in batches of 500 is still just 2 batches
-		if (patientCount > BATCH_SIZE && patientCount % BATCH_SIZE != 0) {
+		if (patientCount > batchSize && patientCount % batchSize != 0) {
 			numberOfBatches++;
 		}
 		
@@ -1271,7 +1305,7 @@ public class DataExportFunctions {
 	}
 	
 	/**
-	 * Sets the patientSet var with {@link #BATCH_SIZE} patients for use in queries
+	 * Sets the patientSet var with {@link #batchSize} patients for use in queries
 	 * 
 	 * @param batchIndex
 	 */
@@ -1280,19 +1314,30 @@ public class DataExportFunctions {
 		// if the user defined a patientSet and its larger than BATCH_SIZE
 		if (overallPatientSetMemberIds != null) {
 			// if we're dealing with a small pre-defined patientSet, this does nothing
-			int start = batchIndex * BATCH_SIZE;
-			int end = start + BATCH_SIZE;
+			int start = batchIndex * batchSize;
+			int end = start + batchSize;
 			if (end > overallPatientSetMemberIds.size())
 				end = overallPatientSetMemberIds.size();
 			patientSet = new Cohort(overallPatientSetMemberIds.subList(start, end));
 		}
 		else {
 			// if we're dealing with all patients in the db
-			int start = batchIndex * BATCH_SIZE;
-			patientSet = patientSetService.getPatients(start, BATCH_SIZE);
+			int start = batchIndex * batchSize;
+			patientSet = patientSetService.getPatients(start, batchSize);
 		}
 		
 		// empty the maps so we can reclaim some memory
 		clearAllMaps();
+	}
+	
+	/**
+	 * The size of the batches to extract.  The larger this number is the faster things 
+	 * go but also more memory is used in the process.
+	 *  
+	 * @param batchSize an integer greater than zero
+	 */
+	public void setBatchSize(Integer batchSize) {
+		if (batchSize != null && batchSize > 0)
+			this.batchSize = batchSize;
 	}
 }

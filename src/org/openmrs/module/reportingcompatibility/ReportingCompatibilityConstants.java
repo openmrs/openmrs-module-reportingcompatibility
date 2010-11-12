@@ -20,5 +20,15 @@ public class ReportingCompatibilityConstants {
 	
 	public static final String OPENMRS_REPORT_DATA = "__openmrs_report_data";
 	public static final String OPENMRS_REPORT_ARGUMENT = "__openmrs_report_argument";
+	
+	/**
+	 * GP name for the customization property
+	 */
+	public static final String BATCH_SIZE_GP = "reportingcompatibility.data_export_batch_size";
+	
+	/**
+	 * Default value if the user hasn't filled in the previous gp
+	 */
+	public static final Integer BATCH_SIZE_GP_DEFAULT = 7500;
 
 }
