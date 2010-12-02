@@ -106,7 +106,7 @@ public class DataExportListController extends SimpleFormController {
 				
 				if (msa.getMessage("reportingcompatibility.DataExport.generate").equals(action)) {
 					if (reportList == null)
-						success = noneGenerated;
+						error = noneGenerated;
 					else {
 						ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 						EvaluationContext evalContext = new EvaluationContext();

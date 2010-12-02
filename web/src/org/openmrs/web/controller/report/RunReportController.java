@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,7 +32,6 @@ import org.openmrs.report.RenderingMode;
 import org.openmrs.report.ReportData;
 import org.openmrs.report.ReportRenderer;
 import org.openmrs.report.ReportSchema;
-import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.web.report.WebReportRenderer;
 import org.springframework.util.StringUtils;
@@ -135,9 +135,18 @@ public class RunReportController extends SimpleFormController implements Validat
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		CommandObject ret = new CommandObject();
 		if (Context.isAuthenticated()) {
-			Integer id = Integer.valueOf(request.getParameter("reportId"));
+			Integer id ;
+			String param = request.getParameter("reportId");
+			try {
+				id = Integer.valueOf(param);
+			}
+			catch (NumberFormatException e) {
+				throw new ServletException("Unable to run a report with report id: '" + param + "'.  Please choose a valid id");
+			}
 			ReportService reportService = (ReportService) Context.getService(ReportService.class);
 			ReportSchema schema = reportService.getReportSchema(id);
+			if (schema == null)
+				throw new ServletException("Unable to find a report with report id: '" + param + "' in the database. Please choose a different id");
 			ret.setSchema(schema);
 			ret.setRenderingModes(reportService.getRenderingModes(schema));
 		}
