@@ -161,7 +161,14 @@ public class DataExportUtil {
 			functions.setPatientSet(patientSet);
 		}
 		
-		Integer batchSize = Context.getAdministrationService().getGlobalPropertyValue(ReportingCompatibilityConstants.BATCH_SIZE_GP, ReportingCompatibilityConstants.BATCH_SIZE_GP_DEFAULT);
+		String sizeGp =Context.getAdministrationService().getGlobalProperty(ReportingCompatibilityConstants.BATCH_SIZE_GP);
+		Integer batchSize = ReportingCompatibilityConstants.BATCH_SIZE_GP_DEFAULT;
+		try {
+			batchSize = Integer.parseInt(sizeGp);
+		}
+		catch (Exception e) {
+			// Do nothing, just use the default
+		}
 		functions.setBatchSize(batchSize);
 		
 		// add the error handler

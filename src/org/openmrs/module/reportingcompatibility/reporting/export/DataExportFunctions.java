@@ -51,9 +51,9 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.PatientService;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.PersonService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearchReportObject;
@@ -129,7 +129,7 @@ public class DataExportFunctions {
 	// Map<key, Collection<personId>>, where key is like "Cohort.1" or "Filter.3"
 	protected Map<String, Collection<Integer>> cohortMap = new HashMap<String, Collection<Integer>>();
 	
-	protected PatientSetService patientSetService;
+	protected ReportingCompatibilityService rcs;
 	
 	protected PatientService patientService;
 	
@@ -153,7 +153,7 @@ public class DataExportFunctions {
 	}
 	
 	public DataExportFunctions() {
-		this.patientSetService = Context.getPatientSetService();
+		this.rcs = Context.getService(ReportingCompatibilityService.class);
 		this.patientService = Context.getPatientService();
 		this.conceptService = Context.getConceptService();
 		this.encounterService = Context.getEncounterService();
@@ -182,7 +182,7 @@ public class DataExportFunctions {
 		
 	public void clear() {
 		clearAllMaps();
-		patientSetService = null;
+		rcs = null;
 		patientService = null;
 		conceptService = null;
 		encounterService = null;
@@ -333,7 +333,7 @@ public class DataExportFunctions {
 		if (!encounterType.equals(""))
 			type = encounterService.getEncounterType(encounterType);
 		
-		Map<Integer, ?> encounterMap = patientSetService.getEncountersByType(getPatientSetIfNotAllPatients(), type);
+		Map<Integer, ?> encounterMap = rcs.getEncountersByType(getPatientSetIfNotAllPatients(), type);
 		
 		patientEncounterMap.put(encounterType, encounterMap);
 		
@@ -377,7 +377,7 @@ public class DataExportFunctions {
 				encounterTypes.add(type);
 		}
 		
-		Map<Integer, Object> encounterMap = patientSetService.getEncounterAttrsByType(getPatientSetIfNotAllPatients(),
+		Map<Integer, Object> encounterMap = rcs.getEncounterAttrsByType(getPatientSetIfNotAllPatients(),
 		    encounterTypes, attr);
 		
 		patientEncounterMap.put(key, encounterMap);
@@ -400,7 +400,7 @@ public class DataExportFunctions {
 		if (!encounterType.equals(""))
 			type = encounterService.getEncounterType(encounterType);
 		
-		Map<Integer, Encounter> encounterMap = patientSetService.getFirstEncountersByType(getPatientSetIfNotAllPatients(),
+		Map<Integer, Encounter> encounterMap = rcs.getFirstEncountersByType(getPatientSetIfNotAllPatients(),
 		    type);
 		
 		patientFirstEncounterMap.put(encounterType, encounterMap);
@@ -444,7 +444,7 @@ public class DataExportFunctions {
 				encounterTypes.add(type);
 		}
 		
-		Map<Integer, Object> encounterMap = patientSetService.getFirstEncounterAttrsByType(getPatientSetIfNotAllPatients(),
+		Map<Integer, Object> encounterMap = rcs.getFirstEncounterAttrsByType(getPatientSetIfNotAllPatients(),
 		    encounterTypes, attr);
 		
 		patientFirstEncounterMap.put(key, encounterMap);
@@ -512,11 +512,11 @@ public class DataExportFunctions {
 			
 			boolean needToFlipTheResults = false;
 			try {
-				patientIdObsMap = patientSetService.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs, size, mostRecentFirst);
+				patientIdObsMap = rcs.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs, size, mostRecentFirst);
 			}
 			catch (NoSuchMethodError e) {
 				// for backwards compatibility
-				patientIdObsMap = patientSetService.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs);
+				patientIdObsMap = rcs.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs);
 			}
 			
 			conceptAttrObsMap.put(key, patientIdObsMap);
@@ -555,7 +555,7 @@ public class DataExportFunctions {
 			if (program == null) {
 				program = Context.getProgramWorkflowService().getProgramByName(programIdOrName);
 			}
-			patientIdProgramMap = patientSetService.getPatientPrograms(getPatientSetIfNotAllPatients(), program);
+			patientIdProgramMap = rcs.getPatientPrograms(getPatientSetIfNotAllPatients(), program);
 			programMap.put(programIdOrName, patientIdProgramMap);
 		}
 		return patientIdProgramMap.get(patientId);
@@ -571,7 +571,7 @@ public class DataExportFunctions {
 			patientIdDrugOrderMap = currentDrugOrderMap.get(drugSetName);
 		} else {
 			Concept drugSet = conceptService.getConceptByName(drugSetName);
-			patientIdDrugOrderMap = patientSetService.getCurrentDrugOrders(getPatientSetIfNotAllPatients(), drugSet);
+			patientIdDrugOrderMap = rcs.getCurrentDrugOrders(getPatientSetIfNotAllPatients(), drugSet);
 			currentDrugOrderMap.put(drugSetName, patientIdDrugOrderMap);
 		}
 		return patientIdDrugOrderMap.get(patientId);
@@ -619,7 +619,7 @@ public class DataExportFunctions {
 			patientIdDrugOrderMap = drugOrderMap.get(drugSetName);
 		} else {
 			Concept drugSet = conceptService.getConceptByName(drugSetName);
-			patientIdDrugOrderMap = patientSetService.getDrugOrders(getPatientSetIfNotAllPatients(), drugSet);
+			patientIdDrugOrderMap = rcs.getDrugOrders(getPatientSetIfNotAllPatients(), drugSet);
 			drugOrderMap.put(drugSetName, patientIdDrugOrderMap);
 		}
 		return patientIdDrugOrderMap.get(patientId);
@@ -659,7 +659,7 @@ public class DataExportFunctions {
 		} else {
 			//log.debug("getting relationship list for type: " + relationshipTypeName);
 			RelationshipType relType = Context.getPersonService().getRelationshipTypeByName(relationshipTypeName);
-			patientIdRelationshipMap = patientSetService.getRelationships(getPatientSetIfNotAllPatients(), relType);
+			patientIdRelationshipMap = rcs.getRelationships(getPatientSetIfNotAllPatients(), relType);
 			relationshipMap.put(relationshipTypeName, patientIdRelationshipMap);
 		}
 		return patientIdRelationshipMap.get(patientId);
@@ -759,7 +759,7 @@ public class DataExportFunctions {
 			patientIdAttrMap = patientAttributeMap.get(key);
 		} else {
 			//log.debug("getting patient attrs: " + key);
-			patientIdAttrMap = patientSetService.getPatientAttributes(getPatientSetIfNotAllPatients(), className, property,
+			patientIdAttrMap = rcs.getPatientAttributes(getPatientSetIfNotAllPatients(), className, property,
 			    returnAll);
 			patientAttributeMap.put(key, patientIdAttrMap);
 		}
@@ -779,7 +779,7 @@ public class DataExportFunctions {
 			personIdAttrMap = personAttributeMap.get(key);
 		} else {
 			//log.debug("getting patient attrs: " + key);
-			personIdAttrMap = patientSetService.getPersonAttributes(getPatientSetIfNotAllPatients(), attributeName,
+			personIdAttrMap = rcs.getPersonAttributes(getPatientSetIfNotAllPatients(), attributeName,
 			    joinClass, joinProperty, outputColumn, returnAll);
 			personAttributeMap.put(key, personIdAttrMap);
 		}
@@ -1013,7 +1013,7 @@ public class DataExportFunctions {
 		
 		// hacky hack in case someone installed this newer module in a pre 1.8 openmrs 
 		// and the list isn't getting reversed before it comes back to us here
-		if (null == patientSetService.getClass().getMethod("getObservationsValues", Cohort.class, Concept.class, List.class, Integer.class, boolean.class)) {
+		if (null == rcs.getClass().getMethod("getObservationsValues", Cohort.class, Concept.class, List.class, Integer.class, boolean.class)) {
 			// this if block can be removed when the "required version" is upped to 1.8+ (keep the 'else' block)
 			List<Object> blankRow = new Vector<Object>();
 			for (String attr : attrs)
@@ -1085,12 +1085,12 @@ public class DataExportFunctions {
 			try {
 				// this is a 1.8+ only method.  Uses less memory and cpu than the previous
 				// one that is in the catch block
-				patientIdentifiers = patientSetService.getPatientIdentifierStringsByType(getPatientSetIfNotAllPatients(), type);
+				patientIdentifiers = rcs.getPatientIdentifierStringsByType(getPatientSetIfNotAllPatients(), type);
 			}
 			catch (NoSuchMethodError e) {
 				// this catch block is so that the module can still be installed on 1.5/1.6/1.7 and
 				// so that we don't have to bump up the 'required version' in config.xml
-				Map<Integer, PatientIdentifier> patientIdentifierObjects = patientSetService.getPatientIdentifiersByType(getPatientSetIfNotAllPatients(), type);
+				Map<Integer, PatientIdentifier> patientIdentifierObjects = rcs.getPatientIdentifiersByType(getPatientSetIfNotAllPatients(), type);
 				
 				patientIdentifiers = new HashMap<Integer, String>();
 				for (Map.Entry<Integer, PatientIdentifier> entry : patientIdentifierObjects.entrySet()) {
@@ -1278,7 +1278,7 @@ public class DataExportFunctions {
 		
 		if (patientSet == null) {
 			// we're dealing with all patients, so get that count
-			patientCount = patientSetService.getCountOfPatients();
+			patientCount = rcs.getCountOfPatients();
 		}
 		else {
 			patientCount = patientSet.getSize();
@@ -1323,7 +1323,7 @@ public class DataExportFunctions {
 		else {
 			// if we're dealing with all patients in the db
 			int start = batchIndex * batchSize;
-			patientSet = patientSetService.getPatients(start, batchSize);
+			patientSet = rcs.getPatients(start, batchSize);
 		}
 		
 		// empty the maps so we can reclaim some memory
