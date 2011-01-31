@@ -87,8 +87,12 @@ public class DWRCohortBuilderService {
 	
 	public Cohort getLastResult() {
 		CohortSearchHistory history = getMySearchHistory();
-		Cohort ps = history.getLastPatientSet(null);
-		return ps;
+		if (history != null) {
+			Cohort ps = history.getLastPatientSet(null);
+			return ps;
+		}
+		return 
+			new Cohort();
 	}
 	
 	public List<ListItem> getSavedSearches(boolean includeParameterized) {
