@@ -1294,10 +1294,10 @@ public class DataExportFunctions {
 		// if the patientCount happens to be an exact multiple of batch size, don't add the extra batch
 		// e.g. 400 patients in batches of 500 is 1 batch
 		//      600 patients in batches of 500 is 2 batches
+		// 		900 patients in batches of 500 is 2 batches  (check this because dividing above will round up)
 		//      1000 patients in batches of 500 is still just 2 batches
-		if (patientCount > batchSize && patientCount % batchSize != 0) {
+		if (numberOfBatches * batchSize < patientCount)
 			numberOfBatches++;
-		}
 		
 		log.debug("Getting batch count: " + numberOfBatches);
 		
@@ -1316,9 +1316,18 @@ public class DataExportFunctions {
 			// if we're dealing with a small pre-defined patientSet, this does nothing
 			int start = batchIndex * batchSize;
 			int end = start + batchSize;
-			if (end > overallPatientSetMemberIds.size())
-				end = overallPatientSetMemberIds.size();
-			patientSet = new Cohort(overallPatientSetMemberIds.subList(start, end));
+			
+			int sizeOfPatients = overallPatientSetMemberIds.size();
+			
+			// if the user is requesting a larger start date, just give them back an empty list
+			if (start >= sizeOfPatients) {
+				patientSet = new Cohort();
+			}
+			else {
+				if (end > sizeOfPatients)
+					end = sizeOfPatients;
+				patientSet = new Cohort(overallPatientSetMemberIds.subList(start, end));
+			}
 		}
 		else {
 			// if we're dealing with all patients in the db
