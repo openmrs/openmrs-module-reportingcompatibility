@@ -586,6 +586,7 @@
 			<li><a id="searchTab_encounter" href="#" onClick="changeSearchTab(this)"><spring:message code="reportingcompatibility.CohortBuilder.searchTab.encounter"/></a></li>
 			<li><a id="searchTab_program" href="#" onClick="changeSearchTab(this)"><spring:message code="reportingcompatibility.CohortBuilder.searchTab.program"/></a></li>
 			<li><a id="searchTab_drugOrder" href="#" onClick="changeSearchTab(this)"><spring:message code="reportingcompatibility.CohortBuilder.searchTab.drugOrder"/></a></li>
+			<li><a id="searchTab_sqlQuery" href="#" onClick="changeSearchTab(this)"><spring:message code="reportingcompatibility.CohortBuilder.searchTab.sqlQuery"/></a></li>
 			<li><a id="searchTab_composition" href="#" onClick="changeSearchTab(this, 'composition')"><spring:message code="reportingcompatibility.CohortBuilder.searchTab.composition"/></a></li>
 		</ul>
 	</div>
@@ -984,6 +985,20 @@
 					<input type="submit" value="<spring:message code="general.search" />"/>
 				</form>
 			</div>
+		</div>
+		
+		<div id="searchTab_sqlQuery_content" style="display: none">
+			<form method="post" action="cohortBuilder.form">
+				<input type="hidden" name="method" value="addDynamicFilter"/>
+				<input type="hidden" name="filterClass" value="org.openmrs.module.reportingcompatibility.reporting.PatientSqlFilter" />
+				<input type="hidden" name="vars" value="query#java.lang.String" />
+				<textarea name="query" rows="20" cols="80"></textarea>
+				<br/>
+				<input type="submit" value="<spring:message code="general.search"/>"/>
+				<br/>
+				<b><spring:message code="reportingcompatibility.CohortBuilder.sqlQuery.note.title"/>:</b>
+				<spring:message code="reportingcompatibility.CohortBuilder.sqlQuery.note.message"/>.
+			</form>
 		</div>
 		
 		<div id="searchTab_composition_content" style="display: none">

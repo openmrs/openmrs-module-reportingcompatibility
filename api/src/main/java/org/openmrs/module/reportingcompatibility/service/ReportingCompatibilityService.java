@@ -285,6 +285,12 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	@Transactional(readOnly = true)
 	public Cohort getPatientsHavingPersonAttribute(PersonAttributeType attribute, String value);
 	
+	/**
+	 * @return A Cohort of patients filtered by the specified SQL query
+	 */
+	@Transactional(readOnly = true)
+	public Cohort getPatientsBySqlQuery(String sqlQuery);
+	
 	@Transactional(readOnly = true)
 	public Map<Integer, String> getShortPatientDescriptions(Collection<Integer> patientIds);
 	

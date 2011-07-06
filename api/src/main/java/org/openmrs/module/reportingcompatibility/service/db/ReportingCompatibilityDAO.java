@@ -76,6 +76,8 @@ public interface ReportingCompatibilityDAO {
 	
 	public Cohort getPatientsHavingLocation(Integer locationId, PatientLocationMethod method) throws DAOException;
 	
+	public Cohort getPatientsBySqlQuery(String sqlQuery) throws DAOException;
+	
 	public Map<Integer, String> getShortPatientDescriptions(Collection<Integer> patientIds) throws DAOException;
 	
 	public Map<Integer, List<Obs>> getObservations(Cohort patients, Concept concept, Date fromDate, Date toDate)

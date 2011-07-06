@@ -275,6 +275,14 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 		return getDao().getPatientsHavingPersonAttribute(attribute, value);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityService#getPatientsBySqlQuery(java.lang.String)
+	 */
+	public Cohort getPatientsBySqlQuery(String sqlQuery) {
+		return getDao().getPatientsBySqlQuery(sqlQuery);
+	}
+	
 	public Map<Integer, String> getShortPatientDescriptions(Collection<Integer> patientIds) {
 		return getDao().getShortPatientDescriptions(patientIds);
 	}

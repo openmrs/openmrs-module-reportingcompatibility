@@ -1395,6 +1395,12 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		return new Cohort(query.list());
 	}
 	
+	public Cohort getPatientsBySqlQuery(String sqlQuery) {
+		log.debug("query: " + sqlQuery);
+		Query query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
+		return new Cohort(query.list());
+	}
+	
 	public Cohort convertPatientIdentifier(List<String> identifiers) throws DAOException {
 		
 		StringBuffer sb = new StringBuffer();
