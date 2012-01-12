@@ -75,15 +75,15 @@
 					</spring:bind>
 				</td>
 			</tr>
-			<c:forEach items="${reportObject.class.declaredFields}" var="field">
+			<c:forEach items="${reportObject['class'].declaredFields}" var="field">
 				<c:if test="${empty transientObjects[field.name]}">
 					<spring:bind path="reportObject.${field.name}">
 						<tr>
 							<td valign="top"><c:out value="${field.name}"/></td>
-							<c:if test="${!field.type.enum}">
+							<c:if test="${!field.type['enum']}">
 								<td valign="top" colspan="5"><openmrs:fieldGen type="${field.genericType}" formFieldName="${status.expression}" val="${status.editor.value}" /></td>
 							</c:if>
-							<c:if test="${field.type.enum}">
+							<c:if test="${field.type['enum']}">
 								<td valign="top" colspan="5"><openmrs:fieldGen type="${field.genericType}" formFieldName="${status.expression}" val="${status.value}" /></td>
 							</c:if>
 						</tr>

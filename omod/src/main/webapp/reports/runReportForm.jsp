@@ -59,7 +59,7 @@
 			<spring:bind path="selectedRenderer">
 	            <select name="${status.expression}">
 	                <c:forEach var="r" items="${report.renderingModes}">
-	                	<c:set var="thisVal" value="${r.renderer.class.name}!${r.argument}"/>
+	                	<c:set var="thisVal" value="${r.renderer['class'].name}!${r.argument}"/>
 	                    <option
 	                        <c:if test="${status.value == thisVal}"> selected</c:if>
 	                        value="${thisVal}">

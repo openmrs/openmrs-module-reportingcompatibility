@@ -41,7 +41,7 @@
 		<spring:message code="reportingcompatibility.Report.run.renderAgain"/>
 		<select name="renderingMode">
 			<c:forEach var="r" items="${otherRenderingModes}">
-				<option value="${r.renderer.class.name}!${r.argument}">${r.label}</option>
+				<option value="${r.renderer['class'].name}!${r.argument}">${r.label}</option>
 			</c:forEach>
 		</select>
 		<input type="submit" value="<spring:message code="reportingcompatibility.Report.renderAgain"/>"/>
