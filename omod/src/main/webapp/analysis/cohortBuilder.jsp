@@ -1193,7 +1193,8 @@
 	</div>
 
 	<div style="border: 1px gray solid; padding: 0.5em; margin: 0.5em">
-		<openmrs:portlet url="cohort" parameters="linkUrl=patientDashboard.form" />
+		<openmrs:globalProperty key="reportingcompatibility.patientLinkUrl" defaultValue="patientDashboard.form" var="linkUrl"/>
+		<openmrs:portlet url="cohort" parameters="linkUrl=${linkUrl}" />
 	</div>
 
 	<div id="cohort_builder_actions" style="position: relative; border: 1px black solid">
