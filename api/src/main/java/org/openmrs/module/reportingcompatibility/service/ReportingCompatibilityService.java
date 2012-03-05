@@ -366,6 +366,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param patients Cohort of patients to search
 	 * @param encType List<EncounterType> to include in the search
 	 * @return Map<Integer, Encounter> of patientId to encounters matching a specific type
+	 * @should exclude voided encounters
 	 */
 	@Transactional(readOnly = true)
 	public Map<Integer, Encounter> getEncountersByType(Cohort patients, List<EncounterType> encType);
@@ -378,6 +379,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @see EncounterService#getAllEncounters(Cohort)
 	 * @param patients Cohort of patients to search
 	 * @return Map<Integer, Encounter> of all encounters for specified patients.
+	 * @should exclude voided encounters
 	 */
 	@Transactional(readOnly = true)
 	public Map<Integer, Encounter> getEncounters(Cohort patients);
@@ -389,6 +391,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param encType
 	 * @return Map<Integer, Encounter> of patientId to first encounters of specified patients, from
 	 *         a specific type
+	 * @should exclude voided encounters
 	 */
 	@Transactional(readOnly = true)
 	public Map<Integer, Encounter> getFirstEncountersByType(Cohort patients, EncounterType encType);
