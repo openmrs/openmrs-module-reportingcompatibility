@@ -53,6 +53,19 @@ public class ReportingCompatibilityServiceTest extends BaseModuleContextSensitiv
 		for (Patient patient : patients)
 			cohort.addMember(patient.getPatientId());
 		
+		//sanity check that at least there is a patient with a voided encounter
+		Patient p = ps.getPatient(3);
+		boolean foundVoided = false;
+		List<Encounter> encs = Context.getEncounterService().getEncountersByPatient(
+		    p.getPatientIdentifier().getIdentifier(), true);
+		for (Encounter encounter : encs) {
+			if (encounter.isVoided()) {
+				foundVoided = true;
+				break;
+			}
+		}
+		Assert.assertTrue("At least one voided encounter should be present for one of the patients", foundVoided);
+		
 		Map<Integer, Encounter> patientEncountersMap = rcs.getEncounters(cohort);
 		for (Encounter encounter : patientEncountersMap.values()) {
 			Assert.assertFalse(encounter.isVoided());
