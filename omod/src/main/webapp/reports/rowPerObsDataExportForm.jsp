@@ -496,7 +496,7 @@
 		vertical-align: top;
 	}
 	
-	.column {
+	.dataexportcolumn {
 		margin-top: 10px;
 		margin-left: 5px;
 		margin-bottom: 3px;
@@ -669,7 +669,7 @@
 	
 	<!-- Column Definitions -->
 	<div id="defineColumns" class="box">
-		<div id="newColumn" class="column" style="display: none">
+		<div id="newColumn" class="dataexportcolumn" style="display: none">
 			<div class="tabBar">
 				<a id="simpleTab" class="tab" href="#selectSimpleTab" onclick="selectTab(this)"><spring:message code="reportingcompatibility.DataExport.simpleTab"/></a>
 				<a id="conceptTab" class="tab" href="#selectConceptTab" onclick="selectTab(this)"><spring:message code="reportingcompatibility.DataExport.conceptTab"/></a>
@@ -696,6 +696,7 @@
 				<%@ include file="include/cohortColumns.jsp" %>
 			</div>
 		</div>
+		
 		<input type="button" onClick="return addNew(this, 'newColumn');" class="addNew" id="newColumnButtom" value='<spring:message code="reportingcompatibility.DataExport.addColumn" />' />
 	</div>
 	
@@ -726,16 +727,17 @@
 					getChildByName(obj, "simpleName_" + count).value = "${column.columnName}";
 					getChildByName(obj, "simpleValue_" + count).value = "<spring:message javaScriptEscape="true" text="${column.returnValue}" />";
 				</c:if>
-				<c:if test="${column.columnType == 'concept'}">
+				<c:if test="${column.columnType == 'rowPerObs'}">
 					selectTab(getChildById(obj, 'conceptTab'));
 					getChildByName(obj, "conceptColumnName_" + count).value = "${column.columnName}";
-					getChildByName(obj, "conceptModifierNum_" + count).value = "${column.modifierNum}";
+					<%-- getChildByName(obj, "conceptModifierNum_" + count).value = "${column.modifierNum}"; --%>
 					var extras = new Array();
 					<c:forEach items="${column.extras}" var="ext">
 						extras["${ext}"] = 1;
 					</c:forEach>
 					var children = obj.getElementsByTagName("input");
 					for(var i=0; i<children.length; i++) {
+						<%--
 						if (children[i].name == ("conceptModifier_" + count)) {
 							if (children[i].value == '${column.modifier}') {
 								children[i].checked = true;
@@ -744,6 +746,7 @@
 							else
 								children[i].checked = false;
 						}
+						--%>
 						if (children[i].name == ("conceptExtra_" + count))
 							children[i].checked = (extras[children[i].value] == 1);
 					}
@@ -780,8 +783,8 @@
 			
 			dwr.engine.setOrdered(true);
 			var btn = $('newPatientButton');
-			<c:forEach items="${dataExport.patientIds}" var="id">
-				addNew(btn, "newPatient", '${id}');
+			<c:forEach items="${dataExport.patientIds}" var="pid">
+				addNew(btn, "newPatient", '${pid}');
 			</c:forEach>
 			dwr.engine.setOrdered(false);
 		</c:if>

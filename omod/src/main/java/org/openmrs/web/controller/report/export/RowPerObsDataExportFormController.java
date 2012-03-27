@@ -31,7 +31,6 @@ import org.openmrs.layout.web.address.AddressSupport;
 import org.openmrs.layout.web.address.AddressTemplate;
 import org.openmrs.propertyeditor.LocationEditor;
 import org.openmrs.reporting.ReportObjectService;
-import org.openmrs.reporting.export.DataExportReportObject;
 import org.openmrs.reporting.export.ExportColumn;
 import org.openmrs.reporting.export.RowPerObsDataExportReportObject;
 import org.openmrs.util.OpenmrsConstants;
@@ -119,7 +118,7 @@ public class RowPerObsDataExportFormController extends SimpleFormController {
 								// for backwards compatibility to pre 1.0.43
 								Concept c = Context.getConceptService().getConceptByName(conceptId);
 								if (c == null)
-									throw new APIException("Concept name : + '" + conceptId
+									throw new APIException("Concept name: '" + conceptId
 									        + "' could not be found in the dictionary");
 								conceptId = c.getConceptId().toString();
 							}
@@ -190,15 +189,18 @@ public class RowPerObsDataExportFormController extends SimpleFormController {
 	 * 
 	 * @see org.springframework.web.servlet.mvc.AbstractFormController#formBackingObject(javax.servlet.http.HttpServletRequest)
 	 */
+	@SuppressWarnings("deprecation")
 	protected Object formBackingObject(HttpServletRequest request) throws ServletException {
 		
-		DataExportReportObject report = null;
+		RowPerObsDataExportReportObject report = null;
 		
 		if (Context.isAuthenticated()) {
 			ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 			String reportId = request.getParameter("dataExportId");
-			if (reportId != null)
+			if (reportId != null) {
 				report = (RowPerObsDataExportReportObject) rs.getReportObject(Integer.valueOf(reportId));
+				report.getColumns().add(report.getRowPerObsColumn()); // so that it is displayed correctly when editing
+			}
 		}
 		
 		if (report == null)
