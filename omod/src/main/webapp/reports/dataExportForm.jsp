@@ -775,8 +775,8 @@
 			
 			dwr.engine.setOrdered(true);
 			var btn = document.getElementById('newPatientButton');
-			<c:forEach items="${dataExport.patientIds}" var="id">
-				addNew(btn, "newPatient", '${id}');
+			<c:forEach items="${dataExport.patientIds}" var="pid">
+				addNew(btn, "newPatient", '${pid}');
 			</c:forEach>
 			dwr.engine.setOrdered(false);
 		</c:if>
