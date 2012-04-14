@@ -115,6 +115,11 @@
 						</c:if>
 					</c:forEach>
 				</c:forEach>
+				<option disabled> </option>
+				<option disabled><spring:message code="reportingcompatibility.DataExport.personAttributes"/></option>
+				<c:forEach items="${personAttributeTypes}" var="personAttributeType">
+					<option value="$!{fn.getPersonAttribute(&#34;${personAttributeType}&#34;)}">&nbsp; ${personAttributeType}</option>
+				</c:forEach>
 			</select>
 			
 		</td>

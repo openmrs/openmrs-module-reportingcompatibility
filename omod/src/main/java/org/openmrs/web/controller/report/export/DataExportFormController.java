@@ -238,6 +238,7 @@ public class DataExportFormController extends SimpleFormController {
 			map.put("addressTemplate", template);
 		}
 		map.put("defaultVerbose", defaultVerbose.equals("true") ? true : false);
+		map.put("personAttributeTypes", Context.getPersonService().getAllPersonAttributeTypes());
 		
 		return map;
 	}
