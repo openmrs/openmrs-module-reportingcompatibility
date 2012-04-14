@@ -184,10 +184,10 @@ public class DataExportFormController extends SimpleFormController {
 			rs.saveReportObject(report);
 			
 			// if there are cached results for this report, delete them  
-			File cachedLastReportRun = DataExportUtil.getGeneratedFile(report);  
-			if (cachedLastReportRun != null && cachedLastReportRun.exists()) {  
-				cachedLastReportRun.delete();  
-			} 
+			File cachedLastReportRun = DataExportUtil.getGeneratedFile(report);
+			if (cachedLastReportRun != null && cachedLastReportRun.exists()) {
+				cachedLastReportRun.delete();
+			}
 			
 			String action = ServletRequestUtils.getRequiredStringParameter(request, "action");
 			MessageSourceAccessor msa = getMessageSourceAccessor();
@@ -195,7 +195,8 @@ public class DataExportFormController extends SimpleFormController {
 				view = getSuccessView();
 				httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "reportingcompatibility.DataExport.saved");
 			} else {
-				view = request.getContextPath() + "/moduleServlet/reportingcompatibility/dataExportServlet?dataExportId=" + report.getReportObjectId();
+				view = request.getContextPath() + "/moduleServlet/reportingcompatibility/dataExportServlet?dataExportId="
+				        + report.getReportObjectId();
 			}
 		}
 		
