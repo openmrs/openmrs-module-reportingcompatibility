@@ -56,6 +56,12 @@
 	<!--  **************************  WEB MAPPINGS  *************************  -->
 	
 	<bean id="reportingCompatibilityUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="localeChangeInterceptor" />
+				<ref bean="themeChangeInterceptor" />
+			</list>
+		</property>
 		<property name="order"><value>20</value></property>
 		<property name="mappings">
 			<props>
