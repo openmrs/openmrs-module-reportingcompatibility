@@ -28,7 +28,9 @@ import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
+import org.springframework.test.context.ContextConfiguration;
 
+@ContextConfiguration(locations = { "classpath*:openmrs-servlet.xml" })
 public class ReportingCompatibilityServiceTest extends BaseModuleContextSensitiveTest {
 	
 	private ReportingCompatibilityService rcs = null;
