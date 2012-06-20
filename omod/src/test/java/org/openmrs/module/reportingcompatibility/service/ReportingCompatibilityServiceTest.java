@@ -26,24 +26,23 @@ import org.openmrs.EncounterType;
 import org.openmrs.Patient;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
-import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
-import org.springframework.test.context.ContextConfiguration;
+import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 
-@ContextConfiguration(locations = { "classpath*:openmrs-servlet.xml" })
-public class ReportingCompatibilityServiceTest extends BaseModuleContextSensitiveTest {
-	
+public class ReportingCompatibilityServiceTest extends
+		BaseModuleWebContextSensitiveTest {
+
 	private ReportingCompatibilityService rcs = null;
-	
+
 	private PatientService ps = null;
-	
+
 	@Before
 	public void before() throws Exception {
 		executeDataSet("org/openmrs/api/include/EncounterServiceTest-initialData.xml");
 		rcs = Context.getService(ReportingCompatibilityService.class);
 		ps = Context.getPatientService();
 	}
-	
+
 	/**
 	 * @see {@link ReportingCompatibilityService#getEncounters(Cohort)}
 	 */
@@ -54,59 +53,71 @@ public class ReportingCompatibilityServiceTest extends BaseModuleContextSensitiv
 		Cohort cohort = new Cohort();
 		for (Patient patient : patients)
 			cohort.addMember(patient.getPatientId());
-		
-		//sanity check that at least there is a patient with a voided encounter
+
+		// sanity check that at least there is a patient with a voided encounter
 		Patient p = ps.getPatient(3);
 		boolean foundVoided = false;
-		List<Encounter> encs = Context.getEncounterService().getEncountersByPatient(
-		    p.getPatientIdentifier().getIdentifier(), true);
+		List<Encounter> encs = Context.getEncounterService()
+				.getEncountersByPatient(
+						p.getPatientIdentifier().getIdentifier(), true);
 		for (Encounter encounter : encs) {
 			if (encounter.isVoided()) {
 				foundVoided = true;
 				break;
 			}
 		}
-		Assert.assertTrue("At least one voided encounter should be present for one of the patients", foundVoided);
-		
-		Map<Integer, Encounter> patientEncountersMap = rcs.getEncounters(cohort);
+		Assert.assertTrue(
+				"At least one voided encounter should be present for one of the patients",
+				foundVoided);
+
+		Map<Integer, Encounter> patientEncountersMap = rcs
+				.getEncounters(cohort);
 		for (Encounter encounter : patientEncountersMap.values()) {
 			Assert.assertFalse(encounter.isVoided());
 		}
 	}
-	
+
 	/**
-	 * @see {@link ReportingCompatibilityService#getEncountersByType(Cohort,List<QEncounterType;>)}
+	 * @see {@link
+	 *      ReportingCompatibilityService#getEncountersByType(Cohort,List<
+	 *      QEncounterType;>)}
 	 */
 	@Test
 	@Verifies(value = "should exclude voided encounters", method = "getEncountersByType(Cohort,List<QEncounterType;>)")
-	public void getEncountersByType_shouldExcludeVoidedEncounters() throws Exception {
+	public void getEncountersByType_shouldExcludeVoidedEncounters()
+			throws Exception {
 		List<Patient> patients = ps.getAllPatients(false);
 		Cohort cohort = new Cohort();
 		for (Patient patient : patients)
 			cohort.addMember(patient.getPatientId());
-		
-		List<EncounterType> encTypes = Context.getEncounterService().getAllEncounterTypes(false);
-		
-		Map<Integer, Encounter> patientEncountersMap = rcs.getEncountersByType(cohort, encTypes);
+
+		List<EncounterType> encTypes = Context.getEncounterService()
+				.getAllEncounterTypes(false);
+
+		Map<Integer, Encounter> patientEncountersMap = rcs.getEncountersByType(
+				cohort, encTypes);
 		for (Encounter encounter : patientEncountersMap.values()) {
 			Assert.assertFalse(encounter.isVoided());
 		}
 	}
-	
+
 	/**
 	 * @see {@link ReportingCompatibilityService#getFirstEncountersByType(Cohort,EncounterType)}
 	 */
 	@Test
 	@Verifies(value = "should exclude voided encounters", method = "getFirstEncountersByType(Cohort,EncounterType)")
-	public void getFirstEncountersByType_shouldExcludeVoidedEncounters() throws Exception {
+	public void getFirstEncountersByType_shouldExcludeVoidedEncounters()
+			throws Exception {
 		List<Patient> patients = ps.getAllPatients();
 		Cohort cohort = new Cohort();
 		for (Patient patient : patients)
 			cohort.addMember(patient.getPatientId());
-		
-		List<EncounterType> encTypes = Context.getEncounterService().getAllEncounterTypes(false);
-		
-		Map<Integer, Encounter> patientEncountersMap = rcs.getFirstEncountersByType(cohort, encTypes);
+
+		List<EncounterType> encTypes = Context.getEncounterService()
+				.getAllEncounterTypes(false);
+
+		Map<Integer, Encounter> patientEncountersMap = rcs
+				.getFirstEncountersByType(cohort, encTypes);
 		for (Encounter encounter : patientEncountersMap.values()) {
 			Assert.assertFalse(encounter.isVoided());
 		}
