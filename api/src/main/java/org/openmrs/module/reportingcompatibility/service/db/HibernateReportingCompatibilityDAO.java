@@ -130,12 +130,12 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		if (obs.getComment() != null) {
 			obsNode.setAttribute("comment", obs.getComment());
 		}
-		if (obs.getDateStarted() != null) {
+		/*if (obs.getDateStarted() != null) {
 			obsNode.setAttribute("date_started", df.format(obs.getDateStarted()));
 		}
 		if (obs.getDateStopped() != null) {
 			obsNode.setAttribute("date_stopped", df.format(obs.getDateStopped()));
-		}
+		}*/
 		if (obs.getObsGroup() != null) {
 			obsNode.setAttribute("obs_group_id", obs.getObsGroup().getObsId().toString());
 		}
