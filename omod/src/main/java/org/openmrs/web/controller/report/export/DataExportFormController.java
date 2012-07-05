@@ -124,7 +124,7 @@ public class DataExportFormController extends SimpleFormController {
 								// for backwards compatibility to pre 1.0.43
 								Concept c = Context.getConceptService().getConceptByName(conceptId);
 								if (c == null)
-									throw new APIException("Concept name : + '" + conceptId
+									throw new APIException("Concept name : '" + conceptId
 									        + "' could not be found in the dictionary");
 								conceptId = c.getConceptId().toString();
 							}
