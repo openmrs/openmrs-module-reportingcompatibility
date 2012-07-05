@@ -3,7 +3,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>reportingcompatibility</artifactId>
-	<version>1.5.8</version>
+	<version>1.5.9-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Reporting Compatibility</name>
 	<description>Parent project for Reporting Compatibility</description>
@@ -11,9 +11,9 @@
 	<url>http://openmrs.org</url>
 
 	<scm>
-		<connection>scm:svn:https://svn.openmrs.org/openmrs-modules/reportingcompatibility/tags/reportingcompatibility-1.5.8</connection>
-		<developerConnection>scm:svn:https://svn.openmrs.org/openmrs-modules/reportingcompatibility/tags/reportingcompatibility-1.5.8</developerConnection>
-		<url>https://svn.openmrs.org/openmrs-modules/reportingcompatibility/tags/reportingcompatibility-1.5.8</url>
+		<connection>scm:svn:https://svn.openmrs.org/openmrs-modules/reportingcompatibility/trunk</connection>
+		<developerConnection>scm:svn:https://svn.openmrs.org/openmrs-modules/reportingcompatibility/trunk</developerConnection>
+		<url>https://svn.openmrs.org/openmrs-modules/reportingcompatibility/trunk</url>
 	</scm>
 
 	<modules>
