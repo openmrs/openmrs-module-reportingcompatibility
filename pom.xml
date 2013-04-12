@@ -11,9 +11,9 @@
 	<url>http://openmrs.org</url>
 
 	<scm>
-		<connection>scm:svn:https://svn.openmrs.org/openmrs-modules/reportingcompatibility/trunk</connection>
-		<developerConnection>scm:svn:https://svn.openmrs.org/openmrs-modules/reportingcompatibility/trunk</developerConnection>
-		<url>https://svn.openmrs.org/openmrs-modules/reportingcompatibility/trunk</url>
+		<connection>scm:git:https://github.com/openmrs/openmrs-module-reportingcompatibility</connection>
+		<developerConnection>scm:git:https://github.com/openmrs/openmrs-module-reportingcompatibility</developerConnection>
+		<url>https://github.com/openmrs/openmrs-module-reportingcompatibility</url>
 	</scm>
 
 	<distributionManagement>
