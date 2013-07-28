@@ -26,11 +26,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.comparators.NullComparator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
+import org.openmrs.ConceptName;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortSearchHistory;
@@ -135,9 +137,15 @@ public class CohortBuilderController implements Controller {
 			
 			List<Concept> genericDrugs = Context.getConceptService().getConceptsWithDrugsInFormulary();
 			Collections.sort(genericDrugs, new Comparator<Concept>() {
-				
+				private NullComparator nullComparator = new NullComparator(false);
 				public int compare(Concept left, Concept right) {
-					return left.getName().getName().compareTo(right.getName().getName());
+					ConceptName leftName = left.getName();
+					ConceptName rightName = right.getName();
+					if (leftName == null || rightName == null) {
+						return nullComparator.compare(leftName, rightName);
+					} else {
+						return nullComparator.compare(leftName.getName(), rightName.getName());
+					}
 				}
 			});
 			
@@ -256,7 +264,7 @@ public class CohortBuilderController implements Controller {
 				}
 				
 			} else {
-				ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
+				ReportObjectService rs = Context.getService(ReportObjectService.class);
 				PatientFilter pf = rs.getPatientFilterByName(spec);
 				if (label == null)
 					label = pf.getName();
@@ -332,7 +340,7 @@ public class CohortBuilderController implements Controller {
 	public ModelAndView addFilter(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 	                                                                                       IOException {
 		if (Context.isAuthenticated()) {
-			ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
+			ReportObjectService rs = Context.getService(ReportObjectService.class);
 			CohortSearchHistory history = getMySearchHistory(request);
 			String temp = request.getParameter("filter_id");
 			if (temp != null) {
@@ -432,6 +440,7 @@ public class CohortBuilderController implements Controller {
 			        && ((argValue instanceof String && ((String) argValue).length() > 0) || (argValue instanceof String[] && ((String[]) argValue).length > 0));
 		}
 		
+		@Override
 		public String toString() {
 			return "(" + argClass + ") " + argName + " = " + argValue;
 		}
@@ -524,7 +533,7 @@ public class CohortBuilderController implements Controller {
 				throw new RuntimeException("Re-saving histories is not yet implemented");
 			history.setName(name);
 			history.setDescription(description);
-			ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
+			ReportObjectService rs = Context.getService(ReportObjectService.class);
 			rs.saveSearchHistory(history);
 		}
 		return new ModelAndView(new RedirectView(getSuccessView()));
