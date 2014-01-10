@@ -619,7 +619,7 @@
 		
 		<div id="searchTab_attribute_content" style="display: none">
 			<div style="background: #f6f6f6; border: 1px #808080 solid; padding: 0.5em; margin: 0.5em">
-				<form method="post" action="cohortBuilder.form">
+				<form name="patient_attribute" method="post" action="cohortBuilder.form">
 					<input type="hidden" name="method" value="addDynamicFilter"/>
 					<input type="hidden" name="filterClass" value="org.openmrs.reporting.PatientCharacteristicFilter" />
 					<input type="hidden" name="vars" value="gender#java.lang.String,minBirthdate#java.util.Date,maxBirthdate#java.util.Date,minAge#java.lang.Integer,maxAge#java.lang.Integer,aliveOnly#java.lang.Boolean,deadOnly#java.lang.Boolean" />
@@ -651,9 +651,9 @@
 						<tr>
 							<td align="right"></td>
 							<td>
-								<input type="checkbox" name="aliveOnly" value="true" /> Alive only
+								<input type="radio" name="aliveOnly" value="true" onclick="if(this.checked){document.patient_attribute.deadOnly.checked=false;}" /> Alive only
 								&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="checkbox" name="deadOnly" value="true" /> Dead only
+								<input type="radio" name="deadOnly"  value="true"  onclick="if(this.checked){document.patient_attribute.aliveOnly.checked=false;}"/> Dead only
 							</td>
 						</tr>
 					</table>
