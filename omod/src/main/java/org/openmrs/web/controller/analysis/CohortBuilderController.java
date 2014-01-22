@@ -513,7 +513,8 @@ public class CohortBuilderController implements Controller {
 			
 			if (search != null) {
 				CohortSearchHistory history = getMySearchHistory(request);
-				history.addSearchItem(search);
+				if (history != null)
+					history.addSearchItem(search);
 			}
 		}
 		return new ModelAndView(new RedirectView(getSuccessView()));
