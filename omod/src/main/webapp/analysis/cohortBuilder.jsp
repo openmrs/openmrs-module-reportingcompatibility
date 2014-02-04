@@ -120,6 +120,7 @@
 			str += ' <select name="modifier" id="modifier"><option value="LESS_THAN">&lt;</option><option value="LESS_EQUAL">&lt;=</option><option value="EQUAL">=</option><option value="GREATER_EQUAL">&gt;=</option><option value="GREATER_THAN">&gt;</option></select> ';
 			str += '</span>';
 		} else if (hl7Abbrev == 'DT' || hl7Abbrev == 'TS') {
+			
 			str += ' <br/><br/><span style="margin-left: 40px">';
 			str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /> (valueDatetime)</small> <spring:message code="reportingcompatibility.CohortBuilder.whatValuesQuestion" /> ';
 			str += ' <select name="modifier" id="modifier"><option value="LESS_THAN">before</option><option value="LESS_EQUAL" selected="true">on or before</option><option value="EQUAL">on</option><option value="GREATER_EQUAL">on or after</option><option value="GREATER_THAN">after</option></select> ';
@@ -147,6 +148,7 @@
 			str += '<select name="value"><option value=""></option><option value="true"><spring:message code="general.true"/><option value="false"><spring:message code="general.false"/></option></option></select>'; 
 		}
 		str += ' <br/><br/><span style="margin-left: 40px">';
+		
 		str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /> (obsDatetime)</small> <spring:message code="reportingcompatibility.CohortBuilder.whenPrefix" /> <spring:message code="reportingcompatibility.CohortBuilder.withinMonthsAndDays" arguments="withinLastMonths,withinLastDays" />';
 		str += '</span>';
 		str += ' <br/><br/><span style="margin-left: 40px">';
@@ -840,13 +842,11 @@
 							</td>
 						</tr>
 						<tr>
-							<td>When?</td>
-							<td>
+							<td><spring:message code="reportingcompatibility.CohortBuilder.dateRangePrefix" /></td>							
+							<td>								
 								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
-								on or after:<input type="text" size="10" name="sinceDate" onClick="showCalendar(this)" />
-								<br/>
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
-								on or before:<input type="text" size="10" name="untilDate" onClick="showCalendar(this)" />
+								In the program
+								<spring:message code="reportingcompatibility.CohortBuilder.fromDateToDate" arguments="sinceDate,untilDate" />
 							</td>
 						</tr>
 					</table>
