@@ -28,7 +28,7 @@
 			<td valign="top"><input type="checkbox" name="patientSearchId"
 				value="${patientSearch.reportObjectId}"></td>
 			<td valign="top"><a
-				href="patientSearch.form?patientSearchIdLookup=${patientSearch.reportObjectId}">${patientSearch.name}</a>
+				href="patientSearch.form?patientSearchIdLookup=${patientSearch.reportObjectId}">${patientSearch.name}(id = ${patientSearch.id})</a>
 			</td>
 			<td valign="top">${patientSearch.description}</td>
 			<td></td>
