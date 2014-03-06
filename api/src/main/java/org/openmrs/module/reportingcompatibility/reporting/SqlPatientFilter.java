@@ -6,8 +6,7 @@ import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.CachingPatientFilter;
-import org.springframework.util.StringUtils;
- 
+import org.springframework.util.StringUtils; 
 /**
  * This class implements a simple patient filter using a SQL query
  */
