@@ -10,6 +10,7 @@
 <script type="text/javascript" src='${pageContext.request.contextPath}/dwr/interface/DWRCohortBuilderService.js'></script>
 <script type="text/javascript" src='${pageContext.request.contextPath}/dwr/interface/DWRPatientService.js'></script>
 <script type="text/javascript" src='${pageContext.request.contextPath}/dwr/interface/DWRPatientSetService.js'></script>
+
 <openmrs:htmlInclude file="/dwr/interface/DWRProgramWorkflowService.js" />
 <openmrs:htmlInclude file="/scripts/dojoConfig.js"></openmrs:htmlInclude>
 <openmrs:htmlInclude file="/scripts/dojo/dojo.js"></openmrs:htmlInclude>
