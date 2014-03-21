@@ -10,6 +10,7 @@
 <script type="text/javascript" src='${pageContext.request.contextPath}/dwr/interface/DWRCohortBuilderService.js'></script>
 <script type="text/javascript" src='${pageContext.request.contextPath}/dwr/interface/DWRPatientService.js'></script>
 <script type="text/javascript" src='${pageContext.request.contextPath}/dwr/interface/DWRPatientSetService.js'></script>
+
 <openmrs:htmlInclude file="/dwr/interface/DWRProgramWorkflowService.js" />
 <openmrs:htmlInclude file="/scripts/dojoConfig.js"></openmrs:htmlInclude>
 <openmrs:htmlInclude file="/scripts/dojo/dojo.js"></openmrs:htmlInclude>
@@ -990,7 +991,7 @@
 		<div id="searchTab_sqlQuery_content" style="display: none">
 			<form method="post" action="cohortBuilder.form">
 				<input type="hidden" name="method" value="addDynamicFilter"/>
-				<input type="hidden" name="filterClass" value="org.openmrs.module.reportingcompatibility.reporting.PatientSqlFilter" />
+				<input type="hidden" name="filterClass" value="org.openmrs.module.reportingcompatibility.reporting.SqlPatientFilter" />
 				<input type="hidden" name="vars" value="query#java.lang.String" />
 				<textarea name="query" rows="20" cols="80"></textarea>
 				<br/>
@@ -998,6 +999,10 @@
 				<br/>
 				<b><spring:message code="reportingcompatibility.CohortBuilder.sqlQuery.note.title"/>:</b>
 				<spring:message code="reportingcompatibility.CohortBuilder.sqlQuery.note.message"/>.
+                                <br/>
++				<spring:message code="reportingcompatibility.CohortBuilder.sqlQuery.note.message2"/>.
+
+
 			</form>
 		</div>
 		
