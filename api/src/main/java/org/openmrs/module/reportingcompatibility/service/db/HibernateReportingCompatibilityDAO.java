@@ -728,9 +728,13 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 			StringBuffer sb = new StringBuffer();
 			if ("M".equals(results[1])) {
 				sb.append("Male");
-			} else {
+			} else if ("F".equals(results[1])) {
 				sb.append("Female");
+			} else {
+				// if gender is neither male or female, default to null
+				sb.append("null");
 			}
+			
 			Date bd = (Date) results[2];
 			if (bd != null) {
 				int age = (int) ((now - bd.getTime()) / MS_PER_YEAR);
