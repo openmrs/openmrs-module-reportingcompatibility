@@ -841,13 +841,40 @@
 						</tr>
 						<tr>
 							<td>When?</td>
+							
+							<tr>
 							<td>
+							<spring:message code="reportingcompatibility.CohortBuilder.InProgram" />
 								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
 								on or after:<input type="text" size="10" name="sinceDate" onClick="showCalendar(this)" />
-								<br/>
+								
 								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
 								on or before:<input type="text" size="10" name="untilDate" onClick="showCalendar(this)" />
 							</td>
+							</tr>
+							
+							<tr>
+							<td>
+							<spring:message code="reportingcompatibility.CohortBuilder.EnrolledInProgram" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								on or after:<input type="text" size="10" name="sinceDate" onClick="showCalendar(this)" />
+								
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								on or before:<input type="text" size="10" name="untilDate" onClick="showCalendar(this)" />
+							</td>
+							</tr>
+							
+							<tr>
+							<td>
+							<spring:message code="reportingcompatibility.CohortBuilder.CompletedProgram" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								on or after:<input type="text" size="10" name="sinceDate" onClick="showCalendar(this)" />
+								
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								on or before:<input type="text" size="10" name="untilDate" onClick="showCalendar(this)" />
+							</td>
+							</tr>
+								
 						</tr>
 					</table>
 					<input type="submit" value="<spring:message code="general.search" />"/>
