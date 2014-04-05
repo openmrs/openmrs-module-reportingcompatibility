@@ -1032,7 +1032,7 @@
 			<form method="post" action="cohortBuilder.form">
 				<input type="hidden" name="method" value="addFilter"/>
 				<h4><spring:message code="reportingcompatibility.CohortBuilder.addCompositionFilter"/></h4>
-				<i><spring:message code="reportingcompatibility.CohortBuilder.compositionHelp"/></i>
+				<spring:message code="reportingcompatibility.CohortBuilder.compositionHelp" htmlEscape="false"/>
 				<br/>
 				<br/>
 				<spring:message code="general.search"/>:
