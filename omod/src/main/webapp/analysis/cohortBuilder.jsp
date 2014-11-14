@@ -116,22 +116,22 @@
 			str += '<br/><span style="margin-left: 40px">Which observations? <select name="timeModifier"><option value="ANY">Any</option><option value="NO">None</option><option value="FIRST">Earliest</option><option value="LAST" selected="true">Most Recent</option></select></span> ';
 		if (hl7Abbrev == 'NM') {
 			str += ' <br/><br/><span style="margin-left: 40px">';
-			str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /></small> <spring:message code="reportingcompatibility.CohortBuilder.whatValuesQuestion" /> ';
+			str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/></small> <spring:message code="reportingcompatibility.CohortBuilder.whatValuesQuestion" /> ';
 			str += ' <select name="modifier" id="modifier"><option value="LESS_THAN">&lt;</option><option value="LESS_EQUAL">&lt;=</option><option value="EQUAL">=</option><option value="GREATER_EQUAL">&gt;=</option><option value="GREATER_THAN">&gt;</option></select> ';
 			str += '</span>';
 		} else if (hl7Abbrev == 'DT' || hl7Abbrev == 'TS') {
 			str += ' <br/><br/><span style="margin-left: 40px">';
-			str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /> (valueDatetime)</small> <spring:message code="reportingcompatibility.CohortBuilder.whatValuesQuestion" /> ';
+			str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/> (valueDatetime)</small> <spring:message code="reportingcompatibility.CohortBuilder.whatValuesQuestion" /> ';
 			str += ' <select name="modifier" id="modifier"><option value="LESS_THAN">before</option><option value="LESS_EQUAL" selected="true">on or before</option><option value="EQUAL">on</option><option value="GREATER_EQUAL">on or after</option><option value="GREATER_THAN">after</option></select> ';
 			str += '</span>';
 		} else if (hl7Abbrev == 'ST' || hl7Abbrev == 'CWE') {
 			str += ' <br/><br/><span style="margin-left: 40px">';
-			str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /></small> <spring:message code="reportingcompatibility.CohortBuilder.whatValueQuestion" /> ';
+			str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/></small> <spring:message code="reportingcompatibility.CohortBuilder.whatValueQuestion" /> ';
 			str += ' <input type="hidden" name="modifier" value="EQUAL" /> ';
 			str += '</span>';
 		} else if (hl7Abbrev == 'BIT') {
 			str += ' <br/><br/><span style="margin-left: 40px">';
-			str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /></small> <spring:message code="reportingcompatibility.CohortBuilder.whatValueQuestion" /> ';
+			str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/></small> <spring:message code="reportingcompatibility.CohortBuilder.whatValueQuestion" /> ';
 			str += ' <input type="hidden" name="modifier" value="EQUAL" /> ';
 		}
 		if (hl7Abbrev == 'NM' || hl7Abbrev == 'ST') {
@@ -147,10 +147,10 @@
 			str += '<select name="value"><option value=""></option><option value="true"><spring:message code="general.true"/><option value="false"><spring:message code="general.false"/></option></option></select>'; 
 		}
 		str += ' <br/><br/><span style="margin-left: 40px">';
-		str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /> (obsDatetime)</small> <spring:message code="reportingcompatibility.CohortBuilder.whenPrefix" /> <spring:message code="reportingcompatibility.CohortBuilder.withinMonthsAndDays" arguments="withinLastMonths,withinLastDays" />';
+		str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/> (obsDatetime)</small> <spring:message code="reportingcompatibility.CohortBuilder.whenPrefix" /> <spring:message code="reportingcompatibility.CohortBuilder.withinMonthsAndDays" arguments="withinLastMonths,withinLastDays" htmlEscape="false"/>';
 		str += '</span>';
 		str += ' <br/><br/><span style="margin-left: 40px">';
-		str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /> (obsDatetime)</small> <spring:message code="reportingcompatibility.CohortBuilder.dateRangePrefix" /> <spring:message code="reportingcompatibility.CohortBuilder.fromDateToDate" arguments="sinceDate,untilDate" />';
+		str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/> (obsDatetime)</small> <spring:message code="reportingcompatibility.CohortBuilder.dateRangePrefix" /> <spring:message code="reportingcompatibility.CohortBuilder.fromDateToDate" arguments="sinceDate,untilDate" htmlEscape="false"/>';
 		str += '</span>';
 		str += ' <br/><br/><input type="submit" value="Search"/>';
 		str += ' &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="<spring:message code="general.cancel" />" onClick="hideLayer(\'concept_filter_box\')"/>';
@@ -178,14 +178,14 @@
 		str += ' <select name="timeModifier"><option value="ANY">Patients who have these observations</option><option value="NO">Patients who do not have these observations</option></select> ';
 		str += '</span>';
 		str += ' <br/><br/><span style="margin-left: 40px">';
-		str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /> (obsDatetime)</small> When? Within the last ';
+		str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/> (obsDatetime)</small> When? Within the last ';
 		str += ' <input type="text" name="withinLastMonths" value="" size="2" />';
 		str += ' months and/or';
 		str += ' <input type="text" name="withinLastDays" value="" size="2" />';
 		str += ' days';
 		str += '</span>';
 		str += ' <br/><br/><span style="margin-left: 40px">';
-		str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" /> (obsDatetime)</small> Date range? since ';
+		str += ' <small><spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/> (obsDatetime)</small> Date range? since ';
 		str += ' <input type="text" name="sinceDate" size="10" value="" onClick="showCalendar(this)" />';
 		str += ' and/or until ';
 		str += ' <input type="text" name="untilDate" size="10" value="" onClick="showCalendar(this)" />';
@@ -495,7 +495,7 @@
 
 </script>
 
-<h2><spring:message code="reportingcompatibility.CohortBuilder.title"/></h2>	
+<h2><spring:message code="reportingcompatibility.CohortBuilder.title"/></h2>
 
 <div id="cohort_builder_add_filter" style="padding: 4px">
 	<b><spring:message code="general.search"/></b>
@@ -697,7 +697,7 @@
 					<table style="margin-left: 40px">
 						<tr valign="top">
 							<td>
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 							</td>
 							<td>
 								of type
@@ -714,7 +714,7 @@
 						</tr>
 						<tr valign="top">
 							<td>
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 							</td>
 							<td>
 								at location
@@ -730,7 +730,7 @@
 						</tr>
 						<tr valign="top">
 							<td>
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 							</td>
 							<td>
 								from form
@@ -746,7 +746,7 @@
 						</tr>
 						<tr valign="top">
 							<td>
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 							</td>
 							<td colspan="2">
 								at least this many
@@ -757,7 +757,7 @@
 						</tr>
 						<tr valign="top">
 							<td>
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 							</td>
 							<td colspan="2">
 								within the last <input type="text" size="3" name="withinLastMonths" />months
@@ -766,7 +766,7 @@
 						</tr>
 						<tr valign="top">
 							<td>
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 							</td>
 							<td colspan="2">
 								since <input type="text" size="10" name="sinceDate" onClick="showCalendar(this)" />
@@ -845,10 +845,10 @@
 							<tr>
 							<td>
 							<spring:message code="reportingcompatibility.CohortBuilder.InProgram" />
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 								on or after:<input type="text" size="10" name="sinceDate" onClick="showCalendar(this)" />
 								
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 								on or before:<input type="text" size="10" name="untilDate" onClick="showCalendar(this)" />
 							</td>
 							</tr>
@@ -856,10 +856,10 @@
 							<tr>
 							<td>
 							<spring:message code="reportingcompatibility.CohortBuilder.EnrolledInProgram" />
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 								on or after:<input type="text" size="10" name="sinceDate" onClick="showCalendar(this)" />
 								
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 								on or before:<input type="text" size="10" name="untilDate" onClick="showCalendar(this)" />
 							</td>
 							</tr>
@@ -867,10 +867,10 @@
 							<tr>
 							<td>
 							<spring:message code="reportingcompatibility.CohortBuilder.CompletedProgram" />
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 								on or after:<input type="text" size="10" name="sinceDate" onClick="showCalendar(this)" />
 								
-								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+								<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 								on or before:<input type="text" size="10" name="untilDate" onClick="showCalendar(this)" />
 							</td>
 							</tr>
@@ -945,14 +945,14 @@
 						<a href="javascript:toggleDrugOrderDateOptions()">[current]</a>
 						<br/>
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+							<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 							<spring:message code="reportingcompatibility.CohortBuilder.whenPrefix" />
-							<spring:message code="reportingcompatibility.CohortBuilder.withinMonthsAndDays" arguments="withinLastMonths,withinLastDays" />
+							<spring:message code="reportingcompatibility.CohortBuilder.withinMonthsAndDays" arguments="withinLastMonths,withinLastDays" htmlEscape="false"/>
 						<br/>
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+							<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 							<spring:message code="reportingcompatibility.CohortBuilder.dateRangePrefix" />
-							<spring:message code="reportingcompatibility.CohortBuilder.fromDateToDate" arguments="sinceDate,untilDate" />
+							<spring:message code="reportingcompatibility.CohortBuilder.fromDateToDate" arguments="sinceDate,untilDate" htmlEscape="false"/>
 						<br/>
 					</div>
 					
@@ -968,16 +968,16 @@
 					<input type="hidden" name="discontinued" value="true" />
 					<b>Patients who stopped or changed a drug</b>
 					<br/><br/>
-						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 						<spring:message code="reportingcompatibility.CohortBuilder.whenPrefix" />
-						<spring:message code="reportingcompatibility.CohortBuilder.withinMonthsAndDays" arguments="withinLastMonths,withinLastDays" />
+						<spring:message code="reportingcompatibility.CohortBuilder.withinMonthsAndDays" arguments="withinLastMonths,withinLastDays" htmlEscape="false"/>
 					<br/>
-						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 						<spring:message code="reportingcompatibility.CohortBuilder.dateRangePrefix" />
-						<spring:message code="reportingcompatibility.CohortBuilder.fromDateToDate" arguments="sinceDate,untilDate" />
+						<spring:message code="reportingcompatibility.CohortBuilder.fromDateToDate" arguments="sinceDate,untilDate" htmlEscape="false"/>
 					<br/>
 					<table><tr valign="top"><td style="padding-right: 20px">
-						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 						Reason for stop/change: <br/>
 						(leave blank for <spring:message code="general.allOptions" />)
 						<br/>
@@ -987,7 +987,7 @@
 							</c:forEach>
 						</select>
 					</td><td style="padding-right: 20px">
-						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 						Only these drugs: <br/>
 						(leave blank for <spring:message code="general.allOptions" />)
 						<br/>
@@ -997,7 +997,7 @@
 							</c:forEach>
 						</select>
 					</td><td>
-						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" />
+						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 						Only these generics: <br/>
 						(leave blank for <spring:message code="general.allOptions" />)
 						<br/>
@@ -1032,7 +1032,7 @@
 			<form method="post" action="cohortBuilder.form">
 				<input type="hidden" name="method" value="addFilter"/>
 				<h4><spring:message code="reportingcompatibility.CohortBuilder.addCompositionFilter"/></h4>
-				<i><spring:message code="reportingcompatibility.CohortBuilder.compositionHelp"/></i>
+				<i><spring:message code="reportingcompatibility.CohortBuilder.compositionHelp" htmlEscape="false"/></i>
 				<br/>
 				<br/>
 				<spring:message code="general.search"/>:
