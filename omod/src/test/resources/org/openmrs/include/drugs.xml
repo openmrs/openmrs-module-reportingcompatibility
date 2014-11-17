@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<concept concept_id="793" retired="false" datatype_id="4" class_id="3" is_set="false" creator="1" date_created="2004-04-08 00:00:00.0" version="" changed_by="1" date_changed="2008-08-15 14:05:56.0" uuid="d144d24f-6913-4b63-9660-a9108c2bebeg"/>
+	<concept concept_id="794" retired="false" datatype_id="4" class_id="3" is_set="false" creator="1" date_created="2004-04-08 00:00:00.0" version="" changed_by="1" date_changed="2008-08-15 14:05:56.0" uuid="d144d24f-6913-4b63-9660-a9108c2bebeh"/>
+	<concept concept_id="795" retired="false" datatype_id="4" class_id="3" is_set="false" creator="1" date_created="2004-04-08 00:00:00.0" version="" changed_by="1" date_changed="2008-08-15 14:05:56.0" uuid="d144d24f-6913-4b63-9660-a9108c2bebei"/>
+	<drug drug_id="4" concept_id="793" name="Triomune-30" combination="true" creator="1" date_created="2005-02-24 00:00:00.0" retired="false" uuid="3cfcf118-931c-46f7-8ff6-7b876f0d4203"/>
+	<drug drug_id="5" concept_id="794" name="Triomune-30" combination="true" creator="1" date_created="2005-02-24 00:00:00.0" retired="false" uuid="3cfcf118-931c-46f7-8ff6-7b876f0d4204"/>
+	<drug drug_id="6" concept_id="795" name="Triomune-30" combination="true" creator="1" date_created="2005-02-24 00:00:00.0" retired="false" uuid="3cfcf118-931c-46f7-8ff6-7b876f0d4205"/>
+</dataset>
