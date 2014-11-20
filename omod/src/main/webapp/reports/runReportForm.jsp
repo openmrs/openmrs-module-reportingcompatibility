@@ -6,11 +6,13 @@
 <%@ include file="localHeader.jsp" %>
 
 <div style="width: 60%">
-	<h2>
-		<spring:message code="reportingcompatibility.Report.run.title"/>:
-		${report.schema.name}
-	</h2>
-	<i>${report.schema.description}</i>
+	<c:if test="${not empty report.schema}">
+		<h2>
+			<spring:message code="reportingcompatibility.Report.run.title"/>:
+			${report.schema.name}
+		</h2>
+		<i>${report.schema.description}</i>
+	</c:if>
 	
 	<br/><br/>
 	
@@ -24,54 +26,62 @@
 		<br />
 	</spring:hasBindErrors>
 	
+	<c:if test="${empty report.schema}">
+		<div class="error">
+			<spring:message code="reportingcompatibility.Report.unable.find" arguments="${param['reportId']}"/>
+		</div>
+	</c:if>
+	
 	<br/><br/>
 	
-	<form method="post">
-		<b><spring:message code="reportingcompatibility.Report.parameters"/></b>
-		
-		<spring:nestedPath path="report">
-			<table>
-				<c:forEach var="p" items="${report.schema.reportParameters}">
-	                <tr>
-	                    <spring:bind path="userEnteredParams[${p.name}]">
-				            <td>
-					           <spring:message code="${p.label}"/>:
-		                    </td>
-		                    <td>
-		                    	<openmrs:fieldGen type="${p.clazz.name}" formFieldName="${status.expression}" val="${status.value}"/>
-		                        <c:if test="${status.errorMessage != ''}">
-		                            <span class="error">${status.errorMessage}</span>
-		                        </c:if>
-		                    </td>
-			            </spring:bind>
-	                </tr>
-	            </c:forEach>
-	            <spring:bind path="userEnteredParams">
-			        <c:if test="${status.errorMessage != ''}">
-			            <span class="error">${status.errorMessage}</span>
-			        </c:if>
-	            </spring:bind>
-	        </table>
-	        
-	        <br/><br/>
+	<c:if test="${not empty report.schema}">
+		<form method="post">
+			<b><spring:message code="reportingcompatibility.Report.parameters"/></b>
 			
-			<b><spring:message code="reportingcompatibility.Report.run.outputFormat"/></b>
-			<spring:bind path="selectedRenderer">
-	            <select name="${status.expression}">
-	                <c:forEach var="r" items="${report.renderingModes}">
-	                	<c:set var="thisVal" value="${r.renderer['class'].name}!${r.argument}"/>
-	                    <option
-	                        <c:if test="${status.value == thisVal}"> selected</c:if>
-	                        value="${thisVal}">
-	                            ${r.label}
-	                    </option>
-	                </c:forEach>
-	            </select>
-	        </spring:bind>
-		</spring:nestedPath>
-		
-		<br/>
-		<br/>
-		<input type="submit" value="<spring:message code="reportingcompatibility.Report.run.button"/>" style="margin-left: 9em"/>
-	</form>
+			<spring:nestedPath path="report">
+				<table>
+					<c:forEach var="p" items="${report.schema.reportParameters}">
+						<tr>
+							<spring:bind path="userEnteredParams[${p.name}]">
+								<td>
+								   <spring:message code="${p.label}"/>:
+								</td>
+								<td>
+									<openmrs:fieldGen type="${p.clazz.name}" formFieldName="${status.expression}" val="${status.value}"/>
+									<c:if test="${status.errorMessage != ''}">
+										<span class="error">${status.errorMessage}</span>
+									</c:if>
+								</td>
+							</spring:bind>
+						</tr>
+					</c:forEach>
+					<spring:bind path="userEnteredParams">
+						<c:if test="${status.errorMessage != ''}">
+							<span class="error">${status.errorMessage}</span>
+						</c:if>
+					</spring:bind>
+				</table>
+				
+				<br/><br/>
+				
+				<b><spring:message code="reportingcompatibility.Report.run.outputFormat"/></b>
+				<spring:bind path="selectedRenderer">
+					<select name="${status.expression}">
+						<c:forEach var="r" items="${report.renderingModes}">
+							<c:set var="thisVal" value="${r.renderer['class'].name}!${r.argument}"/>
+							<option
+								<c:if test="${status.value == thisVal}"> selected</c:if>
+								value="${thisVal}">
+									${r.label}
+							</option>
+						</c:forEach>
+					</select>
+				</spring:bind>
+			</spring:nestedPath>
+			
+			<br/><br/>
+			
+			<input type="submit" value="<spring:message code="reportingcompatibility.Report.run.button"/>" style="margin-left: 9em"/>
+		</form>
+	</c:if>
 </div>

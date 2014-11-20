@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.openmrs.api.APIException;
 import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
@@ -141,12 +141,18 @@ public class RunReportController extends SimpleFormController implements Validat
 				id = Integer.valueOf(param);
 			}
 			catch (NumberFormatException e) {
-				throw new ServletException("Unable to run a report with report id: '" + param + "'.  Please choose a valid id");
+				return ret;
 			}
-			ReportService reportService = (ReportService) Context.getService(ReportService.class);
-			ReportSchema schema = reportService.getReportSchema(id);
-			if (schema == null)
-				throw new ServletException("Unable to find a report with report id: '" + param + "' in the database. Please choose a different id");
+			
+			ReportService reportService;
+			ReportSchema schema;
+			try {
+				reportService = (ReportService) Context.getService(ReportService.class);
+				schema = reportService.getReportSchema(id);
+			} catch (APIException e) {
+				return ret;
+			}
+			
 			ret.setSchema(schema);
 			ret.setRenderingModes(reportService.getRenderingModes(schema));
 		}
