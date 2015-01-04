@@ -2,7 +2,7 @@
 <%@ taglib prefix="rpt" uri="/WEB-INF/view/module/reportingcompatibility/resources/reportingcompatibility.tld" %>
 
 <openmrs:require privilege="View Patient Cohorts" otherwise="/login.htm" redirect="/cohortBuilder.list" />
-
+<spring:message var="pageTitle" code="reportingcompatibility.cohortBuilder.title" scope="page"/>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 
 <script type="text/javascript" src='${pageContext.request.contextPath}/dwr/engine.js'></script>
@@ -495,7 +495,7 @@
 
 </script>
 
-<h2><spring:message code="reportingcompatibility.CohortBuilder.title"/></h2>
+<h2><spring:message code="reportingcompatibility.CohortBuilder.header"/></h2>
 
 <div id="cohort_builder_add_filter" style="padding: 4px">
 	<b><spring:message code="general.search"/></b>
