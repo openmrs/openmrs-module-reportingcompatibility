@@ -39,6 +39,7 @@ import org.openmrs.ProgramWorkflow;
 import org.openmrs.ProgramWorkflowState;
 import org.openmrs.Relationship;
 import org.openmrs.RelationshipType;
+import org.openmrs.api.APIException;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.api.PatientSetService;
@@ -48,6 +49,8 @@ import org.openmrs.api.PatientSetService.PatientLocationMethod;
 import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.reportingcompatibility.service.db.ReportingCompatibilityDAO;
+import org.openmrs.reporting.AbstractReportObject;
+import org.openmrs.reporting.Report;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -610,5 +613,65 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @since 1.8
 	 */
 	public Cohort getPatients(Integer start, Integer size);
+	
+	/**
+	 * Create a new Report
+	 *
+	 * @param report Report to create
+	 * @throws org.openmrs.api.APIException
+	 * @deprecated see reportingcompatibility module
+	 */
+	@Deprecated
+	public void createReport(Report report) throws APIException;
+	
+	/**
+	 * Update Report
+	 *
+	 * @param report Report to update
+	 * @deprecated see reportingcompatibility module
+	 * @throws APIException
+	 */
+	@Deprecated
+	public void updateReport(Report report) throws APIException;
+	
+	/**
+	 * Delete Report
+	 *
+	 * @param report Report to delete
+	 * @throws APIException
+	 * @deprecated see reportingcompatibility module
+	 */
+	@Deprecated
+	public void deleteReport(Report report) throws APIException;
+	
+	/**
+	 * Create a new Report Object
+	 *
+	 * @param reportObject Report Object to create
+	 * @deprecated see reportingcompatibility module
+	 * @throws APIException
+	 */
+	@Deprecated
+	public void createReportObject(AbstractReportObject reportObject) throws APIException;
+	
+	/**
+	 * Update Report Object
+	 *
+	 * @param reportObject the Report Object to update
+	 * @deprecated see reportingcompatibility module
+	 * @throws APIException
+	 */
+	@Deprecated
+	public void updateReportObject(AbstractReportObject reportObject) throws APIException;
+	
+	/**
+	 * Delete Report Object
+	 *
+	 * @param reportObjectId Internal identifier for the Report Object to delete
+	 * @deprecated see reportingcompatibility module
+	 * @throws APIException
+	 */
+	@Deprecated
+	public void deleteReportObject(Integer reportObjectId) throws APIException;
 	
 }

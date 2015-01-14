@@ -70,6 +70,9 @@ import org.openmrs.api.PatientSetService.PatientLocationMethod;
 import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.reporting.AbstractReportObject;
+import org.openmrs.reporting.Report;
+import org.openmrs.reporting.ReportObjectWrapper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -1989,4 +1992,82 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		return new Cohort("Batch of " + size + " patients starting at " + start, "", ids);
 	}
 	
+	/**
+	 * @see org.openmrs.api.AdministrationService#createReport(org.openmrs.reporting.Report)
+	 * @deprecated see reportingcompatibility module
+	 */
+	@Deprecated
+	public void createReport(Report r) throws DAOException {
+		r.setCreator(Context.getAuthenticatedUser());
+		r.setDateCreated(new Date());
+		sessionFactory.getCurrentSession().save(r);
+	}
+	
+	/**
+	 * @see org.openmrs.api.AdministrationService#updateReport(org.openmrs.reporting.Report)
+	 * @deprecated see reportingcompatibility module
+	 */
+	@Deprecated
+	public void updateReport(Report r) throws DAOException {
+		if (r.getReportId() == null) {
+			createReport(r);
+		} else {
+			sessionFactory.getCurrentSession().saveOrUpdate(r);
+		}
+	}
+	
+	/**
+	 * @see org.openmrs.api.AdministrationService#deleteReport(org.openmrs.reporting.Report)
+	 * @deprecated see reportingcompatibility module
+	 */
+	@Deprecated
+	public void deleteReport(Report r) throws DAOException {
+		sessionFactory.getCurrentSession().delete(r);
+	}
+	
+	/**
+	 * @deprecated see reportingcompatibility module
+	 */
+	@Deprecated
+	public void createReportObject(AbstractReportObject ro) throws DAOException {
+		
+		ReportObjectWrapper wrappedReportObject = new ReportObjectWrapper(ro);
+		User user = Context.getAuthenticatedUser();
+		Date now = new Date();
+		wrappedReportObject.setCreator(user);
+		wrappedReportObject.setDateCreated(now);
+		wrappedReportObject.setVoided(false);
+		sessionFactory.getCurrentSession().save(wrappedReportObject);
+	}
+	
+	/**
+	 * @deprecated see reportingcompatibility module
+	 */
+	@Deprecated
+	public void updateReportObject(AbstractReportObject ro) throws DAOException {
+		if (ro.getReportObjectId() == null) {
+			createReportObject(ro);
+		} else {
+			sessionFactory.getCurrentSession().clear();
+			ReportObjectWrapper wrappedReportObject = new ReportObjectWrapper(ro);
+			User user = Context.getAuthenticatedUser();
+			Date now = new Date();
+			wrappedReportObject.setChangedBy(user);
+			wrappedReportObject.setDateChanged(now);
+			
+			sessionFactory.getCurrentSession().saveOrUpdate(wrappedReportObject);
+		}
+	}
+	
+	/**
+	 * @deprecated see reportingcompatibility module
+	 */
+	@Deprecated
+	public void deleteReportObject(Integer reportObjectId) throws DAOException {
+		ReportObjectWrapper wrappedReportObject = (ReportObjectWrapper) sessionFactory.getCurrentSession().get(
+				ReportObjectWrapper.class, reportObjectId);
+		
+		sessionFactory.getCurrentSession().delete(wrappedReportObject);
+	}
+
 }

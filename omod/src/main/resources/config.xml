@@ -73,6 +73,11 @@
 		<servlet-class>org.openmrs.web.servlet.DataExportServlet</servlet-class>
 	</servlet>	
 	
+	<mappingFiles>
+		ReportObject.hbm.xml
+		ReportSchema.hbm.xml
+	</mappingFiles>
+	
 	<messages>
 		<lang>en</lang>
 		<file>messages.properties</file>
