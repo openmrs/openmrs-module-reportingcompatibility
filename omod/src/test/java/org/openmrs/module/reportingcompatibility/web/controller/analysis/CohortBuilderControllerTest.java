@@ -11,15 +11,16 @@
 *
 * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
 */
-package org.openmrs.web.controller.analysis;
+package org.openmrs.module.reportingcompatibility.web.controller.analysis;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
+import org.openmrs.web.controller.analysis.CohortBuilderController;
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
-
-import javax.servlet.http.HttpServletResponse;
 
 public class CohortBuilderControllerTest extends BaseModuleWebContextSensitiveTest {
 

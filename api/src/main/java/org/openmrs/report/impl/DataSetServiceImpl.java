@@ -20,7 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.api.APIException;
-import org.openmrs.api.DataSetService;
+import org.openmrs.module.reportingcompatibility.service.DataSetService;
 import org.openmrs.report.DataSet;
 import org.openmrs.report.DataSetDefinition;
 import org.openmrs.report.DataSetProvider;

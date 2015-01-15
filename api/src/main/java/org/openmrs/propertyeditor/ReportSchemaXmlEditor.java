@@ -13,12 +13,12 @@
  */
 package org.openmrs.propertyeditor;
 
-import java.beans.PropertyEditorSupport;import java.lang.Deprecated;import java.lang.Exception;import java.lang.IllegalArgumentException;import java.lang.Integer;import java.lang.String;
+import java.beans.PropertyEditorSupport;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.ReportSchemaXml;
 import org.springframework.util.StringUtils;
 

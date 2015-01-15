@@ -30,9 +30,9 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.GlobalProperty;
 import org.openmrs.api.APIException;
-import org.openmrs.api.DataSetService;
-import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.DataSetService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.DataSet;
 import org.openmrs.report.DataSetDefinition;
 import org.openmrs.report.EvaluationContext;
@@ -114,7 +114,7 @@ public class ReportServiceImpl implements ReportService {
 		ret.setDataSets(data);
 		ret.setReportSchema(reportSchema);
 		ret.setEvaluationContext(evalContext);
-		DataSetService dss = Context.getDataSetService();
+		DataSetService dss = Context.getService(DataSetService.class);
 		
 		if (reportSchema.getDataSetDefinitions() != null) {
 			for (DataSetDefinition dataSetDefinition : reportSchema.getDataSetDefinitions()) {
