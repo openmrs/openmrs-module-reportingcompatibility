@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.openmrs.api.APIException;
+import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;

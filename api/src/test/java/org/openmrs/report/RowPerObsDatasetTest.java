@@ -24,12 +24,13 @@ import org.apache.commons.logging.LogFactory;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
 import org.openmrs.Cohort;
+import org.openmrs.api.DataSetService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.reportingcompatibility.service.DataSetService;
 import org.openmrs.report.impl.TsvReportRenderer;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.SkipBaseSetup;
 import org.openmrs.util.OpenmrsUtil;
 import org.simpleframework.xml.Serializer;
 
@@ -50,7 +51,7 @@ public class RowPerObsDatasetTest extends BaseContextSensitiveTest {
 		executeDataSet("org/openmrs/report/include/RowPerObsDatasetTest.xml");
 		
 		EvaluationContext evalContext = new EvaluationContext();
-		DataSetService service = Context.getService(DataSetService.class);
+		DataSetService service = Context.getDataSetService();
 		PatientSearch kids = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 		
 		Calendar today = new GregorianCalendar();
