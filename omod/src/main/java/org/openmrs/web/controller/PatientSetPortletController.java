@@ -27,6 +27,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
 import org.openmrs.util.OpenmrsConstants;
+import org.openmrs.web.controller.PortletController;
 
 public class PatientSetPortletController extends PortletController {
 	

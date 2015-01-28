@@ -75,7 +75,7 @@
 	
 	<mappingFiles>
 		ReportObject.hbm.xml
-		ReportSchemaXml.hbm.xml
+		ReportSchema.hbm.xml
 	</mappingFiles>
 	
 	<messages>
