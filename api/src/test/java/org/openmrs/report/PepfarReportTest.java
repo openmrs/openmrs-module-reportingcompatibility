@@ -31,7 +31,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.openmrs.Cohort;
 import org.openmrs.Program;
-import org.openmrs.api.ReportService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.api.context.Context;
 import org.openmrs.report.impl.TsvReportRenderer;
 import org.openmrs.reporting.PatientCharacteristicFilter;
