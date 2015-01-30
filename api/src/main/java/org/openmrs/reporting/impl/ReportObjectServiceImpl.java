@@ -162,7 +162,7 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	 * @deprecated
 	 */
 	public Integer createReportObject(AbstractReportObject reportObject) throws APIException {
-		Context.getReportObjectService().saveReportObject(reportObject);
+		Context.getService(ReportObjectService.class).saveReportObject(reportObject);
 		return reportObject.getReportObjectId();
 	}
 	
@@ -178,7 +178,7 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	 * @deprecated
 	 */
 	public void deleteReport(AbstractReportObject reportObject) throws APIException {
-		Context.getReportObjectService().purgeReportObject(reportObject);
+		Context.getService(ReportObjectService.class).purgeReportObject(reportObject);
 	}
 	
 	/**
@@ -193,7 +193,7 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	 * @deprecated
 	 */
 	public void updateReportObject(AbstractReportObject reportObject) throws APIException {
-		Context.getReportObjectService().saveReportObject(reportObject);
+		Context.getService(ReportObjectService.class).saveReportObject(reportObject);
 	}
 	
 	/**
@@ -263,7 +263,7 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	 * @deprecated
 	 */
 	public void createSearchHistory(CohortSearchHistory history) {
-		Context.getReportObjectService().saveSearchHistory(history);
+		Context.getService(ReportObjectService.class).saveSearchHistory(history);
 	}
 	
 	/**
@@ -278,7 +278,7 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	 * @deprecated
 	 */
 	public void deleteSearchHistory(CohortSearchHistory history) {
-		Context.getReportObjectService().purgeSearchHistory(history);
+		Context.getService(ReportObjectService.class).purgeSearchHistory(history);
 	}
 	
 	/**

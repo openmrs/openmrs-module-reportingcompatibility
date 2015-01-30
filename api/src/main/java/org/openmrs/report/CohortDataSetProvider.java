@@ -19,9 +19,9 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
-import org.openmrs.api.CohortService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortDefinition;
+import org.openmrs.module.reportingcompatibility.service.CohortService;
 
 /**
  * The logic that evaluates a {@link CohortDataSetDefinition} and produces a {@link CohortDataSet}
@@ -59,7 +59,7 @@ public class CohortDataSetProvider implements DataSetProvider {
 		data.setName(def.getName());
 		
 		Map<String, Cohort> results = new LinkedHashMap<String, Cohort>();
-		CohortService cs = Context.getCohortService();
+		CohortService cs = Context.getService(CohortService.class);
 		for (Map.Entry<String, CohortDefinition> e : def.getStrategies().entrySet()) {
 			Cohort temp = cs.evaluate(e.getValue(), evalContext);
 			if (inputCohort != null) {

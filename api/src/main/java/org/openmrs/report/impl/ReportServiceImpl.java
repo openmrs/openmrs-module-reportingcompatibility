@@ -30,9 +30,9 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.GlobalProperty;
 import org.openmrs.api.APIException;
-import org.openmrs.api.DataSetService;
-import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.DataSetService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.DataSet;
 import org.openmrs.report.DataSetDefinition;
 import org.openmrs.report.EvaluationContext;
@@ -52,7 +52,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Methods specific to objects in the report package. These methods render reports or save them to
  * the database
  *
- * @see org.openmrs.api.ReportService
+ * @see org.openmrs.module.reportingcompatibility.service.ReportService
  * @see org.openmrs.api.context.Context
  * @deprecated see reportingcompatibility module
  */
@@ -96,14 +96,14 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#deleteReportSchema(org.openmrs.report.ReportSchema)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#deleteReportSchema(org.openmrs.report.ReportSchema)
 	 */
 	public void deleteReportSchema(ReportSchema reportSchema) {
 		throw new APIException("Not Yet Implemented");
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#evaluate(org.openmrs.report.ReportSchema,
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#evaluate(org.openmrs.report.ReportSchema,
 	 *      org.openmrs.Cohort, org.openmrs.report.EvaluationContext)
 	 */
 	@SuppressWarnings("unchecked")
@@ -114,7 +114,7 @@ public class ReportServiceImpl implements ReportService {
 		ret.setDataSets(data);
 		ret.setReportSchema(reportSchema);
 		ret.setEvaluationContext(evalContext);
-		DataSetService dss = Context.getDataSetService();
+		DataSetService dss = Context.getService(DataSetService.class);
 		
 		if (reportSchema.getDataSetDefinitions() != null) {
 			for (DataSetDefinition dataSetDefinition : reportSchema.getDataSetDefinitions()) {
@@ -126,7 +126,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getReportRenderer(java.lang.String)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getReportRenderer(java.lang.String)
 	 */
 	@Transactional(readOnly = true)
 	public ReportRenderer getReportRenderer(Class<? extends ReportRenderer> clazz) {
@@ -140,7 +140,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getReportRenderer(java.lang.String)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getReportRenderer(java.lang.String)
 	 */
 	@Transactional(readOnly = true)
 	public ReportRenderer getReportRenderer(String className) {
@@ -154,7 +154,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getReportRenderers()
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getReportRenderers()
 	 */
 	@Transactional(readOnly = true)
 	public Collection<ReportRenderer> getReportRenderers() {
@@ -162,7 +162,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getRenderingModes(org.openmrs.report.ReportSchema)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getRenderingModes(org.openmrs.report.ReportSchema)
 	 */
 	@Transactional(readOnly = true)
 	public List<RenderingMode> getRenderingModes(ReportSchema schema) {
@@ -178,7 +178,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getReportSchema(java.lang.Integer)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getReportSchema(java.lang.Integer)
 	 */
 	@Transactional(readOnly = true)
 	public ReportSchema getReportSchema(Integer reportSchemaId) throws APIException {
@@ -187,7 +187,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getReportSchema(org.openmrs.report.ReportSchemaXml)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getReportSchema(org.openmrs.report.ReportSchemaXml)
 	 */
 	@Transactional(readOnly = true)
 	public ReportSchema getReportSchema(ReportSchemaXml reportSchemaXml) throws APIException {
@@ -207,7 +207,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getReportSchemas()
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getReportSchemas()
 	 */
 	@Transactional(readOnly = true)
 	public List<ReportSchema> getReportSchemas() throws APIException {
@@ -221,7 +221,7 @@ public class ReportServiceImpl implements ReportService {
 	/**
 	 * ADDs renderers...doesn't replace them.
 	 *
-	 * @see org.openmrs.api.ReportService#setRenderers(java.util.Map)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#setRenderers(java.util.Map)
 	 */
 	public void setRenderers(Map<Class<? extends ReportRenderer>, ReportRenderer> newRenderers) throws APIException {
 		for (Map.Entry<Class<? extends ReportRenderer>, ReportRenderer> entry : newRenderers.entrySet()) {
@@ -230,7 +230,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getRenderers()
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getRenderers()
 	 */
 	@Transactional(readOnly = true)
 	public Map<Class<? extends ReportRenderer>, ReportRenderer> getRenderers() throws APIException {
@@ -242,7 +242,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#registerRenderer(java.lang.Class,
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#registerRenderer(java.lang.Class,
 	 *      org.openmrs.report.ReportRenderer)
 	 */
 	public void registerRenderer(Class<? extends ReportRenderer> rendererClass, ReportRenderer renderer) throws APIException {
@@ -250,7 +250,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#registerRenderer(java.lang.String)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#registerRenderer(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
 	public void registerRenderer(String rendererClass) throws APIException {
@@ -265,21 +265,21 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#removeRenderer(Class)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#removeRenderer(Class)
 	 */
 	public void removeRenderer(Class<? extends ReportRenderer> renderingClass) {
 		renderers.remove(renderingClass);
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#saveReportSchema(org.openmrs.report.ReportSchema)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#saveReportSchema(org.openmrs.report.ReportSchema)
 	 */
 	public void saveReportSchema(ReportSchema reportSchema) {
 		throw new APIException("Not Yet Implemented");
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getReportSchemaXml(java.lang.Integer)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getReportSchemaXml(java.lang.Integer)
 	 */
 	@Transactional(readOnly = true)
 	public ReportSchemaXml getReportSchemaXml(Integer reportSchemaXmlId) {
@@ -287,37 +287,37 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#saveReportSchemaXml(org.openmrs.report.ReportSchemaXml)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#saveReportSchemaXml(org.openmrs.report.ReportSchemaXml)
 	 */
 	public void saveReportSchemaXml(ReportSchemaXml reportSchemaXml) {
 		dao.saveReportSchemaXml(reportSchemaXml);
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#createReportSchemaXml(org.openmrs.report.ReportSchemaXml)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#createReportSchemaXml(org.openmrs.report.ReportSchemaXml)
 	 * @deprecated use saveReportSchemaXml(reportSchemaXml)
 	 */
 	public void createReportSchemaXml(ReportSchemaXml reportSchemaXml) {
-		Context.getReportService().saveReportSchemaXml(reportSchemaXml);
+		Context.getService(ReportService.class).saveReportSchemaXml(reportSchemaXml);
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#updateReportSchemaXml(org.openmrs.report.ReportSchemaXml)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#updateReportSchemaXml(org.openmrs.report.ReportSchemaXml)
 	 * @deprecated use saveReportSchemaXml(reportSchemaXml)
 	 */
 	public void updateReportSchemaXml(ReportSchemaXml reportSchemaXml) {
-		Context.getReportService().saveReportSchemaXml(reportSchemaXml);
+		Context.getService(ReportService.class).saveReportSchemaXml(reportSchemaXml);
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#deleteReportSchemaXml(org.openmrs.report.ReportSchemaXml)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#deleteReportSchemaXml(org.openmrs.report.ReportSchemaXml)
 	 */
 	public void deleteReportSchemaXml(ReportSchemaXml reportSchemaXml) {
 		dao.deleteReportSchemaXml(reportSchemaXml);
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getReportSchemaXmls()
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getReportSchemaXmls()
 	 */
 	@Transactional(readOnly = true)
 	public List<ReportSchemaXml> getReportSchemaXmls() {
@@ -325,7 +325,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#getReportXmlMacros()
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#getReportXmlMacros()
 	 */
 	@Transactional(readOnly = true)
 	public Properties getReportXmlMacros() {
@@ -344,7 +344,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#saveReportXmlMacros(java.util.Properties)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#saveReportXmlMacros(java.util.Properties)
 	 */
 	public void saveReportXmlMacros(Properties macros) {
 		try {
@@ -359,7 +359,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.ReportService#applyReportXmlMacros(java.lang.String)
+	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#applyReportXmlMacros(java.lang.String)
 	 */
 	@Transactional(readOnly = true)
 	public String applyReportXmlMacros(String input) {

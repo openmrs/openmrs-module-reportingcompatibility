@@ -34,7 +34,7 @@ import org.openmrs.cohort.CohortSearchHistory;
 import org.openmrs.cohort.CohortUtil;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
-import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.util.ReportingcompatibilityUtil;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -416,7 +416,7 @@ public class PatientSearch implements CohortDefinition {
 			} else if (o instanceof PatientFilter) {
 				ret.add(o);
 			} else if (o instanceof PatientSearch) {
-				ret.add(OpenmrsUtil.toPatientFilter((PatientSearch) o, history, evalContext));
+				ret.add(ReportingcompatibilityUtil.toPatientFilter((PatientSearch) o, history, evalContext));
 			} else {
 				throw new RuntimeException("Programming Error: forgot to handle: " + o.getClass());
 			}

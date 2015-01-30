@@ -21,14 +21,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.api.ReportService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 /**
  * Tests the small class ReportSchemaXml and its database accesses
  */
-public class ReportSchemaXmlTest extends BaseContextSensitiveTest {
+public class ReportSchemaXmlTest extends BaseModuleContextSensitiveTest {
 	
 	Log log = LogFactory.getLog(getClass());
 	

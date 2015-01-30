@@ -5,6 +5,7 @@
 
 <hibernate-configuration>
 	<session-factory>
-		${hbmConfig}
+		<mapping resource="ReportObject.hbm.xml"/>
+		<mapping resource="ReportSchemaXml.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

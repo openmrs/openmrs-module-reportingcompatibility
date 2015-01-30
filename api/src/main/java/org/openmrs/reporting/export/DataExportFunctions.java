@@ -55,7 +55,9 @@ import org.openmrs.api.context.Context;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearchReportObject;
+import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 /**
  * @deprecated see reportingcompatibility module
@@ -347,12 +349,12 @@ public class DataExportFunctions {
 		if (key.startsWith("C.")) {
 			ps = Context.getCohortService().getCohort(Integer.valueOf(key.substring(2)));
 		} else if (key.startsWith("F.")) {
-			PatientFilter pf = Context.getReportObjectService().getPatientFilterById(Integer.valueOf(key.substring(2)));
+			PatientFilter pf = Context.getService(ReportObjectService.class).getPatientFilterById(Integer.valueOf(key.substring(2)));
 			ps = pf.filter(getPatientSet(), context);
 		} else if (key.startsWith("S.")) {
-			PatientSearchReportObject ro = (PatientSearchReportObject) Context.getReportObjectService().getReportObject(
+			PatientSearchReportObject ro = (PatientSearchReportObject) Context.getService(ReportObjectService.class).getReportObject(
 			    Integer.valueOf(key.substring(2)));
-			PatientFilter pf = OpenmrsUtil.toPatientFilter(ro.getPatientSearch(), null);
+			PatientFilter pf = ReportingcompatibilityUtil.toPatientFilter(ro.getPatientSearch(), null);
 			ps = pf.filter(getPatientSet(), context);
 		} else {
 			log.error("key = " + key);
@@ -652,8 +654,8 @@ public class DataExportFunctions {
 		}
 		Date earliest = null;
 		for (DrugOrder o : patientOrders) {
-			if (earliest == null || OpenmrsUtil.compareWithNullAsLatest(o.getStartDate(), earliest) < 0) {
-				earliest = o.getStartDate();
+			if (earliest == null || OpenmrsUtil.compareWithNullAsLatest(o.getDateActivated(), earliest) < 0) {
+				earliest = o.getDateActivated();
 			}
 		}
 		return earliest;

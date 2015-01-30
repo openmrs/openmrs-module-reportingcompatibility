@@ -16,6 +16,7 @@ package org.openmrs.reporting.export;
 import java.io.Serializable;
 
 import org.openmrs.api.context.Context;
+import org.openmrs.reporting.ReportObjectService;
 import org.springframework.util.StringUtils;
 
 /**
@@ -59,18 +60,18 @@ public class CohortColumn implements ExportColumn, Serializable {
 		} else if (filterId != null) {
 			this.filterId = filterId;
 			if (!StringUtils.hasText(columnName)) {
-				this.columnName = Context.getReportObjectService().getPatientFilterById(filterId).getName();
+				this.columnName = Context.getService(ReportObjectService.class).getPatientFilterById(filterId).getName();
 			}
 			if (!StringUtils.hasText(valueIfTrue)) {
-				this.valueIfTrue = Context.getReportObjectService().getPatientFilterById(filterId).getName();
+				this.valueIfTrue = Context.getService(ReportObjectService.class).getPatientFilterById(filterId).getName();
 			}
 		} else { // assert patientSearchId != null
 			this.patientSearchId = patientSearchId;
 			if (!StringUtils.hasText(columnName)) {
-				this.columnName = Context.getReportObjectService().getReportObject(patientSearchId).getName();
+				this.columnName = Context.getService(ReportObjectService.class).getReportObject(patientSearchId).getName();
 			}
 			if (!StringUtils.hasText(valueIfTrue)) {
-				this.valueIfTrue = Context.getReportObjectService().getReportObject(patientSearchId).getName();
+				this.valueIfTrue = Context.getService(ReportObjectService.class).getReportObject(patientSearchId).getName();
 			}
 		}
 	}

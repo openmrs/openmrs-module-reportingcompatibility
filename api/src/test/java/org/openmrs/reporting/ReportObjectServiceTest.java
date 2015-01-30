@@ -8,10 +8,10 @@ import org.openmrs.Concept;
 import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortSearchHistory;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
 
-public class ReportObjectServiceTest extends BaseContextSensitiveTest {
+public class ReportObjectServiceTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see {@link ReportObjectService#saveSearchHistory(CohortSearchHistory)}
@@ -35,6 +35,6 @@ public class ReportObjectServiceTest extends BaseContextSensitiveTest {
 		history.setName("Some name");
 		history.setDescription("a description");
 		history.addSearchItem(search);
-		Context.getReportObjectService().saveSearchHistory(history);
+		Context.getService(ReportObjectService.class).saveSearchHistory(history);
 	}
 }

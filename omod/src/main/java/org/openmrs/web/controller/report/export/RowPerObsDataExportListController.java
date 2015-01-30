@@ -28,8 +28,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
-import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
 import org.openmrs.reporting.AbstractReportObject;
@@ -85,8 +85,6 @@ public class RowPerObsDataExportListController extends SimpleFormController {
 			String[] reportList = request.getParameterValues("dataExportId");
 			String action = request.getParameter("action");
 			
-			AdministrationService as = Context.getAdministrationService();
-			
 			String success = "";
 			String error = "";
 			
@@ -134,7 +132,7 @@ public class RowPerObsDataExportListController extends SimpleFormController {
 					for (String p : reportList) {
 						// TODO convenience method deleteDataExport(Integer) ??
 						try {
-							as.deleteReportObject(Integer.valueOf(p));
+							Context.getService(ReportingCompatibilityService.class).deleteReportObject(Integer.valueOf(p));
 							if (!success.equals(""))
 								success += "<br/>";
 							success += textDataExport + " " + p + " " + deleted;

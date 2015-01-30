@@ -23,11 +23,11 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
-import org.openmrs.api.CohortService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.cohort.CohortSearchHistory;
 import org.openmrs.cohort.CohortUtil;
+import org.openmrs.module.reportingcompatibility.service.CohortService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
 import org.openmrs.reporting.AbstractReportObject;
@@ -311,7 +311,7 @@ public class DWRCohortBuilderService {
 				evalContext.addParameterValue(p, v);
 			}
 		}
-		CohortService svc = Context.getCohortService();
+		CohortService svc = Context.getService(CohortService.class);
 		return svc.evaluate(def, evalContext);
 	}
 }

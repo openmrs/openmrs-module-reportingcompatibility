@@ -25,13 +25,14 @@ import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ProgramStatePatientFilter;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
 
 /**
  * Tests methods in the {@link org.openmrs.cohort.CohortUtil} class.
  */
-public class CohortUtilTest extends BaseContextSensitiveTest {
+public class CohortUtilTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see {@link org.openmrs.cohort.CohortUtil#parse(String)}
@@ -44,14 +45,14 @@ public class CohortUtilTest extends BaseContextSensitiveTest {
 			// Create a search called "Male" 
 			PatientSearch ps = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 			ps.addArgument("gender", "m", String.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Male", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("Male", ps));
 		}
 		{
 			// Create a search called "EnrolledOnDate" with one parameter called untilDate
 			PatientSearch ps = PatientSearch.createFilterSearch(ProgramStatePatientFilter.class);
 			//ps.addArgument("program", Context.getProgramWorkflowService().getProgram("HIV PROGRAM").getProgramId().toString(), Integer.class);
 			ps.addArgument("untilDate", "${date}", Date.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("EnrolledOnDate", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("EnrolledOnDate", ps));
 		}
 		
 		// TODO this is the actual test.  Move the above logic into a dbunit xml file or use the standard xml run by BaseContextSensitiveTest

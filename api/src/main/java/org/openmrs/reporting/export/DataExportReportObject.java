@@ -27,7 +27,8 @@ import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearchReportObject;
-import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 /**
  * @deprecated see reportingcompatibility module
@@ -206,7 +207,7 @@ public class DataExportReportObject extends AbstractReportObject implements Seri
 		}
 		
 		if (cohortDefinitionId != null) {
-			PatientFilter cohortDefinition = (PatientFilter) Context.getReportObjectService().getReportObject(
+			PatientFilter cohortDefinition = (PatientFilter) Context.getService(ReportObjectService.class).getReportObject(
 			    cohortDefinitionId);
 			if (cohortDefinition != null) {
 				cohort = cohortDefinition.filter(cohort, context);
@@ -214,9 +215,9 @@ public class DataExportReportObject extends AbstractReportObject implements Seri
 		}
 		
 		if (patientSearchId != null) {
-			PatientSearchReportObject search = (PatientSearchReportObject) Context.getReportObjectService().getReportObject(
+			PatientSearchReportObject search = (PatientSearchReportObject) Context.getService(ReportObjectService.class).getReportObject(
 			    patientSearchId);
-			PatientFilter cohortDefinition = OpenmrsUtil.toPatientFilter(search.getPatientSearch(), null);
+			PatientFilter cohortDefinition = ReportingcompatibilityUtil.toPatientFilter(search.getPatientSearch(), null);
 			cohort = cohortDefinition.filter(cohort, context);
 		}
 		

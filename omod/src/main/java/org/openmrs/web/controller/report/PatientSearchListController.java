@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
-import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityService;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
@@ -63,7 +63,6 @@ public class PatientSearchListController extends SimpleFormController {
 		if (Context.isAuthenticated()) {
 			String[] reportList = request.getParameterValues("patientSearchId");
 			String action = request.getParameter("action");
-			AdministrationService as = Context.getAdministrationService();
 			String success = "";
 			String error = "";
 			MessageSourceAccessor msa = getMessageSourceAccessor();
@@ -104,7 +103,7 @@ public class PatientSearchListController extends SimpleFormController {
 						}
 						if (compositeTest == 0) {
 							try {
-								as.deleteReportObject(Integer.valueOf(p));
+								Context.getService(ReportingCompatibilityService.class).deleteReportObject(Integer.valueOf(p));
 								if (!success.equals(""))
 									success += "<br/>";
 								success += textPatientSearch + " " + p + " " + deleted;

@@ -20,12 +20,12 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 import org.openmrs.Cohort;
 import org.openmrs.report.EvaluationContext;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 /**
  *
  */
-public class CachingPatientFilterTest extends BaseContextSensitiveTest {
+public class CachingPatientFilterTest extends BaseModuleContextSensitiveTest {
 	
 	@Test
 	public void shouldCachingPatientFilter() throws Exception {

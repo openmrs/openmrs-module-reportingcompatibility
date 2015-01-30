@@ -26,7 +26,8 @@ import org.openmrs.api.context.Context;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearchReportObject;
-import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 /**
  * Facilitates printing a data export so that a patient is listed out on multiple lines to allow for
@@ -224,7 +225,7 @@ public class RowPerObsDataExportReportObject extends DataExportReportObject impl
 		}
 		
 		if (cohortDefinitionId != null) {
-			PatientFilter cohortDefinition = (PatientFilter) Context.getReportObjectService().getReportObject(
+			PatientFilter cohortDefinition = (PatientFilter) Context.getService(ReportObjectService.class).getReportObject(
 			    cohortDefinitionId);
 			if (cohortDefinition != null) {
 				Cohort c = new Cohort("Cohort from Definition", "cohort from cohortdefinitionid: " + cohortDefinitionId,
@@ -235,9 +236,9 @@ public class RowPerObsDataExportReportObject extends DataExportReportObject impl
 		}
 		
 		if (patientSearchId != null) {
-			PatientSearchReportObject search = (PatientSearchReportObject) Context.getReportObjectService().getReportObject(
+			PatientSearchReportObject search = (PatientSearchReportObject) Context.getService(ReportObjectService.class).getReportObject(
 			    patientSearchId);
-			PatientFilter cohortDefinition = OpenmrsUtil.toPatientFilter(search.getPatientSearch(), null);
+			PatientFilter cohortDefinition = ReportingcompatibilityUtil.toPatientFilter(search.getPatientSearch(), null);
 			org.openmrs.Cohort c = new Cohort("Cohort from patientSearch",
 			        "cohort from patientSearchId: " + patientSearchId, patientIdSet);
 			c = cohortDefinition.filter(c, context);

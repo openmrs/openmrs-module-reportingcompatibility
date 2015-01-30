@@ -33,6 +33,7 @@ import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.ReportingCompatibilityConstants;
 import org.openmrs.module.reportingcompatibility.reporting.export.DataExportUtil;
+import org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
 import org.openmrs.reporting.AbstractReportObject;
@@ -152,8 +153,8 @@ public class DataExportListController extends SimpleFormController {
 								} catch (Exception ex) { 
 									// pass 
 									// (if this failed for any reason, we still want to delete the data export if we can) 
-								} 
-								as.deleteReportObject(Integer.valueOf(p));
+								}
+								Context.getService(ReportingCompatibilityService.class).deleteReportObject(Integer.valueOf(p));
 								
 								if (!success.equals(""))
 									success += "<br/>";

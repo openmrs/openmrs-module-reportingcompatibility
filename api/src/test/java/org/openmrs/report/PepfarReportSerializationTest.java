@@ -29,7 +29,7 @@ import org.openmrs.Location;
 import org.openmrs.User;
 import org.openmrs.cohort.StaticCohortDefinition;
 import org.openmrs.reporting.PatientSearch;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.TestUtil;
 import org.openmrs.util.OpenmrsUtil;
 import org.simpleframework.xml.Serializer;
@@ -37,7 +37,7 @@ import org.simpleframework.xml.Serializer;
 /**
  * Test class that tests the serialization and deserialization of the a very simple pepfar report
  */
-public class PepfarReportSerializationTest extends BaseContextSensitiveTest {
+public class PepfarReportSerializationTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * Set up the database with the initial dataset before every test method in this class.

@@ -24,12 +24,12 @@ import org.openmrs.Drug;
 import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
 import org.openmrs.report.EvaluationContext;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 /**
  *
  */
-public class PatientFilterTest extends BaseContextSensitiveTest {
+public class PatientFilterTest extends BaseModuleContextSensitiveTest {
 	
 	DateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
 	

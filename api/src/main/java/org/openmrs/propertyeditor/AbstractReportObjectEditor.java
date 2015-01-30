@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.reporting.AbstractReportObject;
+import org.openmrs.reporting.ReportObjectService;
 import org.springframework.util.StringUtils;
 
 /**
@@ -42,7 +43,7 @@ public class AbstractReportObjectEditor extends PropertyEditorSupport {
 		log.debug("Setting report object text " + text);
 		if (StringUtils.hasText(text)) {
 			try {
-				setValue(Context.getReportObjectService().getReportObject(Integer.valueOf(text)));
+				setValue(Context.getService(ReportObjectService.class).getReportObject(Integer.valueOf(text)));
 				log.debug("value: " + getValue());
 			}
 			catch (Exception ex) {
