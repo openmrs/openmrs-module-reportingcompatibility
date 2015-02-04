@@ -75,7 +75,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#evaluate(org.openmrs.cohort.CohortDefinition,
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#evaluate(org.openmrs.cohort.CohortDefinition,
 	 *      org.openmrs.report.EvaluationContext)
 	 * @deprecated see reportingcompatibility module
 	 */
@@ -87,7 +87,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#getAllPatientsCohortDefinition()
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#getAllPatientsCohortDefinition()
 	 * @deprecated see reportingcompatibility module
 	 */
 	@Deprecated
@@ -99,7 +99,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#getCohortDefinition(java.lang.Class, java.lang.Integer)
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#getCohortDefinition(java.lang.Class, java.lang.Integer)
 	 * @deprecated see reportingcompatibility module
 	 */
 	@Deprecated
@@ -110,7 +110,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#getCohortDefinition(java.lang.String)
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#getCohortDefinition(java.lang.String)
 	 * @deprecated see reportingcompatibility module
 	 */
 	@SuppressWarnings("unchecked")
@@ -123,7 +123,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 			Integer id = Integer.parseInt((keyValues[0] != null) ? keyValues[0] : "0");
 			String className = (keyValues[1] != null) ? keyValues[1] : "";
 			Class clazz = Class.forName(className);
-			return Context.getCohortService().getCohortDefinition(clazz, id);
+			return Context.getService(CohortService.class).getCohortDefinition(clazz, id);
 		}
 		catch (ClassNotFoundException e) {
 			throw new APIException(e);
@@ -131,7 +131,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#getAllCohortDefinitions()
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#getAllCohortDefinitions()
 	 * @deprecated see reportingcompatibility module
 	 */
 	@Deprecated
@@ -148,7 +148,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#purgeCohortDefinition(org.openmrs.cohort.CohortDefinition)
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#purgeCohortDefinition(org.openmrs.cohort.CohortDefinition)
 	 * @deprecated see reportingcompatibility module
 	 */
 	@Deprecated
@@ -158,7 +158,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#setCohortDefinitionProviders(java.util.Map)
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#setCohortDefinitionProviders(java.util.Map)
 	 * @deprecated see reportingcompatibility module
 	 */
 	@Deprecated
@@ -170,7 +170,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#getCohortDefinitionProviders()
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#getCohortDefinitionProviders()
 	 * @deprecated see reportingcompatibility module
 	 */
 	@Deprecated
@@ -184,7 +184,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#registerCohortDefinitionProvider(Class,
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#registerCohortDefinitionProvider(Class,
 	 *      CohortDefinitionProvider)
 	 * @deprecated see reportingcompatibility module
 	 */
@@ -196,7 +196,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#removeCohortDefinitionProvider(java.lang.Class)
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#removeCohortDefinitionProvider(java.lang.Class)
 	 * @deprecated see reportingcompatibility module
 	 */
 	@Deprecated
@@ -212,7 +212,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#saveCohortDefinition(org.openmrs.cohort.CohortDefinition)
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#saveCohortDefinition(org.openmrs.cohort.CohortDefinition)
 	 * @deprecated see reportingcompatibility module
 	 */
 	@Deprecated
@@ -222,7 +222,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	}
 
 	/**
-	 * @see org.openmrs.api.CohortService#getCohortDefinitions(java.lang.Class)
+	 * @see org.openmrs.module.reportingcompatibility.service.CohortService#getCohortDefinitions(java.lang.Class)
 	 * @deprecated see reportingcompatibility module
 	 */
 	@SuppressWarnings("unchecked")

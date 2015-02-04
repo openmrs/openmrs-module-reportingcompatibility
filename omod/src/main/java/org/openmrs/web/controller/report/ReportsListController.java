@@ -15,8 +15,8 @@ package org.openmrs.web.controller.report;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /**

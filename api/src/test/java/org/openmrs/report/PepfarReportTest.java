@@ -31,20 +31,20 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.openmrs.Cohort;
 import org.openmrs.Program;
-import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.impl.TsvReportRenderer;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.ProgramStatePatientFilter;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.util.OpenmrsUtil;
 import org.simpleframework.xml.Serializer;
 
 /**
  * Test class that tries to run a portion of the Pepfar monthly report
  */
-public class PepfarReportTest extends BaseContextSensitiveTest {
+public class PepfarReportTest extends BaseModuleContextSensitiveTest {
 	
 	Log log = LogFactory.getLog(getClass());
 	

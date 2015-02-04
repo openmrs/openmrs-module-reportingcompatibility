@@ -22,6 +22,7 @@ import java.util.StringTokenizer;
 
 import org.openmrs.api.context.Context;
 import org.openmrs.reporting.PatientSearch;
+import org.openmrs.reporting.ReportObjectService;
 
 /**
  * @deprecated see reportingcompatibility module
@@ -109,7 +110,7 @@ public class CohortUtil {
 					if (name == null) {
 						throw new IllegalArgumentException("Could not find a cohort name in " + s);
 					}
-					PatientSearch search = Context.getReportObjectService().getPatientSearch(name);
+					PatientSearch search = Context.getService(ReportObjectService.class).getPatientSearch(name);
 					if (search == null) {
 						throw new IllegalArgumentException("Could not load a cohort named " + name);
 					}

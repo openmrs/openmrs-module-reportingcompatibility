@@ -29,15 +29,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.openmrs.Program;
-import org.openmrs.api.CohortService;
-import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.CohortService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.impl.TsvReportRenderer;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ProgramStatePatientFilter;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.xml.OpenmrsCycleStrategy;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.load.Persister;
@@ -45,7 +46,7 @@ import org.simpleframework.xml.load.Persister;
 /**
  *
  */
-public class PepfarReportFromXmlTest extends BaseContextSensitiveTest {
+public class PepfarReportFromXmlTest extends BaseModuleContextSensitiveTest {
 	
 	Log log = LogFactory.getLog(getClass());
 	
@@ -111,31 +112,31 @@ public class PepfarReportFromXmlTest extends BaseContextSensitiveTest {
 		assertNotNull("Need at least one program defined to run this test", hivProgram);
 		
 		// Make sure we have all required PatientSearches
-		if (Context.getReportObjectService().getPatientSearch("Male") == null) {
+		if (Context.getService(ReportObjectService.class).getPatientSearch("Male") == null) {
 			PatientSearch ps = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 			ps.addArgument("gender", "m", String.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Male", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("Male", ps));
 		}
-		if (Context.getReportObjectService().getPatientSearch("Female") == null) {
+		if (Context.getService(ReportObjectService.class).getPatientSearch("Female") == null) {
 			PatientSearch ps = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 			ps.addArgument("gender", "f", String.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Female", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("Female", ps));
 		}
-		if (Context.getReportObjectService().getPatientSearch("Adult") == null) {
+		if (Context.getService(ReportObjectService.class).getPatientSearch("Adult") == null) {
 			PatientSearch ps = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 			ps.addArgument("minAge", "15", Integer.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Adult", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("Adult", ps));
 		}
-		if (Context.getReportObjectService().getPatientSearch("Child") == null) {
+		if (Context.getService(ReportObjectService.class).getPatientSearch("Child") == null) {
 			PatientSearch ps = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 			ps.addArgument("maxAge", "15", Integer.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Child", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("Child", ps));
 		}
-		if (Context.getReportObjectService().getPatientSearch("EnrolledOnDate") == null) {
+		if (Context.getService(ReportObjectService.class).getPatientSearch("EnrolledOnDate") == null) {
 			PatientSearch ps = PatientSearch.createFilterSearch(ProgramStatePatientFilter.class);
 			ps.addArgument("program", hivProgram.getProgramId().toString(), Program.class);
 			ps.addArgument("untilDate", "${date}", Date.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("EnrolledOnDate", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("EnrolledOnDate", ps));
 		}
 		
 		Serializer serializer = new Persister(new OpenmrsCycleStrategy());
@@ -162,25 +163,25 @@ public class PepfarReportFromXmlTest extends BaseContextSensitiveTest {
 		executeDataSet("org/openmrs/report/include/ReportTests-patients.xml");
 		
 		// Make sure we have all required PatientSearches
-		if (Context.getReportObjectService().getPatientSearch("Male") == null) {
+		if (Context.getService(ReportObjectService.class).getPatientSearch("Male") == null) {
 			PatientSearch ps = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 			ps.addArgument("gender", "m", String.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Male", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("Male", ps));
 		}
-		if (Context.getReportObjectService().getPatientSearch("Female") == null) {
+		if (Context.getService(ReportObjectService.class).getPatientSearch("Female") == null) {
 			PatientSearch ps = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 			ps.addArgument("gender", "f", String.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Female", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("Female", ps));
 		}
-		if (Context.getReportObjectService().getPatientSearch("Adult") == null) {
+		if (Context.getService(ReportObjectService.class).getPatientSearch("Adult") == null) {
 			PatientSearch ps = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 			ps.addArgument("minAge", "15", Integer.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Adult", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("Adult", ps));
 		}
-		if (Context.getReportObjectService().getPatientSearch("Child") == null) {
+		if (Context.getService(ReportObjectService.class).getPatientSearch("Child") == null) {
 			PatientSearch ps = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 			ps.addArgument("maxAge", "15", Integer.class);
-			Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Child", ps));
+			Context.getService(ReportObjectService.class).saveReportObject(new PatientSearchReportObject("Child", ps));
 		}
 		
 		EvaluationContext evalContext = new EvaluationContext();
@@ -189,7 +190,7 @@ public class PepfarReportFromXmlTest extends BaseContextSensitiveTest {
 		evalContext
 		        .addParameterValue(new Parameter("report.endDate", "End Date", Date.class, null), ymd.parse("2007-09-30"));
 		
-		CohortService cs = Context.getCohortService();
+		CohortService cs = Context.getService(CohortService.class);
 		
 		PatientSearch male = new PatientSearch();
 		PatientSearch female = new PatientSearch();

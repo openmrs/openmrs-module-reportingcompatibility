@@ -35,13 +35,13 @@ import org.openmrs.reporting.ObsPatientFilter;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.SearchArgument;
-import org.openmrs.test.BaseContextSensitiveTest;
-import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 /**
  *
  */
-public class PatientSearchTest extends BaseContextSensitiveTest {
+public class PatientSearchTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * Set up the database with the initial dataset before every test method in this class.
@@ -106,7 +106,7 @@ public class PatientSearchTest extends BaseContextSensitiveTest {
 			ec.addParameterValue(search, p, ec.evaluateExpression(p.getDefaultValue().toString()));
 		}
 		
-		PatientFilter filterToRun = OpenmrsUtil.toPatientFilter(search, null, ec);
+		PatientFilter filterToRun = ReportingcompatibilityUtil.toPatientFilter(search, null, ec);
 		Cohort result = filterToRun.filter(Context.getPatientSetService().getAllPatients(), ec);
 		
 		//System.out.println("results is " + result.size());

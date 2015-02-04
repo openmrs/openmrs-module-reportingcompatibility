@@ -33,8 +33,8 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.Location;
 import org.openmrs.User;
-import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityService;
 import org.openmrs.propertyeditor.ConceptEditor;
 import org.openmrs.propertyeditor.LocationEditor;
 import org.openmrs.propertyeditor.UserEditor;
@@ -103,8 +103,7 @@ public class ReportObjectFormController extends SimpleFormController {
 		if (Context.isAuthenticated()) {
 			AbstractReportObject reportObject = (AbstractReportObject) obj;
 			
-			AdministrationService as = Context.getAdministrationService();
-			as.updateReportObject(reportObject);
+			Context.getService(ReportingCompatibilityService.class).updateReportObject(reportObject);
 			view = getSuccessView();
 			httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "ReportObject.saved");
 		}

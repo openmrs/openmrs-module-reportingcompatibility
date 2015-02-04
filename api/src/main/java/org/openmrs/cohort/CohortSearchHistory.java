@@ -33,7 +33,8 @@ import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.ReportObject;
-import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 /**
  * @deprecated see reportingcompatibility module
@@ -147,7 +148,7 @@ public class CohortSearchHistory extends AbstractReportObject {
 			PatientFilter filter = cachedFilters.get(i);
 			item.setFilter(filter);
 			if (search.isSavedFilterReference()) {
-				ReportObject ro = Context.getReportObjectService().getReportObject(search.getSavedFilterId());
+				ReportObject ro = Context.getService(ReportObjectService.class).getReportObject(search.getSavedFilterId());
 				item.setName(ro.getName());
 				item.setDescription(ro.getDescription());
 			} else if (search.isSavedCohortReference()) {
@@ -155,7 +156,7 @@ public class CohortSearchHistory extends AbstractReportObject {
 				item.setName(c.getName());
 				item.setDescription(c.getDescription());
 			} else if (search.isSavedSearchReference()) {
-				ReportObject ro = Context.getReportObjectService().getReportObject(search.getSavedSearchId());
+				ReportObject ro = Context.getService(ReportObjectService.class).getReportObject(search.getSavedSearchId());
 				item.setName(ro.getName());
 				item.setDescription(ro.getDescription());
 			} else if (search.isComposition()) {
@@ -211,7 +212,7 @@ public class CohortSearchHistory extends AbstractReportObject {
 	public synchronized void addSearchItem(PatientSearch ps) {
 		checkArrayLengths();
 		searchHistory.add(ps);
-		cachedFilters.add(OpenmrsUtil.toPatientFilter(ps, this));
+		cachedFilters.add(ReportingcompatibilityUtil.toPatientFilter(ps, this));
 		// the potentially-expensive query should be done lazily
 		cachedResults.add(null);
 		cachedResultDates.add(null);
@@ -257,7 +258,7 @@ public class CohortSearchHistory extends AbstractReportObject {
 	
 	public synchronized PatientFilter ensureCachedFilter(int i) {
 		if (cachedFilters.get(i) == null) {
-			cachedFilters.set(i, OpenmrsUtil.toPatientFilter(searchHistory.get(i), this));
+			cachedFilters.set(i, ReportingcompatibilityUtil.toPatientFilter(searchHistory.get(i), this));
 		}
 		return cachedFilters.get(i);
 	}

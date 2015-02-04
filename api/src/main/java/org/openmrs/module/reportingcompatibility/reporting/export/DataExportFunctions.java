@@ -57,7 +57,9 @@ import org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityS
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearchReportObject;
+import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 
 public class DataExportFunctions {
@@ -303,12 +305,12 @@ public class DataExportFunctions {
 		if (key.startsWith("C.")) {
 			ps = Context.getCohortService().getCohort(Integer.valueOf(key.substring(2)));
 		} else if (key.startsWith("F.")) {
-			PatientFilter pf = Context.getReportObjectService().getPatientFilterById(Integer.valueOf(key.substring(2)));
+			PatientFilter pf = Context.getService(ReportObjectService.class).getPatientFilterById(Integer.valueOf(key.substring(2)));
 			ps = pf.filter(getPatientSet(), context);
 		} else if (key.startsWith("S.")) {
-			PatientSearchReportObject ro = (PatientSearchReportObject) Context.getReportObjectService().getReportObject(
+			PatientSearchReportObject ro = (PatientSearchReportObject) Context.getService(ReportObjectService.class).getReportObject(
 			    Integer.valueOf(key.substring(2)));
-			PatientFilter pf = OpenmrsUtil.toPatientFilter(ro.getPatientSearch(), null);
+			PatientFilter pf = ReportingcompatibilityUtil.toPatientFilter(ro.getPatientSearch(), null);
 			ps = pf.filter(getPatientSet(), context);
 		} else {
 			log.error("key = " + key);
@@ -606,7 +608,7 @@ public class DataExportFunctions {
                 ret.append(o.getDrug().getName());
             else
                 ret.append(o.getConcept().getBestName(Context.getLocale()).getName());
-            ret.append("(" + (o.getStartDate() != null ? sdf.format(o.getStartDate()) : "") + " " + o.getDose()+" " /*+ o.getUnits() + " "*/ + o.getFrequency() + ")");
+            ret.append("(" + (o.getDateActivated() != null ? sdf.format(o.getDateActivated()) : "") + " " + o.getDose()+" " /*+ o.getUnits() + " "*/ + o.getFrequency() + ")");
             if (i.hasNext())
                 ret.append("\n");
         }
@@ -631,8 +633,8 @@ public class DataExportFunctions {
 			return null;
 		Date earliest = null;
 		for (DrugOrder o : patientOrders) {
-			if (earliest == null || OpenmrsUtil.compareWithNullAsLatest(o.getStartDate(), earliest) < 0)
-				earliest = o.getStartDate();
+			if (earliest == null || OpenmrsUtil.compareWithNullAsLatest(o.getDateActivated(), earliest) < 0)
+				earliest = o.getDateActivated();
 		}
 		return earliest;
 	}
@@ -643,9 +645,8 @@ public class DataExportFunctions {
             return null;
         Date latest = null;
         for (DrugOrder o : patientOrders) {
-            System.out.println(o.getStartDate());
-            if (OpenmrsUtil.compareWithNullAsEarliest(o.getStartDate(), latest) > 0)
-                latest = o.getStartDate();
+            if (OpenmrsUtil.compareWithNullAsEarliest(o.getDateActivated(), latest) > 0)
+                latest = o.getDateActivated();
         }
         return latest;
     }

@@ -21,16 +21,18 @@ import org.junit.Test;
 import org.openmrs.Cohort;
 import org.openmrs.Program;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.CohortService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.util.OpenmrsUtil;
 import org.simpleframework.xml.Serializer;
 
 /**
  * TODO: create a test database and test against that
  */
-public class RowPerProgramEnrollmentDatasetTest extends BaseContextSensitiveTest {
+public class RowPerProgramEnrollmentDatasetTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * TODO: fix this so it uses asserts instead of printing to stdout
@@ -44,7 +46,7 @@ public class RowPerProgramEnrollmentDatasetTest extends BaseContextSensitiveTest
 		EvaluationContext evalContext = new EvaluationContext();
 		PatientSearch kids = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 		kids.addArgument("maxAge", "3", Integer.class);
-		Cohort kidsCohort = Context.getCohortService().evaluate(kids, evalContext);
+		Cohort kidsCohort = Context.getService(CohortService.class).evaluate(kids, evalContext);
 		
 		RowPerProgramEnrollmentDataSetDefinition definition = new RowPerProgramEnrollmentDataSetDefinition();
 		definition.setName("Row per enrollment");
@@ -70,7 +72,7 @@ public class RowPerProgramEnrollmentDatasetTest extends BaseContextSensitiveTest
 		//System.out.println("deserialized with " + rs.getDataSetDefinitions().size() + " data set definitions");
 		
 		//System.out.println("Evaluating...");
-		ReportData data = Context.getReportService().evaluate(rs, kidsCohort, evalContext);
+		ReportData data = Context.getService(ReportService.class).evaluate(rs, kidsCohort, evalContext);
 		//System.out.println("Result=");
 		//new TsvReportRenderer().render(data, null, System.out);
 	}

@@ -13,7 +13,7 @@
  */
 package org.openmrs.scheduler.tasks;
 
-import java.lang.Deprecated;import java.lang.Exception;import java.lang.Integer;import java.lang.String;import java.util.List;
+import java.util.List;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
@@ -24,7 +24,7 @@ import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.reporting.export.DataExportReportObject;
 import org.openmrs.reporting.export.DataExportUtil;
-import org.openmrs.scheduler.TaskDefinition;import org.openmrs.scheduler.tasks.AbstractTask;
+import org.openmrs.scheduler.TaskDefinition;
 
 /**
  * Generates a data export
@@ -76,7 +76,7 @@ public class GenerateDataExportTask extends AbstractTask {
 				String[] ids = idString.split(" ");
 				
 				List<DataExportReportObject> reports = new Vector<DataExportReportObject>();
-				ReportObjectService rs = Context.getReportObjectService();
+				ReportObjectService rs = Context.getService(ReportObjectService.class);
 				
 				for (String id : ids) {
 					if (id != null) {

@@ -22,6 +22,7 @@ import org.openmrs.Cohort;
 import org.openmrs.PatientProgram;
 import org.openmrs.Program;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.CohortService;
 
 /**
  * @deprecated see reportingcompatibility module
@@ -51,10 +52,10 @@ public class RowPerProgramEnrollmentDataSetProvider implements DataSetProvider {
 		Cohort patients = inputCohort;
 		if (definition.getFilter() != null) {
 			if (patients != null) {
-				patients = Cohort.intersect(patients, Context.getCohortService().evaluate(definition.getFilter(),
+				patients = Cohort.intersect(patients, Context.getService(CohortService.class).evaluate(definition.getFilter(),
 				    evalContext));
 			} else {
-				patients = Context.getCohortService().evaluate(definition.getFilter(), evalContext);
+				patients = Context.getService(CohortService.class).evaluate(definition.getFilter(), evalContext);
 			}
 		}
 		

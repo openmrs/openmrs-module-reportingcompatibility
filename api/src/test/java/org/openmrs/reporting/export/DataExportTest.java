@@ -25,14 +25,14 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.openmrs.Cohort;
 import org.openmrs.api.context.Context;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.util.OpenmrsUtil;
 
 /**
  * Tests the {@link DataExportReportObject} class TODO clean up, finish, add methods to this test
  * class
  */
-public class DataExportTest extends BaseContextSensitiveTest {
+public class DataExportTest extends BaseModuleContextSensitiveTest {
 	
 	private Log log = LogFactory.getLog(getClass());
 	
@@ -627,7 +627,7 @@ public class DataExportTest extends BaseContextSensitiveTest {
 		DataExportUtil.generateExport(export, patients, "\t", null);
 		File exportFile = DataExportUtil.getGeneratedFile(export);
 		
-		String expectedOutput = "PATIENT_ID	\"FOOD ASSISTANCE\"	\"DATE OF FOOD ASSISTANCE\"	\"FAVORITE FOOD, NON-CODED\"	\"WEIGHT\"\n7	1.0	14/08/2008	PB and J	50.0\n8				\n";
+		String expectedOutput = "PATIENT_ID	\"FOOD ASSISTANCE\"	\"DATE OF FOOD ASSISTANCE\"	\"FAVORITE FOOD, NON-CODED\"	\"WEIGHT\"\n7	YES	14/08/2008	PB and J	50.0\n8				\n";
 		String output = OpenmrsUtil.getFileAsString(exportFile);
 		exportFile.delete();
 		

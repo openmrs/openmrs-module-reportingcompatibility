@@ -24,20 +24,20 @@ import org.apache.commons.logging.LogFactory;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
 import org.openmrs.Cohort;
-import org.openmrs.api.DataSetService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.CohortService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.impl.TsvReportRenderer;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
-import org.openmrs.test.BaseContextSensitiveTest;
-import org.openmrs.test.SkipBaseSetup;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.util.OpenmrsUtil;
 import org.simpleframework.xml.Serializer;
 
 /**
  *
  */
-public class RowPerObsDatasetTest extends BaseContextSensitiveTest {
+public class RowPerObsDatasetTest extends BaseModuleContextSensitiveTest {
 	
 	private Log log = LogFactory.getLog(getClass());
 	
@@ -51,7 +51,6 @@ public class RowPerObsDatasetTest extends BaseContextSensitiveTest {
 		executeDataSet("org/openmrs/report/include/RowPerObsDatasetTest.xml");
 		
 		EvaluationContext evalContext = new EvaluationContext();
-		DataSetService service = Context.getDataSetService();
 		PatientSearch kids = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 		
 		Calendar today = new GregorianCalendar();
@@ -62,7 +61,7 @@ public class RowPerObsDatasetTest extends BaseContextSensitiveTest {
 		// get counted)
 		Integer maxAge = today.get(Calendar.YEAR) - 2007 + 1;
 		kids.addArgument("maxAge", maxAge.toString(), Integer.class);
-		Cohort kidsCohort = Context.getCohortService().evaluate(kids, evalContext);
+		Cohort kidsCohort = Context.getService(CohortService.class).evaluate(kids, evalContext);
 		
 		RowPerObsDataSetDefinition definition = new RowPerObsDataSetDefinition();
 		definition.setName("Row per Obs");
@@ -91,7 +90,7 @@ public class RowPerObsDatasetTest extends BaseContextSensitiveTest {
 		assertEquals("Testing row-per-obs", rs.getName());
 		assertEquals(1, rs.getDataSetDefinitions().size());
 		
-		ReportData data = Context.getReportService().evaluate(rs, kidsCohort, evalContext);
+		ReportData data = Context.getService(ReportService.class).evaluate(rs, kidsCohort, evalContext);
 		//System.out.println("Result=");
 		
 		StringWriter w = new StringWriter();

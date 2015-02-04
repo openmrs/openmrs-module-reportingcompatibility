@@ -27,8 +27,9 @@ import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
+import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.util.OpenmrsConstants;
-import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 /**
  * This class provides access to {@link org.openmrs.reporting.PatientSearch} objects that are saved
@@ -54,11 +55,8 @@ public class PatientSearchCohortDefinitionProvider implements CohortDefinitionPr
 	 */
 	public Cohort evaluate(CohortDefinition cohortDefinition, EvaluationContext evaluationContext) {
 		PatientSearch search = (PatientSearch) cohortDefinition;
-		PatientFilter filter = OpenmrsUtil.toPatientFilter(search, null, evaluationContext);
-		Cohort ret = filter.filter(null, evaluationContext);
-		ret.setCohortDefinition(cohortDefinition);
-		ret.setEvaluationContext(evaluationContext);
-		return ret;
+		PatientFilter filter = ReportingcompatibilityUtil.toPatientFilter(search, null, evaluationContext);
+		return filter.filter(null, evaluationContext);
 	}
 	
 	/**
@@ -67,7 +65,7 @@ public class PatientSearchCohortDefinitionProvider implements CohortDefinitionPr
 	public List<CohortDefinitionItemHolder> getAllCohortDefinitions() {
 		List<CohortDefinitionItemHolder> ret = new ArrayList<CohortDefinitionItemHolder>();
 		
-		List<AbstractReportObject> patientSearches = Context.getReportObjectService().getReportObjectsByType(
+		List<AbstractReportObject> patientSearches = Context.getService(ReportObjectService.class).getReportObjectsByType(
 		    OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 		
 		for (AbstractReportObject o : patientSearches) {
@@ -85,7 +83,7 @@ public class PatientSearchCohortDefinitionProvider implements CohortDefinitionPr
 	 * @see org.openmrs.cohort.CohortDefinitionProvider#getCohortDefinition(java.lang.Integer)
 	 */
 	public CohortDefinition getCohortDefinition(Integer id) {
-		PatientSearchReportObject psro = (PatientSearchReportObject) Context.getReportObjectService().getReportObject(id);
+		PatientSearchReportObject psro = (PatientSearchReportObject) Context.getService(ReportObjectService.class).getReportObject(id);
 		return psro.getPatientSearch();
 	}
 	

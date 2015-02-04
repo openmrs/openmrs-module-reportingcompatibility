@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.swing.event.TreeSelectionEvent;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openmrs.Cohort;
@@ -17,10 +15,10 @@ import org.openmrs.api.PatientSetService.BooleanOperator;
 import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.context.Context;
 import org.openmrs.report.EvaluationContext;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
 
-public class InversePatientFilterTest extends BaseContextSensitiveTest {
+public class InversePatientFilterTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see {@link InversePatientFilter#filter(Cohort,EvaluationContext)}

@@ -55,6 +55,7 @@ import org.openmrs.reporting.CohortFilter;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
+import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.reporting.SearchArgument;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 
@@ -80,11 +81,11 @@ public class ReportingcompatibilityUtil {
 	public static PatientFilter toPatientFilter(PatientSearch search, CohortSearchHistory history,
 			EvaluationContext evalContext) {
 		if (search.isSavedSearchReference()) {
-			PatientSearch ps = ((PatientSearchReportObject) Context.getReportObjectService().getReportObject(
+			PatientSearch ps = ((PatientSearchReportObject) Context.getService(ReportObjectService.class).getReportObject(
 				search.getSavedSearchId())).getPatientSearch();
 			return toPatientFilter(ps, history, evalContext);
 		} else if (search.isSavedFilterReference()) {
-			return Context.getReportObjectService().getPatientFilterById(search.getSavedFilterId());
+			return Context.getService(ReportObjectService.class).getPatientFilterById(search.getSavedFilterId());
 		} else if (search.isSavedCohortReference()) {
 			Cohort c = Context.getCohortService().getCohort(search.getSavedCohortId());
 			// to prevent lazy loading exceptions, cache the member ids here

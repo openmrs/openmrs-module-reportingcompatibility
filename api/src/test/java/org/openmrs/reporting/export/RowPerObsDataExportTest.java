@@ -19,14 +19,14 @@ import java.io.File;
 
 import org.junit.Test;
 import org.openmrs.Cohort;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.util.OpenmrsUtil;
 
 /**
  * Tests the {@link RowPerObsDataExportReportObject} class TODO clean up, finish, add methods to
  * this test class
  */
-public class RowPerObsDataExportTest extends BaseContextSensitiveTest {
+public class RowPerObsDataExportTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * Make sure that more than one row is printed out for each patient

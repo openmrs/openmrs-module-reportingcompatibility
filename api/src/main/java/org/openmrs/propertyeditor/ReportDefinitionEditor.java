@@ -18,6 +18,7 @@ import java.beans.PropertyEditorSupport;import java.lang.Deprecated;import java.
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.reporting.report.ReportDefinition;
 import org.springframework.util.StringUtils;
 
@@ -42,7 +43,7 @@ public class ReportDefinitionEditor extends PropertyEditorSupport {
 		log.debug("Setting report object text " + text);
 		if (StringUtils.hasText(text)) {
 			try {
-				setValue(Context.getReportObjectService().getReportObject(Integer.valueOf(text)));
+				setValue(Context.getService(ReportObjectService.class).getReportObject(Integer.valueOf(text)));
 				log.debug("value: " + getValue());
 			}
 			catch (Exception ex) {

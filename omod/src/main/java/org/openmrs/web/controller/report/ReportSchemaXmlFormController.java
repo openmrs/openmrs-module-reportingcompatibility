@@ -19,8 +19,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.api.ReportService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.ReportSchema;
 import org.openmrs.report.ReportSchemaXml;
 import org.openmrs.web.WebConstants;

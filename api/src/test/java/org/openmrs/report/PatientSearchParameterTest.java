@@ -26,13 +26,14 @@ import org.junit.Test;
 import org.openmrs.api.context.Context;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.reporting.ReportObjectService;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 /**
  * Tests backwards compatibility with org.openmrs.reporting.* framework with the new
  * org.openmrs.cohort.*
  */
-public class PatientSearchParameterTest extends BaseContextSensitiveTest {
+public class PatientSearchParameterTest extends BaseModuleContextSensitiveTest {
 	
 	private static Log log = LogFactory.getLog(PatientSearchParameterTest.class);
 	
@@ -81,7 +82,7 @@ public class PatientSearchParameterTest extends BaseContextSensitiveTest {
 		ro.setName("testReportObject1");
 		ro.setDescription("OldCohortFrameworkTest testPatientSearchParameter");
 		ro.setPatientSearch(ps);
-		Integer newId = Context.getReportObjectService().saveReportObject(ro).getReportObjectId();
+		Integer newId = Context.getService(ReportObjectService.class).saveReportObject(ro).getReportObjectId();
 		
 		// Create an EvaluationContext with the test variables as parameters
 		EvaluationContext context = new EvaluationContext();
@@ -92,7 +93,7 @@ public class PatientSearchParameterTest extends BaseContextSensitiveTest {
 		context.addParameterValue(new Parameter("test.date", "TestDate", java.util.Date.class, "WrongDate"), today);
 		
 		// Retrieve the PatientSearch from the database
-		PatientSearch ps2 = ((PatientSearchReportObject) Context.getReportObjectService().getReportObject(newId))
+		PatientSearch ps2 = ((PatientSearchReportObject) Context.getService(ReportObjectService.class).getReportObject(newId))
 		        .getPatientSearch();
 		
 		// Test if the PatientSearch parameters evaluate to the test variable values
