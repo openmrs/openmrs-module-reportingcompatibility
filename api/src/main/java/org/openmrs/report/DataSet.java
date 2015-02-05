@@ -33,10 +33,8 @@ import org.simpleframework.xml.Root;
  * 
  * @see DataSetProvider
  * @see DataSetDefinition
- * @deprecated see reportingcompatibility module
  */
 @Root
-@Deprecated
 public interface DataSet<T extends Object> extends Iterable<Map<String, T>> {
 	
 	/**

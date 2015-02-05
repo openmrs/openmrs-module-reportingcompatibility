@@ -17,10 +17,6 @@ import java.util.Date;
 
 import org.openmrs.User;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class Report {
 	
 	private Integer reportId;

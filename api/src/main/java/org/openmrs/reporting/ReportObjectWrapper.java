@@ -18,10 +18,6 @@ import java.util.Date;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.User;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 // TODO this should extend BaseOpenmrsMetadata and use retired instead of voided
 public class ReportObjectWrapper extends BaseOpenmrsObject {
 	

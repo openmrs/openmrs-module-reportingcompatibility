@@ -19,10 +19,6 @@ import org.openmrs.Cohort;
 import org.openmrs.api.context.Context;
 import org.openmrs.report.EvaluationContext;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public abstract class CachingPatientFilter extends AbstractPatientFilter implements PatientFilter {
 	
 	protected final Log log = LogFactory.getLog(getClass());

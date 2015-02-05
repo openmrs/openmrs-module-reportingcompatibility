@@ -23,10 +23,6 @@ import org.openmrs.reporting.data.CohortDefinition;
 import org.openmrs.reporting.data.DatasetDefinition;
 import org.openmrs.reporting.export.DataExportReportObject;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class ReportDefinition extends AbstractReportObject implements Serializable {
 	
 	/* Serial version ID*/

@@ -31,9 +31,7 @@ import java.util.Arrays;
  * 4400,      12.0,      1/1/2000
  * </pre>
  *
- * @deprecated see reportingcompatibility module
  */
-@Deprecated
 public class RowPerObsColumn implements ExportColumn, Serializable {
 	
 	public static final long serialVersionUID = 987654323L;

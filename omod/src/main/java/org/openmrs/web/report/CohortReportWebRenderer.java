@@ -47,48 +47,44 @@ public class CohortReportWebRenderer implements WebReportRenderer {
 	}
 	
 	/**
-	 * @see org.openmrs.report.ReportRenderer#getLabel(org.openmrs.report.ReportSchema)
+	 * @see org.openmrs.report.ReportRenderer#getLabel()
 	 */
 	public String getLabel() {
 		return "Cohort report web preview";
 	}
 	
 	/**
-	 * @see org.openmrs.report.ReportRenderer#getLinkUrl(org.openmrs.report.ReportSchema)
+	 * @see org.openmrs.web.report.WebReportRenderer#getLinkUrl(org.openmrs.report.ReportSchema)
 	 */
 	public String getLinkUrl(ReportSchema schema) {
 		return "admin/reports/reportData.form";
 	}
 	
 	/**
-	 * @see org.openmrs.report.ReportRenderer#getRenderedContentType(org.openmrs.report.ReportSchema)
+	 * @see org.openmrs.report.ReportRenderer#getRenderedContentType(org.openmrs.report.ReportSchema, String)
 	 */
 	public String getRenderedContentType(ReportSchema schema, String argument) {
 		return "text/html";
 	}
 	
 	/**
-	 * @see org.openmrs.report.ReportRenderer#getFilename(org.openmrs.report.ReportSchema)
+	 * @see org.openmrs.report.ReportRenderer#getFilename(org.openmrs.report.ReportSchema, String)
 	 */
 	public String getFilename(ReportSchema schema, String argument) {
 		return null;
 	}
 	
 	/**
-	 * @see org.openmrs.report.ReportRenderer#render(org.openmrs.report.ReportData,
-	 *      java.io.OutputStream)
+	 * @see org.openmrs.report.ReportRenderer#render(org.openmrs.report.ReportData, String, java.io.OutputStream)
 	 */
 	public void render(ReportData reportData, String argument, OutputStream out) throws ReportRenderingException {
 		// Do nothing. This renderer returns a value from getLinkUrl() 
 	}
 	
 	/**
-	 * @see org.openmrs.report.ReportRenderer#render(org.openmrs.report.ReportData,
-	 *      java.lang.String, java.io.Writer)
+	 * @see org.openmrs.report.ReportRenderer#render(org.openmrs.report.ReportData, java.lang.String, java.io.Writer)
 	 */
 	public void render(ReportData reportData, String argument, Writer writer) throws IOException, ReportRenderingException {
 		// Do nothing.  This renderer returns a value from getLinkUrl()
-		
 	}
-	
 }

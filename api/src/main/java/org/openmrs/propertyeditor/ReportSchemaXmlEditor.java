@@ -22,10 +22,6 @@ import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.ReportSchemaXml;
 import org.springframework.util.StringUtils;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class ReportSchemaXmlEditor extends PropertyEditorSupport {
 	
 	private Log log = LogFactory.getLog(this.getClass());

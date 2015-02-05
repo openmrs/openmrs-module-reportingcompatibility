@@ -22,10 +22,6 @@ import java.util.Map;
 import org.openmrs.PatientProgram;
 import org.openmrs.api.context.Context;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class RowPerProgramEnrollmentDataSet implements DataSet<Object> {
 	
 	private RowPerProgramEnrollmentDataSetDefinition definition;

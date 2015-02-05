@@ -59,10 +59,6 @@ import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.util.ReportingcompatibilityUtil;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class DataExportFunctions {
 	
 	public final Log log = LogFactory.getLog(this.getClass());

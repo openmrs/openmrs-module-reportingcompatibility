@@ -254,6 +254,7 @@ public class DataExportFunctions {
 	 * @return the isAllPatients
 	 * @deprecated a null patientSet means we need all patients now
 	 */
+	@Deprecated
 	public boolean isAllPatients() {
 		return getPatientSet() == null;
 	}
@@ -262,6 +263,7 @@ public class DataExportFunctions {
 	 * @param isAllPatients the isAllPatients to set
 	 * @deprecated a null patientSet means we need all patients now
 	 */
+	@Deprecated
 	public void setAllPatients(boolean isAllPatients) {
 		// do nothing now
 	}

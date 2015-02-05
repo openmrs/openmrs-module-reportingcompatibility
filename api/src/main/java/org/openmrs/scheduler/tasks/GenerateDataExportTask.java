@@ -28,10 +28,7 @@ import org.openmrs.scheduler.TaskDefinition;
 
 /**
  * Generates a data export
- *
- * @deprecated see reportingcompatibility module
  */
-@Deprecated
 public class GenerateDataExportTask extends AbstractTask {
 	
 	// Logger 

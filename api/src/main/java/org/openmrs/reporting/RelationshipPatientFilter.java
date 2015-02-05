@@ -20,9 +20,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.report.EvaluationContext;
 
-/**
- *
- */
 public class RelationshipPatientFilter extends CachingPatientFilter {
 	
 	private Person person;

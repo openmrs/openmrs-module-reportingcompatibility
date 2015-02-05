@@ -28,9 +28,7 @@ import org.openmrs.module.reportingcompatibility.service.CohortService;
  *
  * @see CohortDataSetDefinition
  * @see CohortDataSet
- * @deprecated see reportingcompatibility module
  */
-@Deprecated
 public class CohortDataSetProvider implements DataSetProvider {
 	
 	protected Log log = LogFactory.getLog(this.getClass());

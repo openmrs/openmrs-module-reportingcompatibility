@@ -78,9 +78,7 @@ public class ReportingCompatibilityServiceTest extends
 	}
 
 	/**
-	 * @see {@link
-	 *      ReportingCompatibilityService#getEncountersByType(Cohort,List<
-	 *      QEncounterType;>)}
+	 * @see {@link ReportingCompatibilityService#getEncountersByType(Cohort,List<EncounterType;>)}
 	 */
 	@Test
 	@Verifies(value = "should exclude voided encounters", method = "getEncountersByType(Cohort,List<QEncounterType;>)")

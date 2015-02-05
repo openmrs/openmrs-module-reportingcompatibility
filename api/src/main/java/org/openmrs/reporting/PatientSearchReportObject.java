@@ -15,10 +15,6 @@ package org.openmrs.reporting;
 
 import org.openmrs.util.OpenmrsConstants;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class PatientSearchReportObject extends AbstractReportObject {
 	
 	private PatientSearch patientSearch;

@@ -13,14 +13,19 @@
  */
 package org.openmrs.module.reportingcompatibility.service;
 
-import java.lang.Class;import java.lang.Deprecated;import java.lang.Exception;import java.lang.Integer;import java.lang.String;import java.util.Collection;
+import java.lang.Class;
+import java.lang.Exception;
+import java.lang.Integer;
+import java.lang.String;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.openmrs.Cohort;
 import org.openmrs.annotation.Authorized;
-import org.openmrs.api.APIException;import org.openmrs.report.EvaluationContext;
+import org.openmrs.api.APIException;
+import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.RenderingMode;
 import org.openmrs.report.ReportData;
 import org.openmrs.report.ReportRenderer;
@@ -31,10 +36,7 @@ import org.openmrs.util.OpenmrsConstants;
 /**
  * Contains methods pertaining to creating/updating/deleting/retiring/registering/evaluating
  * ReportSchema, ReportSchemaXml, ReportRenderer, ReportXmlMacros, and other 'Report' objects.<br/>
- * 
- * @deprecated see reportingcompatibility module
  */
-@Deprecated
 public interface ReportService {
 	
 	/**
@@ -141,7 +143,7 @@ public interface ReportService {
 	/**
 	 * Gets the renderers map registered to this report service
 	 * 
-	 * @return Map of registered {@link org.openmrs.report#ReportRenderer}s
+	 * @return Map of registered {@link org.openmrs.report.ReportRenderer}s
 	 * @throws APIException
 	 */
 	public Map<Class<? extends ReportRenderer>, ReportRenderer> getRenderers() throws APIException;
@@ -192,6 +194,7 @@ public interface ReportService {
 	 * @param reportSchemaXml xml to save
 	 * @deprecated use saveReportSchemaXml(reportSchemaXml)
 	 */
+	@Deprecated
 	public void createReportSchemaXml(ReportSchemaXml reportSchemaXml);
 	
 	/**
@@ -200,6 +203,7 @@ public interface ReportService {
 	 * @param reportSchemaXml xml to save
 	 * @deprecated use saveReportSchemaXml(reportSchemaXml)
 	 */
+	@Deprecated
 	public void updateReportSchemaXml(ReportSchemaXml reportSchemaXml);
 	
 	/**

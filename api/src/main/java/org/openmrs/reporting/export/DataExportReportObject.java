@@ -30,10 +30,6 @@ import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.util.ReportingcompatibilityUtil;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class DataExportReportObject extends AbstractReportObject implements Serializable {
 	
 	public static final long serialVersionUID = 1231231343212L;

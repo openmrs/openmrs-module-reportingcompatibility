@@ -19,10 +19,6 @@ import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.data.CohortDefinition;
 import org.openmrs.reporting.data.DatasetDefinition;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class ReportElementDefinition extends AbstractReportObject implements Serializable {
 	
 	/* */

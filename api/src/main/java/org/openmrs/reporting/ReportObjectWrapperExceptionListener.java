@@ -18,10 +18,6 @@ import java.beans.ExceptionListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class ReportObjectWrapperExceptionListener implements ExceptionListener {
 	
 	private Log log = LogFactory.getLog(this.getClass());

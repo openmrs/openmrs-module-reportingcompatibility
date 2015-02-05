@@ -19,10 +19,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.reporting.ReportObjectService;
 import org.springframework.util.StringUtils;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class CohortColumn implements ExportColumn, Serializable {
 	
 	private static final long serialVersionUID = 1L;

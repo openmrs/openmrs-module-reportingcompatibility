@@ -13,10 +13,6 @@
  */
 package org.openmrs.reporting.export;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public interface ExportColumn {
 	
 	String columnType = "";

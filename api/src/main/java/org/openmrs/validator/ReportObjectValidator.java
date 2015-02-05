@@ -13,7 +13,7 @@
  */
 package org.openmrs.validator;
 
-import java.lang.Class;import java.lang.Deprecated;import java.lang.Object;import java.lang.SuppressWarnings;import org.apache.commons.logging.Log;
+import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.ReportObject;
@@ -23,11 +23,7 @@ import org.springframework.validation.Validator;
 
 /**
  * Validates attributes on the {@link ReportObject} object.
- * 
- * @since 1.5
- * @deprecated see reportingcompatibility module
  */
-@Deprecated
 public class ReportObjectValidator implements Validator {
 	
 	/** Log for this class and subclasses */

@@ -36,10 +36,6 @@ import org.openmrs.reporting.ReportObject;
 import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.util.ReportingcompatibilityUtil;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class CohortSearchHistory extends AbstractReportObject {
 	
 	protected static final Log log = LogFactory.getLog(CohortSearchHistory.class);

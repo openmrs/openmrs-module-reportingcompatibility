@@ -29,10 +29,6 @@ import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.ReportObjectWrapper;
 import org.openmrs.reporting.db.ReportObjectDAO;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class HibernateReportObjectDAO implements ReportObjectDAO {
 	
 	protected final Log log = LogFactory.getLog(getClass());

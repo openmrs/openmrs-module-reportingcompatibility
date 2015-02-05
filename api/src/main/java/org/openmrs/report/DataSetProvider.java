@@ -30,9 +30,7 @@ import org.openmrs.Cohort;
  * 
  * @see DataSetDefinition
  * @see DataSet
- * @deprecated see reportingcompatibility module
  */
-@Deprecated
 public interface DataSetProvider {
 	
 	/**

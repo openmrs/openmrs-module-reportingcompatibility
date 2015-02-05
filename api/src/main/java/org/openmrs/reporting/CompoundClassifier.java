@@ -16,10 +16,6 @@ package org.openmrs.reporting;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class CompoundClassifier implements TableRowClassifier {
 	
 	private String separator;

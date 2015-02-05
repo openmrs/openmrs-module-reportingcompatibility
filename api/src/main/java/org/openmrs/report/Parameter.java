@@ -24,12 +24,10 @@ import org.simpleframework.xml.Root;
  * parameter would be "What start date do you want to use?" The value of the parameter would be
  * plugged in when the object is evaluated.
  * 
- * @see LogicCriteria
+ * @see org.openmrs.logic.LogicCriteria
  * @see Parameterizable
- * @deprecated see reportingcompatibility module
  */
 @Root(strict = false)
-@Deprecated
 public class Parameter {
 	
 	private static final long serialVersionUID = 12020438439292929L;

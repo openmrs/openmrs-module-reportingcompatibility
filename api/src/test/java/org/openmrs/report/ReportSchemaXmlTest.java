@@ -21,9 +21,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.api.context.Context;
-import org.openmrs.test.BaseContextSensitiveTest;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 /**
@@ -121,7 +120,7 @@ public class ReportSchemaXmlTest extends BaseModuleContextSensitiveTest {
 	}
 	
 	/**
-	 * Creates a ReportSchemaXml such as in {@link #testSaveGetDeleteReportSchema()}, then changes
+	 * Creates a ReportSchemaXml such as in test {@link #shouldSaveGetDeleteReportSchema()}, then changes
 	 * it, updates it in the database, and tests to see if the update is successful.
 	 * 
 	 * @throws Exception

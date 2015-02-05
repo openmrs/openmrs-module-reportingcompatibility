@@ -54,9 +54,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @see org.openmrs.module.reportingcompatibility.service.ReportService
  * @see org.openmrs.api.context.Context
- * @deprecated see reportingcompatibility module
  */
-@Deprecated
 @Transactional
 public class ReportServiceImpl implements ReportService {
 	
@@ -297,6 +295,7 @@ public class ReportServiceImpl implements ReportService {
 	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#createReportSchemaXml(org.openmrs.report.ReportSchemaXml)
 	 * @deprecated use saveReportSchemaXml(reportSchemaXml)
 	 */
+	@Deprecated
 	public void createReportSchemaXml(ReportSchemaXml reportSchemaXml) {
 		Context.getService(ReportService.class).saveReportSchemaXml(reportSchemaXml);
 	}
@@ -305,6 +304,7 @@ public class ReportServiceImpl implements ReportService {
 	 * @see org.openmrs.module.reportingcompatibility.service.ReportService#updateReportSchemaXml(org.openmrs.report.ReportSchemaXml)
 	 * @deprecated use saveReportSchemaXml(reportSchemaXml)
 	 */
+	@Deprecated
 	public void updateReportSchemaXml(ReportSchemaXml reportSchemaXml) {
 		Context.getService(ReportService.class).saveReportSchemaXml(reportSchemaXml);
 	}
