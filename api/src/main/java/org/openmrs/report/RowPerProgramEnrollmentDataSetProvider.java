@@ -24,10 +24,6 @@ import org.openmrs.Program;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.service.CohortService;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class RowPerProgramEnrollmentDataSetProvider implements DataSetProvider {
 	
 	protected Log log = LogFactory.getLog(this.getClass());

@@ -30,10 +30,8 @@ import org.simpleframework.xml.Root;
  * 
  * @see DataSetProvider
  * @see DataSet
- * @deprecated see reportingcompatibility module
  */
 @Root(strict = false)
-@Deprecated
 public interface DataSetDefinition extends Parameterizable {
 	
 	/**

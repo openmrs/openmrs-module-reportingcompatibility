@@ -18,10 +18,6 @@ import java.util.List;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.reporting.AbstractReportObject;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public interface ReportObjectDAO {
 	
 	/**

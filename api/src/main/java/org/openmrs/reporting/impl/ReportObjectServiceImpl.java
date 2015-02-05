@@ -30,10 +30,6 @@ import org.openmrs.reporting.db.ReportObjectDAO;
 import org.openmrs.util.OpenmrsConstants;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 @Transactional
 public class ReportObjectServiceImpl extends BaseOpenmrsService implements ReportObjectService {
 	
@@ -159,7 +155,6 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	
 	/**
 	 * @see org.openmrs.reporting.ReportObjectService#createReportObject(org.openmrs.reporting.AbstractReportObject)
-	 * @deprecated
 	 */
 	public Integer createReportObject(AbstractReportObject reportObject) throws APIException {
 		Context.getService(ReportObjectService.class).saveReportObject(reportObject);
@@ -175,7 +170,6 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	
 	/**
 	 * @see org.openmrs.reporting.ReportObjectService#deleteReport(org.openmrs.reporting.AbstractReportObject)
-	 * @deprecated
 	 */
 	public void deleteReport(AbstractReportObject reportObject) throws APIException {
 		Context.getService(ReportObjectService.class).purgeReportObject(reportObject);
@@ -190,7 +184,6 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	
 	/**
 	 * @see org.openmrs.reporting.ReportObjectService#updateReportObject(org.openmrs.reporting.AbstractReportObject)
-	 * @deprecated
 	 */
 	public void updateReportObject(AbstractReportObject reportObject) throws APIException {
 		Context.getService(ReportObjectService.class).saveReportObject(reportObject);
@@ -260,7 +253,6 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	
 	/**
 	 * @see org.openmrs.reporting.ReportObjectService#createSearchHistory(org.openmrs.cohort.CohortSearchHistory)
-	 * @deprecated
 	 */
 	public void createSearchHistory(CohortSearchHistory history) {
 		Context.getService(ReportObjectService.class).saveSearchHistory(history);
@@ -275,7 +267,6 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	
 	/**
 	 * @see org.openmrs.reporting.ReportObjectService#deleteSearchHistory(org.openmrs.cohort.CohortSearchHistory)
-	 * @deprecated
 	 */
 	public void deleteSearchHistory(CohortSearchHistory history) {
 		Context.getService(ReportObjectService.class).purgeSearchHistory(history);
@@ -298,7 +289,6 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	
 	/**
 	 * @see org.openmrs.reporting.ReportObjectService#getSearchHistories()
-	 * @deprecated
 	 */
 	@Transactional(readOnly = true)
 	public List<CohortSearchHistory> getSearchHistories() {

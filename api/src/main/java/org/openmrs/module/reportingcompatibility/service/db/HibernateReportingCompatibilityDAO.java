@@ -1994,9 +1994,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 	
 	/**
 	 * @see org.openmrs.api.AdministrationService#createReport(org.openmrs.reporting.Report)
-	 * @deprecated see reportingcompatibility module
 	 */
-	@Deprecated
 	public void createReport(Report r) throws DAOException {
 		r.setCreator(Context.getAuthenticatedUser());
 		r.setDateCreated(new Date());
@@ -2005,9 +2003,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 	
 	/**
 	 * @see org.openmrs.api.AdministrationService#updateReport(org.openmrs.reporting.Report)
-	 * @deprecated see reportingcompatibility module
 	 */
-	@Deprecated
 	public void updateReport(Report r) throws DAOException {
 		if (r.getReportId() == null) {
 			createReport(r);
@@ -2018,17 +2014,11 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 	
 	/**
 	 * @see org.openmrs.api.AdministrationService#deleteReport(org.openmrs.reporting.Report)
-	 * @deprecated see reportingcompatibility module
 	 */
-	@Deprecated
 	public void deleteReport(Report r) throws DAOException {
 		sessionFactory.getCurrentSession().delete(r);
 	}
 	
-	/**
-	 * @deprecated see reportingcompatibility module
-	 */
-	@Deprecated
 	public void createReportObject(AbstractReportObject ro) throws DAOException {
 		
 		ReportObjectWrapper wrappedReportObject = new ReportObjectWrapper(ro);
@@ -2040,10 +2030,6 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		sessionFactory.getCurrentSession().save(wrappedReportObject);
 	}
 	
-	/**
-	 * @deprecated see reportingcompatibility module
-	 */
-	@Deprecated
 	public void updateReportObject(AbstractReportObject ro) throws DAOException {
 		if (ro.getReportObjectId() == null) {
 			createReportObject(ro);
@@ -2059,10 +2045,6 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		}
 	}
 	
-	/**
-	 * @deprecated see reportingcompatibility module
-	 */
-	@Deprecated
 	public void deleteReportObject(Integer reportObjectId) throws DAOException {
 		ReportObjectWrapper wrappedReportObject = (ReportObjectWrapper) sessionFactory.getCurrentSession().get(
 				ReportObjectWrapper.class, reportObjectId);

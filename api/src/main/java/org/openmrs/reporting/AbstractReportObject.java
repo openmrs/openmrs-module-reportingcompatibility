@@ -18,10 +18,6 @@ import java.util.Date;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.User;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class AbstractReportObject extends BaseOpenmrsObject implements ReportObject {
 	
 	private Integer reportObjectId; // database primary key

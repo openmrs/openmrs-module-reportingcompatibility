@@ -117,7 +117,7 @@ public class ForEachReportObjectTag extends BodyTagSupport {
 	}
 	
 	/**
-	 * @param the name
+	 * @param name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -145,7 +145,7 @@ public class ForEachReportObjectTag extends BodyTagSupport {
 	}
 	
 	/**
-	 * @param the ReportObjectType
+	 * @param reportObjectType
 	 */
 	public void setReportObjectType(String reportObjectType) {
 		this.reportObjectType = reportObjectType;

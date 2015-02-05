@@ -20,10 +20,6 @@ import org.openmrs.api.OpenmrsService;
 import org.openmrs.cohort.CohortSearchHistory;
 import org.openmrs.reporting.db.ReportObjectDAO;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public interface ReportObjectService extends OpenmrsService {
 	
 	/**
@@ -90,11 +86,13 @@ public interface ReportObjectService extends OpenmrsService {
 	/**
 	 * @deprecated use {@link #saveReportObject(AbstractReportObject)}
 	 */
+	@Deprecated
 	public Integer createReportObject(AbstractReportObject reportObject) throws APIException;
 	
 	/**
 	 * @deprecated use {@link #purgeReportObject(AbstractReportObject)}
 	 */
+	@Deprecated
 	public void deleteReport(AbstractReportObject reportObject) throws APIException;
 	
 	/**
@@ -108,6 +106,7 @@ public interface ReportObjectService extends OpenmrsService {
 	/**
 	 * @deprecated use {@link #saveReportObject(AbstractReportObject)}
 	 */
+	@Deprecated
 	public void updateReportObject(AbstractReportObject reportObject) throws APIException;
 	
 	/**
@@ -175,6 +174,7 @@ public interface ReportObjectService extends OpenmrsService {
 	/**
 	 * @deprecated use {@link #saveSearchHistory(CohortSearchHistory)}
 	 */
+	@Deprecated
 	public void createSearchHistory(CohortSearchHistory history) throws APIException;
 	
 	/**
@@ -190,6 +190,7 @@ public interface ReportObjectService extends OpenmrsService {
 	/**
 	 * @deprecated use {@link #purgeSearchHistory(CohortSearchHistory)}
 	 */
+	@Deprecated
 	public void deleteSearchHistory(CohortSearchHistory history) throws APIException;
 	
 	/**
@@ -212,6 +213,7 @@ public interface ReportObjectService extends OpenmrsService {
 	/**
 	 * @deprecated use {@link #getAllSearchHistories()}
 	 */
+	@Deprecated
 	public List<CohortSearchHistory> getSearchHistories() throws APIException;
 	
 	/**

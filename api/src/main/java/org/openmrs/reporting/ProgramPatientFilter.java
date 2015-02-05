@@ -16,11 +16,11 @@ package org.openmrs.reporting;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 import org.openmrs.Cohort;
 import org.openmrs.Program;
 import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
-import org.openmrs.cohort.CohortUtil;
 import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.report.EvaluationContext;
 

@@ -29,10 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation of the data set service.
- *
- * @deprecated see reportingcompatibility module
  */
-@Deprecated
 @Transactional(readOnly = true)
 public class DataSetServiceImpl implements DataSetService {
 	
@@ -60,7 +57,7 @@ public class DataSetServiceImpl implements DataSetService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.DataSetService#setProviders(List)
+	 * @see org.openmrs.module.reportingcompatibility.service.DataSetService#setProviders(List)
 	 */
 	public void setProviders(List<DataSetProvider> newProviders) {
 		for (DataSetProvider provider : newProviders) {
@@ -69,7 +66,7 @@ public class DataSetServiceImpl implements DataSetService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.DataSetService#getProviders()
+	 * @see org.openmrs.module.reportingcompatibility.service.DataSetService#getProviders()
 	 */
 	public List<DataSetProvider> getProviders() {
 		if (providers == null) {
@@ -80,7 +77,7 @@ public class DataSetServiceImpl implements DataSetService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.DataSetService#registerProvider(org.openmrs.report.DataSetProvider)
+	 * @see org.openmrs.module.reportingcompatibility.service.DataSetService#registerProvider(org.openmrs.report.DataSetProvider)
 	 */
 	public void registerProvider(DataSetProvider newProvider) {
 		for (DataSetProvider currentProvider : getProviders()) {
@@ -94,14 +91,14 @@ public class DataSetServiceImpl implements DataSetService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.DataSetService#removeProvider(org.openmrs.report.DataSetProvider)
+	 * @see org.openmrs.module.reportingcompatibility.service.DataSetService#removeProvider(org.openmrs.report.DataSetProvider)
 	 */
 	public void removeProvider(DataSetProvider provider) {
 		getProviders().remove(provider);
 	}
 	
 	/**
-	 * @see org.openmrs.api.DataSetService#getProvider(org.openmrs.report.DataSetDefinition)
+	 * @see org.openmrs.module.reportingcompatibility.service.DataSetService#getProvider(org.openmrs.report.DataSetDefinition)
 	 */
 	public DataSetProvider getProvider(DataSetDefinition definition) {
 		for (DataSetProvider p : getProviders()) {
@@ -113,7 +110,7 @@ public class DataSetServiceImpl implements DataSetService {
 	}
 	
 	/**
-	 * @see org.openmrs.api.DataSetService#evaluate(org.openmrs.report.DataSetDefinition,
+	 * @see org.openmrs.module.reportingcompatibility.service.DataSetService#evaluate(org.openmrs.report.DataSetDefinition,
 	 *      org.openmrs.Cohort, org.openmrs.report.EvaluationContext)
 	 */
 	@SuppressWarnings("unchecked")

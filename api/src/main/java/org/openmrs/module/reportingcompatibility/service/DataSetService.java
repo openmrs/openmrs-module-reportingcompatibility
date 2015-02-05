@@ -13,18 +13,15 @@
  */
 package org.openmrs.module.reportingcompatibility.service;
 
-import java.lang.Deprecated;import java.lang.SuppressWarnings;import java.util.List;
+import java.util.List;
 
 import org.openmrs.Cohort;
-import org.openmrs.api.APIException;import org.openmrs.report.DataSet;
+import org.openmrs.api.APIException;
+import org.openmrs.report.DataSet;
 import org.openmrs.report.DataSetDefinition;
 import org.openmrs.report.DataSetProvider;
 import org.openmrs.report.EvaluationContext;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public interface DataSetService {
 	
 	/**

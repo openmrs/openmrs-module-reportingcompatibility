@@ -13,7 +13,7 @@
  */
 package org.openmrs.propertyeditor;
 
-import java.beans.PropertyEditorSupport;import java.lang.Deprecated;import java.lang.Exception;import java.lang.IllegalArgumentException;import java.lang.Integer;import java.lang.String;
+import java.beans.PropertyEditorSupport;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,10 +22,6 @@ import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.ReportObjectService;
 import org.springframework.util.StringUtils;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class AbstractReportObjectEditor extends PropertyEditorSupport {
 	
 	private Log log = LogFactory.getLog(this.getClass());

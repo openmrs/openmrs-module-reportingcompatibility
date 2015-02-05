@@ -20,12 +20,8 @@ import org.simpleframework.xml.Root;
  * Represents a search strategy for arriving at a cohort. This interface is intentionally empty. You
  * evaluate a CohortDefinition using CohortService
  * 
- * @see org.openmrs.api.CohortService#evaluate(CohortDefinition,
- *      org.openmrs.report.EvaluationContext)
- * @deprecated see reportingcompatibility module
+ * @see org.openmrs.module.reportingcompatibility.service.CohortService#evaluate(CohortDefinition, org.openmrs.report.EvaluationContext)
  */
 @Root(strict = false)
-@Deprecated
 public interface CohortDefinition extends Parameterizable {
-
 }

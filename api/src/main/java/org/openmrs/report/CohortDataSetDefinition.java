@@ -37,10 +37,8 @@ import org.simpleframework.xml.Root;
  *
  * @see CohortDataSet
  * @see CohortDataSetProvider
- * @deprecated see reportingcompatibility module
  */
 @Root
-@Deprecated
 public class CohortDataSetDefinition implements DataSetDefinition {
 	
 	private static final long serialVersionUID = -658417752199413012L;

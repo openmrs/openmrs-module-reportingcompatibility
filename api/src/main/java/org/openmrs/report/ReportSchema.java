@@ -33,11 +33,8 @@ import org.simpleframework.xml.Root;
  * <p>
  * The "filter" represents an (optional) extra filter that is applied to the input cohort before the
  * DataSetDefinitions ever see it.
- *
- * @deprecated see reportingcompatibility module
  */
 @Root(strict = false)
-@Deprecated
 public class ReportSchema extends BaseOpenmrsMetadata implements Parameterizable {
 	
 	private static final long serialVersionUID = 932347906334509564L;

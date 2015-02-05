@@ -17,10 +17,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class DateColumnClassifier implements TableRowClassifier {
 	
 	public enum CombineMethod {

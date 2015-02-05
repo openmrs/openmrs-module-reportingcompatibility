@@ -16,7 +16,6 @@ package org.openmrs.reporting;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -25,10 +24,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class ReportObjectFactory {
 	
 	private static ReportObjectFactory singleton;

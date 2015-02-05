@@ -21,10 +21,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.report.EvaluationContext;
 
-/**
- * @deprecated see reportingcompatibility module
- */
-@Deprecated
 public class PatientCharacteristicFilter extends CachingPatientFilter implements Comparable<PatientCharacteristicFilter> {
 	
 	private String gender;
