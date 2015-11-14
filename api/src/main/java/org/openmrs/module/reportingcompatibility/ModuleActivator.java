@@ -15,28 +15,23 @@ package org.openmrs.module.reportingcompatibility;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.module.Activator;
+import org.openmrs.module.BaseModuleActivator;
 
 /**
  * This class contains the logic that is run every time this module
  * is either started or shutdown
  */
-public class ModuleActivator implements Activator {
+public class ModuleActivator extends BaseModuleActivator {
 
 	private Log log = LogFactory.getLog(this.getClass());
 
-	/**
-	 * @see org.openmrs.module.Activator#startup()
-	 */
-	public void startup() {
-		log.info("Starting Reporting Compatibility Module");
+	@Override
+	public void started() {
+		log.info("Started Reporting Compatibility Module");
 	}
-	
-	/**
-	 *  @see org.openmrs.module.Activator#shutdown()
-	 */
-	public void shutdown() {
-		log.info("Shutting down Reporting Compatibility Module");
+
+	@Override
+	public void stopped() {
+		log.info("Stopped Reporting Compatibility Module");
 	}
-	
 }
