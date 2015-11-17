@@ -591,7 +591,7 @@ public class DataExportFunctions {
 			if (o.getDrug() != null)
 				ret.append(o.getDrug().getName());
 			else
-				ret.append(o.getConcept().getBestName(Context.getLocale()).getName());
+				ret.append(o.getConcept().getName(Context.getLocale(), false).getName());
 			if (i.hasNext())
 				ret.append(" ");
 		}
@@ -609,7 +609,7 @@ public class DataExportFunctions {
             if (o.getDrug() != null)
                 ret.append(o.getDrug().getName());
             else
-                ret.append(o.getConcept().getBestName(Context.getLocale()).getName());
+                ret.append(o.getConcept().getName(Context.getLocale(), false).getName());
             ret.append("(" + (o.getDateActivated() != null ? sdf.format(o.getDateActivated()) : "") + " " + o.getDose()+" " /*+ o.getUnits() + " "*/ + o.getFrequency() + ")");
             if (i.hasNext())
                 ret.append("\n");

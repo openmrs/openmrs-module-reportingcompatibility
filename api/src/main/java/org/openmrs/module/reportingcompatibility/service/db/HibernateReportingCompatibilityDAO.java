@@ -1009,7 +1009,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		
 		// set up the return map
 		for (Encounter enc : encounters) {
-			Integer ptId = enc.getPatientId();
+			Integer ptId = enc.getPatient().getPatientId();
 			if (!ret.containsKey(ptId))
 				ret.put(ptId, enc);
 		}
@@ -1107,7 +1107,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		
 		// set up the return map
 		for (Encounter enc : encounters) {
-			Integer ptId = enc.getPatientId();
+			Integer ptId = enc.getPatient().getPatientId();
 			if (!ret.containsKey(ptId))
 				ret.put(ptId, enc);
 		}
@@ -1139,7 +1139,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		
 		// set up the return map
 		for (Encounter enc : encounters) {
-			Integer ptId = enc.getPatientId();
+			Integer ptId = enc.getPatient().getPatientId();
 			if (!ret.containsKey(ptId))
 				ret.put(ptId, enc);
 		}

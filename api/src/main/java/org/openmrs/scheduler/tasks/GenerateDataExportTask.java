@@ -63,10 +63,6 @@ public class GenerateDataExportTask extends AbstractTask {
 		try {
 			log.debug("Generating data exports...");
 			
-			if (!Context.isAuthenticated()) {
-				authenticate();
-			}
-			
 			if (idString != null && idString.length() > 0) {
 				idString = idString.replace(",", " ");
 				

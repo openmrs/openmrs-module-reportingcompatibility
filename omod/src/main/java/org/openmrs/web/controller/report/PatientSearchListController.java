@@ -26,12 +26,12 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityService;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObject;
 import org.openmrs.reporting.ReportObjectService;
-import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.web.WebConstants;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -76,7 +76,7 @@ public class PatientSearchListController extends SimpleFormController {
 				if (reportList != null) {
 					ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 					List<AbstractReportObject> savedSearches = rs.getReportObjectsByType(
-					    OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+							ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 					for (String p : reportList) {
 						int compositeTest = 0;
 						String psUsedInTheseCompositeSearches = "";
@@ -141,7 +141,7 @@ public class PatientSearchListController extends SimpleFormController {
 		
 		if (Context.isAuthenticated()) {
 			ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
-			searches = rs.getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+			searches = rs.getReportObjectsByType(ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 			
 		}
 		return searches;

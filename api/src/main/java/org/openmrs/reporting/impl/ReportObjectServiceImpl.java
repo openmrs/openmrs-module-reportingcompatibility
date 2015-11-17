@@ -20,6 +20,7 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.cohort.CohortSearchHistory;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearch;
@@ -90,7 +91,7 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	@Transactional(readOnly = true)
 	public List<PatientSearch> getAllPatientSearches() throws APIException {
 		List<PatientSearch> allSearches = new ArrayList<PatientSearch>();
-		List<AbstractReportObject> allMatchingObjects = getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+		List<AbstractReportObject> allMatchingObjects = getReportObjectsByType(ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 		if (allMatchingObjects != null) {
 			for (AbstractReportObject aro : allMatchingObjects) {
 				allSearches.add(((PatientSearchReportObject) aro).getPatientSearch());
@@ -104,7 +105,7 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	 */
 	@Transactional(readOnly = true)
 	public PatientSearch getPatientSearch(String name) throws APIException {
-		List<AbstractReportObject> allMatchingObjects = getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+		List<AbstractReportObject> allMatchingObjects = getReportObjectsByType(ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 		if (allMatchingObjects != null) {
 			for (AbstractReportObject aro : allMatchingObjects) {
 				if (aro.getName().equals(name)) {
@@ -144,7 +145,7 @@ public class ReportObjectServiceImpl extends BaseOpenmrsService implements Repor
 	@Transactional(readOnly = true)
 	public List<PatientFilter> getAllPatientFilters() throws APIException {
 		ArrayList<PatientFilter> allPatientFilters = new ArrayList<PatientFilter>();
-		List<AbstractReportObject> allMatchingObjects = getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTFILTER);
+		List<AbstractReportObject> allMatchingObjects = getReportObjectsByType(ReportConstants.REPORT_OBJECT_TYPE_PATIENTFILTER);
 		if (allMatchingObjects != null) {
 			for (AbstractReportObject aro : allMatchingObjects) {
 				allPatientFilters.add((PatientFilter) aro);

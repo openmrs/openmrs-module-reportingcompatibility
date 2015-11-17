@@ -13,7 +13,6 @@
  */
 package org.openmrs.report;
 
-import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,8 +25,6 @@ import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
-import org.openmrs.util.OpenmrsUtil;
-import org.simpleframework.xml.Serializer;
 
 /**
  * TODO: create a test database and test against that
@@ -60,14 +57,11 @@ public class RowPerProgramEnrollmentDatasetTest extends BaseModuleContextSensiti
 		rs.setName("Testing row-per-obs");
 		rs.setDescription("Tesing RowPerObsDataSet*");
 		rs.addDataSetDefinition(definition);
-		
-		Serializer serializer = OpenmrsUtil.getSerializer();
-		StringWriter writer = new StringWriter();
-		
-		serializer.write(rs, writer);
+
+		String xml = Context.getSerializationService().getDefaultSerializer().serialize(rs);
 		//System.out.println("xml =\n" + writer.toString());
 		
-		rs = (ReportSchema) serializer.read(ReportSchema.class, writer.toString());
+		rs = (ReportSchema) Context.getSerializationService().getDefaultSerializer().deserialize(xml, ReportSchema.class);
 		//System.out.println("deserialized as name=" + rs.getName());
 		//System.out.println("deserialized with " + rs.getDataSetDefinitions().size() + " data set definitions");
 		

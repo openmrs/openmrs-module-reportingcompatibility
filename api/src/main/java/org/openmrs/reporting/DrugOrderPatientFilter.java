@@ -113,7 +113,7 @@ public class DrugOrderPatientFilter extends AbstractPatientFilter implements Pat
 				drugIds.add(drugId);
 			}
 			if (drugConcept != null) {
-				List<Drug> drugs = Context.getConceptService().getDrugs();
+				List<Drug> drugs = Context.getConceptService().getAllDrugs();
 				for (Drug drug : drugs) {
 					if (drug.getConcept().equals(drugConcept)) {
 						drugIds.add(drug.getDrugId());

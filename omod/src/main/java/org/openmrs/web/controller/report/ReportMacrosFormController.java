@@ -20,6 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.GlobalProperty;
 import org.openmrs.api.context.Context;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.util.OpenmrsConstants;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,7 +62,7 @@ public class ReportMacrosFormController extends SimpleFormController {
 		
 		if (!isFormSubmission(request))
 			command.setMacros(Context.getAdministrationService().getGlobalProperty(
-					OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS));
+					ReportConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS));
 		
 		return command;
 	}
@@ -80,7 +81,7 @@ public class ReportMacrosFormController extends SimpleFormController {
 		if (Context.isAuthenticated()) {
 			CommandObject command = (CommandObject) obj;
 			Context.getAdministrationService().saveGlobalProperty(
-			    new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS, command.getMacros()));
+			    new GlobalProperty(ReportConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS, command.getMacros()));
 			view = getSuccessView();
 		}
 		return new ModelAndView(new RedirectView(view));

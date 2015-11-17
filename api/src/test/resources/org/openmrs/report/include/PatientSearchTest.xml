@@ -7,7 +7,7 @@
   <concept_name concept_id="1" name="NEW CD4 COUNT" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" concept_name_id="1" voided="false" uuid="13ee4fe0-7043-4eb6-8fef-af60d0a92f0b" concept_name_type="FULLY_SPECIFIED" locale_preferred="0"/>
   <location location_id="1" name="Test Location" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="f1771d8e-bf1f-4dc5-957f-0d40a5eebf08"/>
   <location location_id="2" name="Test Location 2" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="fe834114-1829-4596-8089-c569518a1b6f"/>
-  <patient_identifier_type patient_identifier_type_id="1" name="Test Identifier Type" description="Test description" check_digit="false" creator="1" date_created="2005-01-01 00:00:00.0" required="false" retired="false" uuid="6e9b8dd2-86dd-4af0-8643-24f4066b7440"/>
+  <patient_identifier_type patient_identifier_type_id="1" name="Test Identifier Type" description="Test description" creator="1" date_created="2005-01-01 00:00:00.0" required="false" retired="false" uuid="6e9b8dd2-86dd-4af0-8643-24f4066b7440"/>
   <person person_id="2" gender="M" dead="false" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="a76e8d23-0c38-408c-b2a8-ea5540f01b51"/>
   <person person_id="3" gender="M" dead="false" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="7470a4e7-ddcc-44ef-ac24-ecc444c98ad8"/>
   <person_name person_name_id="2" preferred="true" person_id="3" given_name="John" middle_name=" " family_name="Doe" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="84889c43-32cb-4625-8bd8-d1dd1c04a38c"/>

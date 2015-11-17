@@ -23,12 +23,12 @@ import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.cohort.CohortDefinitionItemHolder;
 import org.openmrs.cohort.CohortDefinitionProvider;
 import org.openmrs.report.EvaluationContext;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObjectService;
-import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.ReportingcompatibilityUtil;
 
 /**
@@ -63,7 +63,7 @@ public class PatientSearchCohortDefinitionProvider implements CohortDefinitionPr
 		List<CohortDefinitionItemHolder> ret = new ArrayList<CohortDefinitionItemHolder>();
 		
 		List<AbstractReportObject> patientSearches = Context.getService(ReportObjectService.class).getReportObjectsByType(
-		    OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+				ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 		
 		for (AbstractReportObject o : patientSearches) {
 			PatientSearchReportObject psro = (PatientSearchReportObject) o;

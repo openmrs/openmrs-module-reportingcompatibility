@@ -21,6 +21,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.Obs;
+import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.service.CohortService;
 
@@ -59,8 +60,12 @@ public class RowPerObsDataSetProvider implements DataSetProvider {
 		ret.setDefinition(definition);
 		ret.setEvaluationContext(evalContext);
 		List<Concept> concepts = new ArrayList<Concept>(definition.getQuestions());
-		List<Obs> list = Context.getObsService().getObservations(patients, concepts, definition.getFromDate(),
-		    definition.getToDate());
+		
+		List<Person> persons = new ArrayList<Person>();
+		for (Integer patientId : patients.getMemberIds()) {
+			persons.add(new Person(patientId));
+		}
+		List<Obs> list = Context.getObsService().getObservations(persons, null, concepts, null, null, null, null, null, null, definition.getFromDate(), definition.getToDate(), false);
 		ret.setData(list);
 		return ret;
 	}

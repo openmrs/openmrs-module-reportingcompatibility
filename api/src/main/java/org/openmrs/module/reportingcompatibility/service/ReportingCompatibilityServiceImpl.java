@@ -59,10 +59,11 @@ import org.openmrs.api.db.DAOException;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.api.impl.PatientSetServiceImpl;
 import org.openmrs.module.reportingcompatibility.service.db.ReportingCompatibilityDAO;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.Report;
-import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.util.PrivilegeConstants;
 
 public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implements ReportingCompatibilityService {
 	
@@ -74,8 +75,8 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	}
 	
 	private ReportingCompatibilityDAO getDao() {
-		if (!Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENT_COHORTS)) {
-			throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_PATIENT_COHORTS);
+		if (!Context.hasPrivilege(PrivilegeConstants.GET_PATIENT_COHORTS)) {
+			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.GET_PATIENT_COHORTS);
 		}
 		return dao;
 	}
@@ -498,8 +499,8 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	 * @throws org.openmrs.api.APIException
 	 */
 	public void createReport(Report report) throws APIException {
-		if (!Context.hasPrivilege(OpenmrsConstants.PRIV_ADD_REPORTS)) {
-			throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_REPORTS);
+		if (!Context.hasPrivilege(ReportConstants.PRIV_ADD_REPORTS)) {
+			throw new APIAuthenticationException("Privilege required: " + ReportConstants.PRIV_ADD_REPORTS);
 		}
 
 		dao.createReport(report);
@@ -512,8 +513,8 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	 * @throws APIException
 	 */
 	public void updateReport(Report report) throws APIException {
-		if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_REPORTS)) {
-			throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_REPORTS);
+		if (!Context.hasPrivilege(ReportConstants.PRIV_EDIT_REPORTS)) {
+			throw new APIAuthenticationException("Privilege required: " + ReportConstants.PRIV_EDIT_REPORTS);
 		}
 
 		dao.updateReport(report);
@@ -526,8 +527,8 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	 * @throws APIException
 	 */
 	public void deleteReport(Report report) throws APIException {
-		if (!Context.hasPrivilege(OpenmrsConstants.PRIV_DELETE_REPORTS)) {
-			throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_DELETE_REPORTS);
+		if (!Context.hasPrivilege(ReportConstants.PRIV_DELETE_REPORTS)) {
+			throw new APIAuthenticationException("Privilege required: " + ReportConstants.PRIV_DELETE_REPORTS);
 		}
 
 		dao.deleteReport(report);
@@ -540,8 +541,8 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	 * @throws APIException
 	 */
 	public void createReportObject(AbstractReportObject reportObject) throws APIException {
-		if (!Context.hasPrivilege(OpenmrsConstants.PRIV_ADD_REPORT_OBJECTS)) {
-			throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_REPORT_OBJECTS);
+		if (!Context.hasPrivilege(ReportConstants.PRIV_ADD_REPORT_OBJECTS)) {
+			throw new APIAuthenticationException("Privilege required: " + ReportConstants.PRIV_ADD_REPORT_OBJECTS);
 		}
 
 		dao.createReportObject(reportObject);
@@ -554,8 +555,8 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	 * @throws APIException
 	 */
 	public void updateReportObject(AbstractReportObject reportObject) throws APIException {
-		if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_REPORT_OBJECTS)) {
-			throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_REPORT_OBJECTS);
+		if (!Context.hasPrivilege(ReportConstants.PRIV_EDIT_REPORT_OBJECTS)) {
+			throw new APIAuthenticationException("Privilege required: " + ReportConstants.PRIV_EDIT_REPORT_OBJECTS);
 		}
 
 		dao.updateReportObject(reportObject);
@@ -568,8 +569,8 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	 * @throws APIException
 	 */
 	public void deleteReportObject(Integer reportObjectId) throws APIException {
-		if (!Context.hasPrivilege(OpenmrsConstants.PRIV_DELETE_REPORT_OBJECTS)) {
-			throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_DELETE_REPORT_OBJECTS);
+		if (!Context.hasPrivilege(ReportConstants.PRIV_DELETE_REPORT_OBJECTS)) {
+			throw new APIAuthenticationException("Privilege required: " + ReportConstants.PRIV_DELETE_REPORT_OBJECTS);
 		}
 
 		dao.deleteReportObject(reportObjectId);

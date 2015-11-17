@@ -19,7 +19,7 @@
   <encounter_type encounter_type_id="2" name="Test Enc Type 2" description="Some desc 2" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="14c774b1-6963-4d81-b68f-480e4cc283ad"/>
   <location location_id="1" name="Test Location" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="5f681c43-1261-4869-9bec-3fac5685c814"/>
   <location location_id="2" name="Test Location 2" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="57b6ef27-c513-4d15-8053-cdd64bc90646"/>
-  <patient_identifier_type patient_identifier_type_id="1" name="Test Identifier Type" description="Test description" check_digit="false" creator="1" date_created="2005-01-01 00:00:00.0" required="false" retired="false" uuid="10a8dc1a-9f89-4ba8-9153-fff10599c254"/>
+  <patient_identifier_type patient_identifier_type_id="1" name="Test Identifier Type" description="Test description" creator="1" date_created="2005-01-01 00:00:00.0" required="false" retired="false" uuid="10a8dc1a-9f89-4ba8-9153-fff10599c254"/>
   <person person_id="2" gender="M" dead="false" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="33b1a182-43b5-4106-a4db-f39cdbb68e68"/>
   <person person_id="3" gender="F" dead="false" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="ba6832fe-14ee-41d3-8a47-e53853d86d62"/>
   <person_name person_name_id="2" preferred="true" person_id="3" given_name="John3" middle_name=" " family_name="Doe" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="2999701b-bf24-4d0f-ad4f-a9e5978c49b9"/>

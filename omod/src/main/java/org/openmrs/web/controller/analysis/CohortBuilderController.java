@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.WeakHashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,8 @@ import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.ConceptName;
+import org.openmrs.User;
+import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortSearchHistory;
@@ -55,6 +58,8 @@ public class CohortBuilderController implements Controller {
 	private String formView;
 	
 	private String successView;
+	
+	private static Map<User, Map<String, Object>> volatileUserData = new WeakHashMap<User, Map<String, Object>>();
 		
 	public CohortBuilderController() {
 	}
@@ -84,14 +89,40 @@ public class CohortBuilderController implements Controller {
 		}
 		return ret;
 	}
+	
+	public static Object getVolatileUserData(String key) {
+		User u = Context.getAuthenticatedUser();
+		if (u == null) {
+			throw new APIAuthenticationException();
+		}
+		Map<String, Object> myData = volatileUserData.get(u);
+		if (myData == null) {
+			return null;
+		} else {
+			return myData.get(key);
+		}
+	}
+	
+	public static void setVolatileUserData(String key, Object value) {
+		User u = Context.getAuthenticatedUser();
+		if (u == null) {
+			throw new APIAuthenticationException();
+		}
+		Map<String, Object> myData = volatileUserData.get(u);
+		if (myData == null) {
+			myData = new HashMap<String, Object>();
+			volatileUserData.put(u, myData);
+		}
+		myData.put(key, value);
+	}
 		
 	private void setMySearchHistory(HttpServletRequest request, CohortSearchHistory history) {
-		Context.setVolatileUserData("CohortBuilderSearchHistory", history);
+		setVolatileUserData("CohortBuilderSearchHistory", history);
 	}
 	
 	private CohortSearchHistory getMySearchHistory(HttpServletRequest request) {
 		try {
-			Object searchHistoryObj = Context.getVolatileUserData("CohortBuilderSearchHistory");
+			Object searchHistoryObj = getVolatileUserData("CohortBuilderSearchHistory");
 			return (CohortSearchHistory) searchHistoryObj;
 		}
 		catch (Exception e) {

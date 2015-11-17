@@ -26,7 +26,7 @@ import org.openmrs.Form;
 import org.openmrs.api.context.Context;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
-import org.openmrs.util.OpenmrsConstants;
+import org.openmrs.util.PrivilegeConstants;
 
 public class PatientSetPortletController extends PortletController {
 	
@@ -65,7 +65,7 @@ public class PatientSetPortletController extends PortletController {
 			model.put("patientSet", patientSet);
 			
 			if (Context.isAuthenticated() && !model.containsKey("batchEntryForms")
-			        && Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_FORMS)) {
+			        && Context.hasPrivilege(PrivilegeConstants.GET_FORMS)) {
 				if ("true".equals(model.get("allowBatchEntry"))) {
 					Collection<Form> forms = Context.getFormService().getAllForms(false);
 					List<Form> shortForms = new ArrayList<Form>();

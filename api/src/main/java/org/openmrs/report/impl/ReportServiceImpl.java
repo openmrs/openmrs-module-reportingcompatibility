@@ -37,15 +37,14 @@ import org.openmrs.report.DataSet;
 import org.openmrs.report.DataSetDefinition;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.RenderingMode;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.report.ReportData;
 import org.openmrs.report.ReportRenderer;
 import org.openmrs.report.ReportSchema;
 import org.openmrs.report.ReportSchemaXml;
 import org.openmrs.report.db.ReportDAO;
 import org.openmrs.util.OpenmrsClassLoader;
-import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
-import org.simpleframework.xml.Serializer;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -193,10 +192,9 @@ public class ReportServiceImpl implements ReportService {
 		if (reportSchemaXml == null || reportSchemaXml.getXml() == null || reportSchemaXml.getXml().length() == 0) {
 			throw new APIException("The current serialized ReportSchema string named 'xml' is null or empty");
 		}
-		Serializer deserializer = OpenmrsUtil.getSerializer();
 		String expandedXml = applyReportXmlMacros(reportSchemaXml.getXml());
 		try {
-			reportSchema = deserializer.read(ReportSchema.class, expandedXml);
+			reportSchema = Context.getSerializationService().getDefaultSerializer().deserialize(expandedXml, ReportSchema.class);
 		}
 		catch (Exception e) {
 			throw new APIException(e);
@@ -331,7 +329,7 @@ public class ReportServiceImpl implements ReportService {
 	public Properties getReportXmlMacros() {
 		try {
 			String macrosAsString = Context.getAdministrationService().getGlobalProperty(
-			    OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS);
+			    ReportConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS);
 			Properties macros = new Properties();
 			if (macrosAsString != null) {
 				OpenmrsUtil.loadProperties(macros, new ByteArrayInputStream(macrosAsString.getBytes("UTF-8")));
@@ -350,7 +348,7 @@ public class ReportServiceImpl implements ReportService {
 		try {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			OpenmrsUtil.storeProperties(macros, out, null);
-			GlobalProperty prop = new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS, out.toString());
+			GlobalProperty prop = new GlobalProperty(ReportConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS, out.toString());
 			Context.getAdministrationService().saveGlobalProperty(prop);
 		}
 		catch (Exception ex) {

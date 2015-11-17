@@ -9,7 +9,7 @@
 	<orders order_id="1" urgency="ROUTINE" order_action="NEW" concept_id="1" orderer="1" date_activated="2005-01-01 00:00:00.0" auto_expire_date="2005-12-31 00:00:00.0" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" patient_id="2" uuid="f4740b0b-206c-48a4-a5b7-8a9024cb75d9" care_setting="1"/>
 	<patient patient_id="2" creator="1" date_created="2005-01-01 00:00:00.0" voided="false"/>
 	<patient_identifier patient_identifier_id="1" patient_id="2" identifier="1234" identifier_type="1" preferred="1" location_id="1" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="f76b39ad-cffb-42d1-a977-1f449a68a220"/>
-	<patient_identifier_type patient_identifier_type_id="1" name="Test Identifier Type" description="Test description" check_digit="false" creator="1" date_created="2005-01-01 00:00:00.0" required="false" retired="false" uuid="8399cdf4-8f2d-40c4-9b40-bf9843c9c088"/>
+	<patient_identifier_type patient_identifier_type_id="1" name="Test Identifier Type" description="Test description" creator="1" date_created="2005-01-01 00:00:00.0" required="false" retired="false" uuid="8399cdf4-8f2d-40c4-9b40-bf9843c9c088"/>
 	<person person_id="2" gender="M" birthdate="2000-01-01" dead="false" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="b5f5ef61-c750-41fe-94cc-f5a9866dcaf5"/>
 	<person_name person_name_id="2" preferred="true" person_id="2" given_name="John" middle_name=" " family_name="Doe" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="0d1e4fd3-9b00-44f4-80cb-ed68281eb3ae"/>
 </dataset>

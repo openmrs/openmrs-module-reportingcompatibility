@@ -173,9 +173,7 @@ public class PepfarReportTest extends BaseModuleContextSensitiveTest {
 		ReportService rs = (ReportService) Context.getService(ReportService.class);
 		ReportData data = rs.evaluate(schema, inputCohort, evalContext);
 		
-		Serializer serializer = OpenmrsUtil.getSerializer();
-		StringWriter writer = new StringWriter();
-		serializer.write(data, writer);
+		Context.getSerializationService().getDefaultSerializer().serialize(data);
 		//System.out.println("Serialized report:\n" + writer.toString());
 		
 		TsvReportRenderer renderer = new TsvReportRenderer();

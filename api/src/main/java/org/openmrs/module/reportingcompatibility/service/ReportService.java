@@ -13,10 +13,6 @@
  */
 package org.openmrs.module.reportingcompatibility.service;
 
-import java.lang.Class;
-import java.lang.Exception;
-import java.lang.Integer;
-import java.lang.String;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +23,11 @@ import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.RenderingMode;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.report.ReportData;
 import org.openmrs.report.ReportRenderer;
 import org.openmrs.report.ReportSchema;
 import org.openmrs.report.ReportSchemaXml;
-import org.openmrs.util.OpenmrsConstants;
 
 /**
  * Contains methods pertaining to creating/updating/deleting/retiring/registering/evaluating
@@ -52,7 +48,7 @@ public interface ReportService {
 	 * @return {@link ReportData} - Contains the evaluated report data
 	 * @throws org.openmrs.api.APIException
 	 */
-	@Authorized( { OpenmrsConstants.PRIV_RUN_REPORTS })
+	@Authorized( { ReportConstants.PRIV_RUN_REPORTS })
 	public ReportData evaluate(ReportSchema reportSchema, Cohort inputCohort, EvaluationContext context);
 	
 	/**

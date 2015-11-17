@@ -27,12 +27,12 @@ import javax.servlet.http.HttpSession;
 
 import org.openmrs.Cohort;
 import org.openmrs.api.context.Context;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObject;
 import org.openmrs.reporting.ReportObjectService;
-import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.web.WebConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.BindException;
@@ -84,7 +84,7 @@ public class CohortListController extends SimpleFormController {
 			if (toDelete != null) {
 				ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 				List<AbstractReportObject> savedSearches = rs.getReportObjectsByType(
-				    OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+				    ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 				for (String s : toDelete) {
 					int compositeTest = 0;
 					for (ReportObject ro : savedSearches) {

@@ -30,14 +30,15 @@ import org.openmrs.cohort.CohortUtil;
 import org.openmrs.module.reportingcompatibility.service.CohortService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObject;
 import org.openmrs.reporting.ReportObjectService;
-import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.web.controller.analysis.CohortBuilderController;
 
 public class DWRCohortBuilderService {
 	
@@ -54,7 +55,7 @@ public class DWRCohortBuilderService {
 	}
 	
 	private CohortSearchHistory getMySearchHistory() {
-		return (CohortSearchHistory) Context.getVolatileUserData("CohortBuilderSearchHistory");
+		return (CohortSearchHistory) CohortBuilderController.getVolatileUserData("CohortBuilderSearchHistory");
 	}
 	
 	/**
@@ -99,7 +100,7 @@ public class DWRCohortBuilderService {
 		List<ListItem> ret = new ArrayList<ListItem>();
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 		List<AbstractReportObject> savedSearches = rs.getReportObjectsByType(
-				OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+				ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 		for (ReportObject ps : savedSearches) {
 			if (includeParameterized || ((PatientSearchReportObject) ps).getPatientSearch().getParameters().size() == 0) {
 				ListItem li = new ListItem();
@@ -215,7 +216,7 @@ public class DWRCohortBuilderService {
 	 */
 	public void loadSearchHistory(Integer id) {
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
-		Context.setVolatileUserData("CohortBuilderSearchHistory", rs.getSearchHistory(id));
+		CohortBuilderController.setVolatileUserData("CohortBuilderSearchHistory", rs.getSearchHistory(id));
 	}
 	
 	/**

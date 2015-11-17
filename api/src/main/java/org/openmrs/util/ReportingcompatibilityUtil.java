@@ -212,7 +212,7 @@ public class ReportingcompatibilityUtil {
 							ed.setAsText(valueAsString);
 							value = ed.getValue();
 						} else if (LogicCriteria.class.equals(valueClass)) {
-							value = Context.getLogicService().parseString(valueAsString);
+							value = Context.getLogicService().parse(valueAsString);
 						} else {
 							// TODO: Decide whether this is a hack. Currently
 							// setting Object arguments with a String

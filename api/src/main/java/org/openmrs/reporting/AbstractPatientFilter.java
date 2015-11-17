@@ -21,13 +21,13 @@ import org.openmrs.ConceptName;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.report.EvaluationContext;
-import org.openmrs.util.OpenmrsConstants;
+import org.openmrs.report.ReportConstants;
 
 public abstract class AbstractPatientFilter extends AbstractReportObject implements PatientFilter {
 	
 	public AbstractPatientFilter() {
 		// do nothing
-		super.setType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTFILTER);
+		super.setType(ReportConstants.REPORT_OBJECT_TYPE_PATIENTFILTER);
 	}
 	
 	public AbstractPatientFilter(Integer reportObjectId, String name, String description, String type, String subType,

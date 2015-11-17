@@ -46,14 +46,12 @@ import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.CohortDataSetDefinition;
 import org.openmrs.report.DataSetDefinition;
 import org.openmrs.report.Parameter;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.report.ReportSchema;
 import org.openmrs.report.ReportSchemaXml;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObjectService;
-import org.openmrs.util.OpenmrsConstants;
-import org.openmrs.util.OpenmrsUtil;
-import org.simpleframework.xml.Serializer;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
@@ -196,7 +194,7 @@ public class CohortReportFormController extends SimpleFormController implements 
 		
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 		List<AbstractReportObject> searches = rs.getReportObjectsByType(
-		    OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+		    ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		for (AbstractReportObject o : searches) {
 			if (o instanceof PatientSearchReportObject) {
@@ -308,16 +306,14 @@ public class CohortReportFormController extends SimpleFormController implements 
 		rs.setDescription(command.getDescription());
 		rs.setReportParameters(command.getParameters());
 		rs.setDataSetDefinitions(new ArrayList<DataSetDefinition>());
-		Serializer serializer = OpenmrsUtil.getSerializer();
-		StringWriter sw = new StringWriter();
-		serializer.write(rs, sw);
+		String data = Context.getSerializationService().getDefaultSerializer().serialize(rs);
 		
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setValidating(false);
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		
 		Document xml = db.parse(new InputSource(new StringReader(
-		        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + sw.toString())));
+		        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + data)));
 		Node node = findChild(xml, "reportSchema");
 		node = findChild(node, "dataSets");
 		Element dsd = xml.createElement("dataSetDefinition");

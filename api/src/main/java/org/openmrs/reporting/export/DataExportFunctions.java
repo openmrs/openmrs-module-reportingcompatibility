@@ -39,7 +39,6 @@ import org.openmrs.EncounterType;
 import org.openmrs.Location;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
-import org.openmrs.PatientIdentifier;
 import org.openmrs.PatientIdentifierType;
 import org.openmrs.PatientProgram;
 import org.openmrs.Program;
@@ -92,7 +91,7 @@ public class DataExportFunctions {
 	protected Map<String, Map<Integer, ?>> patientEncounterMap = new HashMap<String, Map<Integer, ?>>();
 	
 	// Map<PatientIdentifierType, Map<patientId, PatientIdentifier>>
-	protected Map<String, Map<Integer, PatientIdentifier>> patientIdentifierMap = new HashMap<String, Map<Integer, PatientIdentifier>>();
+	protected Map<String, Map<Integer, String>> patientIdentifierMap = new HashMap<String, Map<Integer, String>>();
 	
 	// Map<EncounterType, Map<patientId, Encounter>>
 	protected Map<String, Map<Integer, ?>> patientFirstEncounterMap = new HashMap<String, Map<Integer, ?>>();
@@ -560,7 +559,7 @@ public class DataExportFunctions {
 		Map<Integer, List<List<Object>>> patientIdObsMap = conceptAttrObsMap.get(key);
 		if (patientIdObsMap == null) {
 			//log.debug("getting obs list for concept: " + c + " and attr: " + attr);
-			patientIdObsMap = patientSetService.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs);
+			patientIdObsMap = patientSetService.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs, null, true);
 			conceptAttrObsMap.put(key, patientIdObsMap);
 		}
 		return patientIdObsMap.get(patientId);
@@ -622,7 +621,7 @@ public class DataExportFunctions {
 			if (o.getDrug() != null) {
 				ret.append(o.getDrug().getName());
 			} else {
-				ret.append(o.getConcept().getBestName(Context.getLocale()).getName());
+				ret.append(o.getConcept().getName(Context.getLocale(), false).getName());
 			}
 			if (i.hasNext()) {
 				ret.append(" ");
@@ -1061,7 +1060,7 @@ public class DataExportFunctions {
 	public Object getPatientIdentifier(String typeName) {
 		
 		log.debug("Identifier Type: " + typeName);
-		Map<Integer, PatientIdentifier> patientIdentifiers;
+		Map<Integer, String> patientIdentifiers;
 		if (patientIdentifierMap.containsKey(typeName)) {
 			patientIdentifiers = patientIdentifierMap.get(typeName);
 		} else {
@@ -1077,7 +1076,7 @@ public class DataExportFunctions {
 				type = patientService.getPatientIdentifierTypeByName(typeName);
 			}
 			// Get identifiers by type 
-			patientIdentifiers = patientSetService.getPatientIdentifiersByType(getPatientSetIfNotAllPatients(), type);
+			patientIdentifiers = patientSetService.getPatientIdentifierStringsByType(getPatientSetIfNotAllPatients(), type);
 			
 			log.debug("Found identifiers for patient identifier " + type + " = " + patientIdentifiers);
 			

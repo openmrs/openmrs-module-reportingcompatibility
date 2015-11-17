@@ -13,11 +13,8 @@
  */
 package org.openmrs.report;
 
-import java.io.StringWriter;
-
 import org.openmrs.BaseOpenmrsObject;
-import org.openmrs.util.OpenmrsUtil;
-import org.simpleframework.xml.Serializer;
+import org.openmrs.api.context.Context;
 
 /**
  * This represents a very simplified saving technique for ReportSchemas. The "xml" attribute is
@@ -58,12 +55,9 @@ public class ReportSchemaXml extends BaseOpenmrsObject {
 	 * @throws Exception if serialization fails
 	 */
 	public ReportSchemaXml(ReportSchema schema) throws Exception {
-		Serializer serializer = OpenmrsUtil.getSerializer();
-		StringWriter writer = new StringWriter();
-		serializer.write(schema, writer);
-		
+		String xml = Context.getSerializationService().getDefaultSerializer().serialize(schema);
 		populateFromReportSchema(schema);
-		setXml(writer.toString());
+		setXml(xml);
 	}
 	
 	/**

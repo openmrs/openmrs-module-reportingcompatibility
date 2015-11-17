@@ -13,15 +13,15 @@
  */
 package org.openmrs.reporting;
 
-import org.openmrs.util.OpenmrsConstants;
+import org.openmrs.report.ReportConstants;
 
 public class PatientSearchReportObject extends AbstractReportObject {
 	
 	private PatientSearch patientSearch;
 	
 	public PatientSearchReportObject() {
-		super.setType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
-		super.setSubType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+		super.setType(ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+		super.setSubType(ReportConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
 	}
 	
 	public PatientSearchReportObject(String name, PatientSearch search) {
