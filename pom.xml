@@ -11,8 +11,8 @@
 	<url>http://openmrs.org</url>
 
 	<scm>
-		<connection>scm:git:https://github.com/openmrs/openmrs-module-reportingcompatibility</connection>
-		<developerConnection>scm:git:https://github.com/openmrs/openmrs-module-reportingcompatibility</developerConnection>
+		<connection>scm:git:https://github.com/openmrs/openmrs-module-reportingcompatibility.git</connection>
+		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-reportingcompatibility.git</developerConnection>
 		<url>https://github.com/openmrs/openmrs-module-reportingcompatibility</url>
 	</scm>
 
