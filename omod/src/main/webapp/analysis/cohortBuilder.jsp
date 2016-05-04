@@ -1112,7 +1112,7 @@
 	<div id="saveFilterBox" style="padding: 1em; position: absolute; z-index: 1; border: 1px black solid; background-color: #ffe0e0; display: none">
 		<b><u><spring:message code="reportingcompatibility.CohortBuilder.cohortDefinition.save"/></u></b>
 		<br/><br/>
-		<spring:message code="general.saving" arguments="<span id='saveFilterTitle'></span>"/>
+		<spring:message code="general.saving" arguments="<span id='saveFilterTitle'></span>" htmlEscape="false"/>
 		<br/><br/>
 		<spring:message code="general.name"/>: <input type="text" id="saveFilterName"/> <br/>
 		<spring:message code="general.description"/>: <input type="text" id="saveFilterDescription" size="60"/> <br/><br/>
