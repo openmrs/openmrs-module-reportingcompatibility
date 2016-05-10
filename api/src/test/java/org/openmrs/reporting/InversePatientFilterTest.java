@@ -11,9 +11,10 @@ import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.Location;
 import org.openmrs.Program;
-import org.openmrs.api.PatientSetService.BooleanOperator;
-import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
+import org.openmrs.module.reportingcompatibility.service.ReportService.BooleanOperator;
+import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
@@ -156,7 +157,7 @@ public class InversePatientFilterTest extends BaseModuleContextSensitiveTest {
 		Cohort normal = f.filter(null, null);
 		Cohort inverse = inv.filter(null, null);
 		Cohort together = Cohort.union(normal, inverse);
-		Cohort everyone = Context.getPatientSetService().getAllPatients();
+		Cohort everyone = Context.getService(ReportService.class).getAllPatients();
 		Assert.assertEquals(everyone.size(), normal.size() + inverse.size());
 		assertEqual(everyone, together);
 	}

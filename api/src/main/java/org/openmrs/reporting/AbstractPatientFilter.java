@@ -20,6 +20,7 @@ import org.openmrs.Concept;
 import org.openmrs.ConceptName;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.ReportConstants;
 
@@ -53,7 +54,7 @@ public abstract class AbstractPatientFilter extends AbstractReportObject impleme
 		} else if (context != null) {
 			return Cohort.subtract(context.getBaseCohort(), filterResult);
 		} else {
-			return Context.getPatientSetService().getInverseOfCohort(filterResult);
+			return Context.getService(ReportService.class).getInverseOfCohort(filterResult);
 		}
 	}
 	

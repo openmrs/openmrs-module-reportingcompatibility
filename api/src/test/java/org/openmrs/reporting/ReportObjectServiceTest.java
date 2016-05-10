@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.junit.Test;
 import org.openmrs.Concept;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortSearchHistory;
+import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
 
@@ -24,7 +24,7 @@ public class ReportObjectServiceTest extends BaseModuleContextSensitiveTest {
 		PatientSearch search = new PatientSearch();
 		search.setFilterClass(ObsPatientFilter.class);
 		List<SearchArgument> args = new ArrayList<SearchArgument>();
-		args.add(new SearchArgument("timeModifier", "ANY", PatientSetService.TimeModifier.class));
+		args.add(new SearchArgument("timeModifier", "ANY", TimeModifier.class));
 		args.add(new SearchArgument("question", Context.getConceptService().getConceptByName("CD4 COUNT").getConceptId()
 		        .toString(), Concept.class));
 		args.add(new SearchArgument("withinLastDays", "1", Integer.class)); //one indicates the number of days

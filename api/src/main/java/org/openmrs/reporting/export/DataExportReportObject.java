@@ -21,8 +21,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.Location;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientFilter;
@@ -182,7 +182,7 @@ public class DataExportReportObject extends AbstractReportObject implements Seri
 	 * @return patientSet to be used with report template
 	 */
 	public Cohort generatePatientSet(EvaluationContext context) {
-		PatientSetService pss = Context.getPatientSetService();
+		ReportService pss = Context.getService(ReportService.class);
 		
 		Cohort cohort = null;
 		

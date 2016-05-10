@@ -16,13 +16,15 @@ package org.openmrs.reporting;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptName;
-import org.openmrs.api.PatientSetService;
-import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
+import org.openmrs.module.reportingcompatibility.service.ReportService.Modifier;
+import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -32,9 +34,9 @@ public class ObsPatientFilter extends CachingPatientFilter {
 	
 	private Concept question;
 	
-	private PatientSetService.Modifier modifier;
+	private Modifier modifier;
 	
-	private PatientSetService.TimeModifier timeModifier;
+	private TimeModifier timeModifier;
 	
 	private Object value;
 	
@@ -128,8 +130,7 @@ public class ObsPatientFilter extends CachingPatientFilter {
 	
 	@Override
 	public Cohort filterImpl(EvaluationContext context) {
-		PatientSetService service = Context.getPatientSetService();
-		return service.getPatientsHavingObs(question == null ? null : question.getConceptId(), timeModifier, modifier,
+		return Context.getService(ReportService.class).getPatientsHavingObs(question == null ? null : question.getConceptId(), timeModifier, modifier,
 		    value, OpenmrsUtil.fromDateHelper(null, getWithinLastDays(), getWithinLastMonths(), getUntilDaysAgo(),
 		        getUntilMonthsAgo(), getSinceDate(), getUntilDate()), OpenmrsUtil.toDateHelper(null, getWithinLastDays(),
 		        getWithinLastMonths(), getUntilDaysAgo(), getUntilMonthsAgo(), getSinceDate(), getUntilDate()));
@@ -199,11 +200,11 @@ public class ObsPatientFilter extends CachingPatientFilter {
 		return ret.toString();
 	}
 	
-	public PatientSetService.Modifier getModifier() {
+	public Modifier getModifier() {
 		return modifier;
 	}
 	
-	public void setModifier(PatientSetService.Modifier modifier) {
+	public void setModifier(Modifier modifier) {
 		this.modifier = modifier;
 	}
 	
@@ -223,11 +224,11 @@ public class ObsPatientFilter extends CachingPatientFilter {
 		this.sinceDate = sinceDate;
 	}
 	
-	public PatientSetService.TimeModifier getTimeModifier() {
+	public TimeModifier getTimeModifier() {
 		return timeModifier;
 	}
 	
-	public void setTimeModifier(PatientSetService.TimeModifier timeModifier) {
+	public void setTimeModifier(TimeModifier timeModifier) {
 		this.timeModifier = timeModifier;
 	}
 	

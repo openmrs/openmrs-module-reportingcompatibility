@@ -29,8 +29,9 @@ import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.Obs;
 import org.openmrs.api.ObsService;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
+import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.reporting.ObsPatientFilter;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearch;
@@ -90,7 +91,7 @@ public class PatientSearchTest extends BaseModuleContextSensitiveTest {
 		{
 			search.setFilterClass(ObsPatientFilter.class);
 			List<SearchArgument> args = new ArrayList<SearchArgument>();
-			args.add(new SearchArgument("timeModifier", "ANY", PatientSetService.TimeModifier.class));
+			args.add(new SearchArgument("timeModifier", "ANY", TimeModifier.class));
 			// using NEW CD4 COUNT in patientSearchTest.xml because CD4 COUNT exists in standardDataSet.xml
 			args.add(new SearchArgument("question", Context.getConceptService().getConceptByName("NEW CD4 COUNT")
 			        .getConceptId().toString(), Concept.class));
@@ -107,7 +108,7 @@ public class PatientSearchTest extends BaseModuleContextSensitiveTest {
 		}
 		
 		PatientFilter filterToRun = ReportingcompatibilityUtil.toPatientFilter(search, null, ec);
-		Cohort result = filterToRun.filter(Context.getPatientSetService().getAllPatients(), ec);
+		Cohort result = filterToRun.filter(Context.getService(ReportService.class).getAllPatients(), ec);
 		
 		//System.out.println("results is " + result.size());
 		

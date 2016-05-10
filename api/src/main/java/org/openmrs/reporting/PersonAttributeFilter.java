@@ -17,6 +17,7 @@ import org.openmrs.Cohort;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 
 public class PersonAttributeFilter extends CachingPatientFilter {
@@ -54,7 +55,7 @@ public class PersonAttributeFilter extends CachingPatientFilter {
 	
 	@Override
 	public Cohort filterImpl(EvaluationContext context) {
-		return Context.getPatientSetService().getPatientsHavingPersonAttribute(getAttribute(), getValue());
+		return Context.getService(ReportService.class).getPatientsHavingPersonAttribute(getAttribute(), getValue());
 	}
 	
 	public boolean isReadyToRun() {

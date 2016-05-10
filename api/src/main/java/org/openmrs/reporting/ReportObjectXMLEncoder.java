@@ -41,7 +41,10 @@ import org.openmrs.Program;
 import org.openmrs.ProgramWorkflow;
 import org.openmrs.ProgramWorkflowState;
 import org.openmrs.User;
-import org.openmrs.api.PatientSetService;
+import org.openmrs.module.reportingcompatibility.service.ReportService.BooleanOperator;
+import org.openmrs.module.reportingcompatibility.service.ReportService.GroupMethod;
+import org.openmrs.module.reportingcompatibility.service.ReportService.Modifier;
+import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.propertyeditor.CohortEditor;
 import org.openmrs.propertyeditor.ConceptAnswerEditor;
 import org.openmrs.propertyeditor.ConceptEditor;
@@ -91,10 +94,10 @@ public class ReportObjectXMLEncoder {
 		Set<Class> alreadyAdded = new HashSet<Class>();
 		{
 			List<Class> enumClasses = new ArrayList<Class>();
-			enumClasses.add(PatientSetService.Modifier.class);
-			enumClasses.add(PatientSetService.TimeModifier.class);
-			enumClasses.add(PatientSetService.BooleanOperator.class);
-			enumClasses.add(PatientSetService.GroupMethod.class);
+			enumClasses.add(Modifier.class);
+			enumClasses.add(TimeModifier.class);
+			enumClasses.add(BooleanOperator.class);
+			enumClasses.add(GroupMethod.class);
 			for (Class clz : enumClasses) {
 				enc.setPersistenceDelegate(clz, enumDelegate);
 				alreadyAdded.add(clz);

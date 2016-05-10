@@ -64,12 +64,11 @@ import org.openmrs.ProgramWorkflowState;
 import org.openmrs.Relationship;
 import org.openmrs.RelationshipType;
 import org.openmrs.User;
-import org.openmrs.api.PatientSetService;
-import org.openmrs.api.PatientSetService.Modifier;
-import org.openmrs.api.PatientSetService.PatientLocationMethod;
-import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.reportingcompatibility.service.ReportService.Modifier;
+import org.openmrs.module.reportingcompatibility.service.ReportService.PatientLocationMethod;
+import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.Report;
 import org.openmrs.reporting.ReportObjectWrapper;
@@ -296,8 +295,8 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		return new Cohort(query.list());
 	}
 	
-	public Cohort getPatientsHavingObs(Integer conceptId, PatientSetService.TimeModifier timeModifier,
-	                                   PatientSetService.Modifier modifier, Object value, Date fromDate, Date toDate) {
+	public Cohort getPatientsHavingObs(Integer conceptId, TimeModifier timeModifier,
+	                                   Modifier modifier, Object value, Date fromDate, Date toDate) {
 		if (conceptId == null && value == null)
 			throw new IllegalArgumentException("Can't have conceptId == null and value == null");
 		if (conceptId == null && (timeModifier != TimeModifier.ANY && timeModifier != TimeModifier.NO))
@@ -388,7 +387,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 			sb.append(dateSql);
 			
 		} else if (timeModifier == TimeModifier.FIRST || timeModifier == TimeModifier.LAST) {
-			boolean isFirst = timeModifier == PatientSetService.TimeModifier.FIRST;
+			boolean isFirst = timeModifier == TimeModifier.FIRST;
 			sb.append("select o.person_id " + "from obs o inner join (" + "    select person_id, "
 			        + (isFirst ? "min" : "max") + "(obs_datetime) as obs_datetime" + "    from obs"
 			        + "    where voided = false and concept_id = :concept_id " + dateSqlForSubquery
@@ -552,8 +551,8 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		return new Cohort(query.list());
 	}
 	
-	public Cohort getPatientsHavingNumericObs(Integer conceptId, PatientSetService.TimeModifier timeModifier,
-	                                          PatientSetService.Modifier modifier, Number value, Date fromDate, Date toDate) {
+	public Cohort getPatientsHavingNumericObs(Integer conceptId, TimeModifier timeModifier,
+	                                          Modifier modifier, Number value, Date fromDate, Date toDate) {
 		
 		Concept concept = Context.getConceptService().getConcept(conceptId);
 		if (!concept.isNumeric()) {
@@ -579,7 +578,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 			sb.append("select o.person_id from obs o " + "where voided = false and concept_id = :concept_id ");
 			sb.append(dateSql);
 		} else if (timeModifier == TimeModifier.FIRST || timeModifier == TimeModifier.LAST) {
-			boolean isFirst = timeModifier == PatientSetService.TimeModifier.FIRST;
+			boolean isFirst = timeModifier == TimeModifier.FIRST;
 			sb.append("select o.person_id " + "from obs o inner join (" + "    select person_id, "
 			        + (isFirst ? "min" : "max") + "(obs_datetime) as obs_datetime" + "    from obs"
 			        + "    where voided = false and concept_id = :concept_id " + dateSql + "    group by person_id"
@@ -1348,7 +1347,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		return new Cohort(query.list());
 	}
 	
-	public Cohort getPatientsHavingLocation(Integer locationId, PatientSetService.PatientLocationMethod method) {
+	public Cohort getPatientsHavingLocation(Integer locationId, PatientLocationMethod method) {
 		StringBuffer sb = new StringBuffer();
 		boolean argumentAsString = false;
 		if (method == PatientLocationMethod.ANY_ENCOUNTER) {

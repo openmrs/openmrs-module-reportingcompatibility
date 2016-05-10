@@ -28,6 +28,7 @@ import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.cohort.CohortSearchHistory;
 import org.openmrs.cohort.CohortUtil;
 import org.openmrs.module.reportingcompatibility.service.CohortService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
 import org.openmrs.report.ReportConstants;
@@ -49,7 +50,7 @@ public class DWRCohortBuilderService {
 		PatientFilter pf = rs.getPatientFilterById(filterId);
 		if (pf == null)
 			return null;
-		Cohort everyone = Context.getPatientSetService().getAllPatients();
+		Cohort everyone = Context.getService(ReportService.class).getAllPatients();
 		Cohort filtered = (Cohort) pf.filter(everyone, null);
 		return filtered.size();
 	}
@@ -157,7 +158,7 @@ public class DWRCohortBuilderService {
 		if (pf == null)
 			return "";
 		else
-			return Context.getPatientSetService().getAllPatients().getCommaSeparatedPatientIds();
+			return Context.getService(ReportService.class).getAllPatients().getCommaSeparatedPatientIds();
 	}
 	
 	/**

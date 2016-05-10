@@ -15,9 +15,10 @@ package org.openmrs.reporting;
 
 import org.openmrs.Cohort;
 import org.openmrs.Location;
-import org.openmrs.api.PatientSetService.PatientLocationMethod;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
+import org.openmrs.module.reportingcompatibility.service.ReportService.PatientLocationMethod;
 import org.openmrs.report.EvaluationContext;
 
 public class LocationPatientFilter extends CachingPatientFilter {
@@ -52,7 +53,7 @@ public class LocationPatientFilter extends CachingPatientFilter {
 	
 	@Override
 	public Cohort filterImpl(EvaluationContext context) {
-		return Context.getPatientSetService().getPatientsHavingLocation(getLocation(), getCalculationMethod());
+		return Context.getService(ReportService.class).getPatientsHavingLocation(getLocation(), getCalculationMethod());
 	}
 	
 	public boolean isReadyToRun() {

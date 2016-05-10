@@ -25,9 +25,9 @@ import java.util.Stack;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
-import org.openmrs.api.PatientSetService;
-import org.openmrs.api.PatientSetService.BooleanOperator;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
+import org.openmrs.module.reportingcompatibility.service.ReportService.BooleanOperator;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.PatientFilter;
@@ -313,7 +313,7 @@ public class CohortSearchHistory extends AbstractReportObject {
 			}
 		}
 		if (current == null) {
-			return Context.getPatientSetService().getAllPatients();
+			return Context.getService(ReportService.class).getAllPatients();
 		} else {
 			return new Cohort("Cohort anded together", "", current);
 		}
@@ -389,11 +389,11 @@ public class CohortSearchHistory extends AbstractReportObject {
 				} else if (st.ttype == StreamTokenizer.TT_WORD) {
 					String str = st.sval.toLowerCase();
 					if (andWords.contains(str)) {
-						currentLine.add(PatientSetService.BooleanOperator.AND);
+						currentLine.add(BooleanOperator.AND);
 					} else if (orWords.contains(str)) {
-						currentLine.add(PatientSetService.BooleanOperator.OR);
+						currentLine.add(BooleanOperator.OR);
 					} else if (notWords.contains(str)) {
-						currentLine.add(PatientSetService.BooleanOperator.NOT);
+						currentLine.add(BooleanOperator.NOT);
 					} else {
 						throw new IllegalArgumentException("Don't recognize " + st.sval);
 					}

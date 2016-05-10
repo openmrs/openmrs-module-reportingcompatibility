@@ -50,14 +50,13 @@ import org.openmrs.Relationship;
 import org.openmrs.RelationshipType;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.APIException;
-import org.openmrs.api.PatientSetService;
-import org.openmrs.api.PatientSetService.GroupMethod;
-import org.openmrs.api.PatientSetService.PatientLocationMethod;
-import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.api.impl.BaseOpenmrsService;
-import org.openmrs.api.impl.PatientSetServiceImpl;
+import org.openmrs.module.reportingcompatibility.service.ReportService.GroupMethod;
+import org.openmrs.module.reportingcompatibility.service.ReportService.Modifier;
+import org.openmrs.module.reportingcompatibility.service.ReportService.PatientLocationMethod;
+import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.module.reportingcompatibility.service.db.ReportingCompatibilityDAO;
 import org.openmrs.report.ReportConstants;
 import org.openmrs.reporting.AbstractReportObject;
@@ -124,14 +123,14 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 		return getDao().getPatientsHavingDateObs(conceptId, startTime, endTime);
 	}
 	
-	public Cohort getPatientsHavingNumericObs(Integer conceptId, PatientSetService.TimeModifier timeModifier,
-	                                          PatientSetServiceImpl.Modifier modifier, Number value, Date fromDate,
+	public Cohort getPatientsHavingNumericObs(Integer conceptId, TimeModifier timeModifier,
+	                                          Modifier modifier, Number value, Date fromDate,
 	                                          Date toDate) {
 		return getDao().getPatientsHavingNumericObs(conceptId, timeModifier, modifier, value, fromDate, toDate);
 	}
 	
 	public Cohort getPatientsHavingObs(Integer conceptId, TimeModifier timeModifier,
-	                                   PatientSetServiceImpl.Modifier modifier, Object value, Date fromDate, Date toDate) {
+	                                   Modifier modifier, Object value, Date fromDate, Date toDate) {
 		return getDao().getPatientsHavingObs(conceptId, timeModifier, modifier, value, fromDate, toDate);
 	}
 	

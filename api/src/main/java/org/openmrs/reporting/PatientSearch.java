@@ -27,11 +27,10 @@ import java.util.Stack;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.api.PatientSetService;
-import org.openmrs.api.PatientSetService.BooleanOperator;
 import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.cohort.CohortSearchHistory;
 import org.openmrs.cohort.CohortUtil;
+import org.openmrs.module.reportingcompatibility.service.ReportService.BooleanOperator;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
 import org.openmrs.util.ReportingcompatibilityUtil;
@@ -182,11 +181,11 @@ public class PatientSearch implements CohortDefinition {
 					String s = (String) token;
 					s = s.toLowerCase();
 					if (andWords.contains(s)) {
-						currentLine.add(PatientSetService.BooleanOperator.AND);
+						currentLine.add(BooleanOperator.AND);
 					} else if (orWords.contains(s)) {
-						currentLine.add(PatientSetService.BooleanOperator.OR);
+						currentLine.add(BooleanOperator.OR);
 					} else if (notWords.contains(s)) {
-						currentLine.add(PatientSetService.BooleanOperator.NOT);
+						currentLine.add(BooleanOperator.NOT);
 					} else if (openParenthesesWords.contains(s)) {
 						stack.push(currentLine);
 						currentLine = new ArrayList<Object>();

@@ -17,6 +17,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 
 public abstract class CachingPatientFilter extends AbstractPatientFilter implements PatientFilter {
@@ -68,7 +69,7 @@ public abstract class CachingPatientFilter extends AbstractPatientFilter impleme
 			if (context != null) {
 				input = context.getBaseCohort();
 			} else {
-				input = Context.getPatientSetService().getAllPatients();
+				input = Context.getService(ReportService.class).getAllPatients();
 			}
 		}
 		return Cohort.intersect(input, cached);
@@ -84,7 +85,7 @@ public abstract class CachingPatientFilter extends AbstractPatientFilter impleme
 			if (context != null) {
 				input = context.getBaseCohort();
 			} else {
-				input = Context.getPatientSetService().getAllPatients();
+				input = Context.getService(ReportService.class).getAllPatients();
 			}
 		}
 		return Cohort.subtract(input, cached);

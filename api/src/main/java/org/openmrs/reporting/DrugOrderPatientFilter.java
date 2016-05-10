@@ -20,15 +20,16 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
-import org.openmrs.api.PatientSetService;
-import org.openmrs.api.PatientSetService.GroupMethod;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
+import org.openmrs.module.reportingcompatibility.service.ReportService.GroupMethod;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -121,8 +122,7 @@ public class DrugOrderPatientFilter extends AbstractPatientFilter implements Pat
 				}
 			}
 		}
-		PatientSetService service = Context.getPatientSetService();
-		return service.getPatientsHavingDrugOrder(input == null ? null : input.getMemberIds(), drugIds, onDate);
+		return Context.getService(ReportService.class).getPatientsHavingDrugOrder(input == null ? null : input.getMemberIds(), drugIds, onDate);
 	}
 	
 	public String getDescription() {

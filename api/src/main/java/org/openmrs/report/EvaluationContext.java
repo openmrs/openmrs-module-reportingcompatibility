@@ -27,6 +27,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.Location;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 
 /**
  * The EvaluationContext provides the following capabilities: - A baseCohort, i.e. the universe of
@@ -397,7 +398,7 @@ public class EvaluationContext {
 	public Cohort getBaseCohort() {
 		if (baseCohort == null) {
 			// Save this so we don't have to query the database next time. This doesn't clear the cache
-			baseCohort = Context.getPatientSetService().getAllPatients();
+			baseCohort = Context.getService(ReportService.class).getAllPatients();
 		}
 		return baseCohort;
 	}

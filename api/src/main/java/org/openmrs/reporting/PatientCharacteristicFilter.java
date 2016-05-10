@@ -15,10 +15,11 @@ package org.openmrs.reporting;
 
 import java.text.DateFormat;
 import java.util.Date;
+
 import org.openmrs.Cohort;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 
 public class PatientCharacteristicFilter extends CachingPatientFilter implements Comparable<PatientCharacteristicFilter> {
@@ -242,9 +243,7 @@ public class PatientCharacteristicFilter extends CachingPatientFilter implements
 	
 	@Override
 	public Cohort filterImpl(EvaluationContext context) {
-		PatientSetService service = Context.getPatientSetService();
-		return service.getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minAge, maxAge, aliveOnly, deadOnly,
+		return Context.getService(ReportService.class).getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minAge, maxAge, aliveOnly, deadOnly,
 		    effectiveDate);
 	}
-	
 }

@@ -21,8 +21,8 @@ import java.util.Vector;
 
 import org.openmrs.Cohort;
 import org.openmrs.Location;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearchReportObject;
@@ -198,12 +198,12 @@ public class RowPerObsDataExportReportObject extends DataExportReportObject impl
 	 * @return patientSet to be used with report template
 	 */
 	public Cohort generatePatientSet(EvaluationContext context) {
-		PatientSetService pss = Context.getPatientSetService();
+		ReportService pss = Context.getService(ReportService.class);
 		
 		Set<Integer> patientIdSet = new HashSet<Integer>();
 		
 		if (getPatientIds() == null || getPatientIds().size() == 0) {
-			patientIdSet.addAll(Context.getPatientSetService().getAllPatients().getMemberIds());
+			patientIdSet.addAll(pss.getAllPatients().getMemberIds());
 			setAllPatients(true);
 		} else {
 			patientIdSet.addAll(patientIds);

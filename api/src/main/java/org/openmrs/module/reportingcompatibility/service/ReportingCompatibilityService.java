@@ -42,12 +42,11 @@ import org.openmrs.RelationshipType;
 import org.openmrs.api.APIException;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.OpenmrsService;
-import org.openmrs.api.PatientSetService;
-import org.openmrs.api.PatientSetService.GroupMethod;
-import org.openmrs.api.PatientSetService.Modifier;
-import org.openmrs.api.PatientSetService.PatientLocationMethod;
-import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.reportingcompatibility.service.ReportService.GroupMethod;
+import org.openmrs.module.reportingcompatibility.service.ReportService.Modifier;
+import org.openmrs.module.reportingcompatibility.service.ReportService.PatientLocationMethod;
+import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.module.reportingcompatibility.service.db.ReportingCompatibilityDAO;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.Report;
@@ -119,7 +118,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	
 	@Transactional(readOnly = true)
 	public Cohort getPatientsHavingNumericObs(Integer conceptId, TimeModifier timeModifier,
-	                                          PatientSetService.Modifier modifier, Number value, Date fromDate, Date toDate);
+	                                          Modifier modifier, Number value, Date fromDate, Date toDate);
 	
 	/**
 	 * Searches for patients who have observations as described by the arguments to this method

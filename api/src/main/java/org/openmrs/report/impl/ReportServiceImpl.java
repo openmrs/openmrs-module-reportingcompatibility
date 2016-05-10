@@ -18,19 +18,38 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
+import org.openmrs.Concept;
+import org.openmrs.ConceptSet;
+import org.openmrs.Drug;
+import org.openmrs.DrugOrder;
+import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
+import org.openmrs.Form;
 import org.openmrs.GlobalProperty;
+import org.openmrs.Location;
+import org.openmrs.PatientIdentifierType;
+import org.openmrs.PatientProgram;
+import org.openmrs.PersonAttributeType;
+import org.openmrs.Program;
+import org.openmrs.ProgramWorkflowState;
+import org.openmrs.Relationship;
+import org.openmrs.RelationshipType;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
+import org.openmrs.api.db.DAOException;
 import org.openmrs.module.reportingcompatibility.service.DataSetService;
 import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.DataSet;
@@ -383,5 +402,325 @@ public class ReportServiceImpl implements ReportService {
 			}
 		}
 		return input;
+	}
+	
+	public Cohort getAllPatients() throws DAOException {
+		return dao.getAllPatients();
+	}
+	
+	public Cohort getInverseOfCohort(Cohort cohort) {
+		// TODO see if this can be sped up by delegating to the database
+		return Cohort.subtract(getAllPatients(), cohort);
+	}
+	
+	/**
+	 * Returns a PatientSet of patient who had drug orders for a set of drugs active on a certain
+	 * date. Can also be used to find patient with no drug orders on that date.
+	 *
+	 * @param patientIds Collection of patientIds you're interested in. NULL means all patients.
+	 * @param takingIds Collection of drugIds the patient is taking. (Or the empty set to mean
+	 *            "any drug" or NULL to mean "no drugs")
+	 * @param onDate Which date to look at the patients' drug orders. (NULL defaults to now().)
+	 * @return Cohort of Patients matching criteria
+	 */
+	public Cohort getPatientsHavingDrugOrder(Collection<Integer> patientIds, Collection<Integer> takingIds, Date onDate) {
+		Map<Integer, Collection<Integer>> activeDrugs = dao.getActiveDrugIds(patientIds, onDate, onDate);
+		Set<Integer> ret = new HashSet<Integer>();
+		boolean takingAny = takingIds != null && takingIds.size() == 0;
+		boolean takingNone = takingIds == null;
+		if (takingAny) {
+			ret.addAll(activeDrugs.keySet());
+		} else if (takingNone) {
+			if (patientIds == null) {
+				patientIds = getAllPatients().getMemberIds();
+			}
+			patientIds.removeAll(activeDrugs.keySet());
+			ret.addAll(patientIds);
+		} else { // taking any of the drugs in takingIds
+			for (Map.Entry<Integer, Collection<Integer>> e : activeDrugs.entrySet()) {
+				for (Integer drugId : takingIds) {
+					if (e.getValue().contains(drugId)) {
+						ret.add(e.getKey());
+						break;
+					}
+				}
+			}
+		}
+		return new Cohort("Cohort from drug orders", "", ret);
+	}
+	
+	public Cohort getPatientsHavingDrugOrder(Collection<Integer> patientIds, Collection<Integer> drugIds,
+	        GroupMethod groupMethod, Date fromDate, Date toDate) {
+		
+		Map<Integer, Collection<Integer>> activeDrugs = dao.getActiveDrugIds(patientIds, fromDate, toDate);
+		Set<Integer> ret = new HashSet<Integer>();
+		
+		if (drugIds == null) {
+			drugIds = new ArrayList<Integer>();
+		}
+		
+		if (drugIds.size() == 0) {
+			if (groupMethod == GroupMethod.NONE) {
+				// Patients taking no drugs
+				if (patientIds == null) {
+					patientIds = getAllPatients().getMemberIds();
+				}
+				patientIds.removeAll(activeDrugs.keySet());
+				ret.addAll(patientIds);
+			} else {
+				// Patients taking any drugs
+				ret.addAll(activeDrugs.keySet());
+			}
+			
+		} else {
+			if (groupMethod == GroupMethod.NONE) {
+				// Patients taking none of the specified drugs
+				if (patientIds == null) {
+					patientIds = getAllPatients().getMemberIds();
+				}
+				// first get all patients taking no drugs at all
+				ret.addAll(patientIds);
+				ret.removeAll(activeDrugs.keySet());
+				
+				// next get all patients taking drugs, but not the specified ones
+				for (Map.Entry<Integer, Collection<Integer>> e : activeDrugs.entrySet()) {
+					if (!OpenmrsUtil.containsAny(e.getValue(), drugIds)) {
+						ret.add(e.getKey());
+					}
+				}
+				
+			} else if (groupMethod == GroupMethod.ALL) {
+				// Patients taking all of the specified drugs
+				for (Map.Entry<Integer, Collection<Integer>> e : activeDrugs.entrySet()) {
+					if (e.getValue().containsAll(drugIds)) {
+						ret.add(e.getKey());
+					}
+				}
+				
+			} else { // groupMethod == GroupMethod.ANY
+				// Patients taking any of the specified drugs
+				for (Map.Entry<Integer, Collection<Integer>> e : activeDrugs.entrySet()) {
+					if (OpenmrsUtil.containsAny(e.getValue(), drugIds)) {
+						ret.add(e.getKey());
+					}
+				}
+			}
+		}
+		Cohort ps = new Cohort("Cohort from drug orders", "", ret);
+		return ps;
+	}
+	
+	public Cohort getPatientsHavingDrugOrder(List<Drug> drug, List<Concept> drugConcept, Date startDateFrom,
+	        Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued, List<Concept> discontinuedReason) {
+		return dao.getPatientsHavingDrugOrder(drug, drugConcept, startDateFrom, startDateTo, stopDateFrom,
+		    stopDateTo, discontinued, discontinuedReason);
+	}
+	
+	public Cohort getPatientsHavingEncounters(EncounterType encounterType, Location location, Form form, Date fromDate,
+	                                          Date toDate, Integer minCount, Integer maxCount) {
+		List<EncounterType> list = encounterType == null ? null : Collections.singletonList(encounterType);
+		return dao.getPatientsHavingEncounters(list, location, form, fromDate, toDate, minCount, maxCount);
+	}
+	
+	public Cohort getPatientsHavingEncounters(List<EncounterType> encounterTypeList, Location location, Form form,
+	                                          Date fromDate, Date toDate, Integer minCount, Integer maxCount) {
+		return dao.getPatientsHavingEncounters(encounterTypeList, location, form, fromDate, toDate, minCount,
+		    maxCount);
+	}
+	
+	public Cohort getPatientsHavingLocation(Location loc) {
+		return dao.getPatientsHavingLocation(loc.getLocationId(), PatientLocationMethod.PATIENT_HEALTH_CENTER);
+	}
+	
+	public Cohort getPatientsHavingLocation(Location loc, PatientLocationMethod method) {
+		return dao.getPatientsHavingLocation(loc.getLocationId(), method);
+	}
+	
+	public Cohort getPatientsHavingLocation(Integer locationId) {
+		return dao.getPatientsHavingLocation(locationId, PatientLocationMethod.PATIENT_HEALTH_CENTER);
+	}
+	
+	public Cohort getPatientsHavingLocation(Integer locationId, PatientLocationMethod method) {
+		return dao.getPatientsHavingLocation(locationId, method);
+	}
+	
+	public Cohort getPatientsHavingObs(Integer conceptId, TimeModifier timeModifier,
+	                                   Modifier modifier, Object value, Date fromDate, Date toDate) {
+		return dao.getPatientsHavingObs(conceptId, timeModifier, modifier, value, fromDate, toDate);
+	}
+	
+	/**
+	 * @see org.openmrs.api.PatientSetService#getPatientsByCharacteristics(java.lang.String, java.util.Date, java.util.Date)
+	 * @return cohort of patients given gender and birth date range
+	 * @should return cohort that contains patients with given gender and birth date range
+	 */
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate) throws DAOException {
+		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, null, null, null, null);
+	}
+	
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	        Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException {
+		return dao.getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minAge, maxAge,
+		    aliveOnly, deadOnly);
+	}
+	
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	        Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate) throws DAOException {
+		return dao.getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minAge, maxAge,
+		    aliveOnly, deadOnly, effectiveDate);
+	}
+	
+	/**
+	 * @see org.openmrs.api.PatientSetService#getPatientsHavingPersonAttribute(org.openmrs.PersonAttributeType, java.lang.String)
+	 * @return cohort that contains patients given person attribute type and value
+	 * @should return cohort that contains patients given person attribute type and value
+	 */
+	public Cohort getPatientsHavingPersonAttribute(PersonAttributeType attribute, String value) {
+		return dao.getPatientsHavingPersonAttribute(attribute, value);
+	}
+	
+	/**
+	 * @see org.openmrs.api.PatientSetService#getPatientsInProgram(org.openmrs.Program, java.util.Date, java.util.Date)
+	 * @return cohort of patients currently in the program within the date range
+	 * @should get cohort of patients currently in the program with the date range
+	 */
+	public Cohort getPatientsInProgram(Program program, Date fromDate, Date toDate) {
+		return dao.getPatientsInProgram(program.getProgramId(), fromDate, toDate);
+	}
+	
+	public Cohort getPatientsByProgramAndState(Program program, List<ProgramWorkflowState> stateList, Date fromDate, Date toDate) {
+		return dao.getPatientsByProgramAndState(program, stateList, fromDate, toDate);
+	}
+	
+	/**
+	 * @return all active drug orders whose drug concept is in the given set (or all drugs if that's
+	 *         null)
+	 */
+	public Map<Integer, List<DrugOrder>> getCurrentDrugOrders(Cohort ps, Concept drugSet) {
+		List<Concept> drugConcepts = null;
+		if (drugSet != null) {
+			List<ConceptSet> concepts = Context.getConceptService().getConceptSetsByConcept(drugSet);
+			drugConcepts = new ArrayList<Concept>();
+			for (ConceptSet cs : concepts) {
+				drugConcepts.add(cs.getConcept());
+			}
+		}
+		log.debug("drugSet: " + drugSet);
+		log.debug("drugConcepts: " + drugConcepts);
+		return dao.getCurrentDrugOrders(ps, drugConcepts);
+	}
+	
+	public Map<Integer, List<Relationship>> getRelationships(Cohort ps, RelationshipType relType) {
+		return dao.getRelationships(ps, relType);
+	}
+	
+	/**
+	 * @return all drug orders whose drug concept is in the given set (or all drugs if that's null)
+	 */
+	public Map<Integer, List<DrugOrder>> getDrugOrders(Cohort ps, Concept drugSet) {
+		List<Concept> drugConcepts = null;
+		if (drugSet != null) {
+			List<ConceptSet> concepts = Context.getConceptService().getConceptSetsByConcept(drugSet);
+			drugConcepts = new ArrayList<Concept>();
+			for (ConceptSet cs : concepts) {
+				drugConcepts.add(cs.getConcept());
+			}
+		}
+		return dao.getDrugOrders(ps, drugConcepts);
+	}
+	
+	public Map<Integer, Encounter> getFirstEncountersByType(Cohort patients, EncounterType encType) {
+		List<EncounterType> types = new Vector<EncounterType>();
+		if (encType != null) {
+			types.add(encType);
+		}
+		return dao.getFirstEncountersByType(patients, types);
+	}
+	
+	public Map<Integer, Object> getFirstEncounterAttrsByType(Cohort patients, List<EncounterType> encTypes, String attr) {
+		if (encTypes == null) {
+			encTypes = new Vector<EncounterType>();
+		}
+		
+		return dao.getEncounterAttrsByType(patients, encTypes, attr, true);
+	}
+	
+	public Map<Integer, Encounter> getFirstEncountersByType(Cohort patients, List<EncounterType> types) {
+		return dao.getFirstEncountersByType(patients, types);
+	}
+	
+	public Map<Integer, Encounter> getEncountersByType(Cohort patients, EncounterType encType) {
+		List<EncounterType> types = new Vector<EncounterType>();
+		if (encType != null) {
+			types.add(encType);
+		}
+		return dao.getEncountersByType(patients, types);
+	}
+	
+	public Map<Integer, Encounter> getEncountersByType(Cohort patients, List<EncounterType> types) {
+		return dao.getEncountersByType(patients, types);
+	}
+	
+	public Map<Integer, Object> getEncounterAttrsByType(Cohort patients, List<EncounterType> encTypes, String attr) {
+		if (encTypes == null) {
+			encTypes = new Vector<EncounterType>();
+		}
+		
+		return dao.getEncounterAttrsByType(patients, encTypes, attr, false);
+	}
+	
+	public Map<Integer, List<List<Object>>> getObservationsValues(Cohort patients, Concept c) {
+		return getObservationsValues(patients, c, null, null, true);
+	}
+	
+	public Map<Integer, List<List<Object>>> getObservationsValues(Cohort patients, Concept c, List<String> attributes,
+	        Integer limit, boolean showMostRecentFirst) {
+		if (attributes == null) {
+			attributes = new Vector<String>();
+		}
+		
+		// add null for the actual obs value
+		if (attributes.size() < 1 || attributes.get(0) != null) {
+			attributes.add(0, null);
+		}
+		
+		return dao.getObservationsValues(patients, c, attributes, limit, showMostRecentFirst);
+	}
+	
+	/**
+	 * @see org.openmrs.api.PatientSetService#getPatientAttributes(Cohort, String, String, boolean)
+	 */
+	public Map<Integer, Object> getPatientAttributes(Cohort patients, String className, String property, boolean returnAll) {
+		return dao.getPatientAttributes(patients, className, property, returnAll);
+	}
+	
+	public Map<Integer, Object> getPatientAttributes(Cohort patients, String classNameDotProperty, boolean returnAll) {
+		String[] temp = classNameDotProperty.split("\\.");
+		if (temp.length != 2) {
+			throw new IllegalArgumentException(classNameDotProperty + " must be ClassName.property");
+		}
+		return getPatientAttributes(patients, temp[0], temp[1], returnAll);
+	}
+	
+	public Map<Integer, String> getPatientIdentifierStringsByType(Cohort patients, PatientIdentifierType type) {
+		List<PatientIdentifierType> types = new Vector<PatientIdentifierType>();
+		if (type != null) {
+			types.add(type);
+		}
+		return dao.getPatientIdentifierByType(patients, types);
+	}
+	
+	/**
+	 * @see org.openmrs.api.PatientSetService#getPersonAttributes(org.openmrs.Cohort,
+	 *      java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
+	 */
+	public Map<Integer, Object> getPersonAttributes(Cohort patients, String attributeName, String joinClass,
+	        String joinProperty, String outputColumn, boolean returnAll) {
+		return dao.getPersonAttributes(patients, attributeName, joinClass, joinProperty, outputColumn,
+		    returnAll);
+	}
+	
+	public Map<Integer, PatientProgram> getPatientPrograms(Cohort ps, Program program) {
+		return dao.getPatientPrograms(ps, program, false, true);
 	}
 }

@@ -21,8 +21,8 @@ import java.util.Collections;
 
 import org.junit.Test;
 import org.openmrs.Drug;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService.GroupMethod;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
@@ -42,7 +42,7 @@ public class PatientFilterTest extends BaseModuleContextSensitiveTest {
 		EvaluationContext ec = new EvaluationContext();
 		Drug inh = Context.getConceptService().getDrug("INH 300mg");
 		DrugOrderFilter filter = new DrugOrderFilter();
-		filter.setAnyOrAll(PatientSetService.GroupMethod.ANY);
+		filter.setAnyOrAll(GroupMethod.ANY);
 		filter.setDrugList(Collections.singletonList(inh));
 		
 		assertEquals("No dates should get 1", 1, filter.filter(null, ec).size());

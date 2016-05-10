@@ -21,13 +21,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
 import org.openmrs.Cohort;
 import org.openmrs.Program;
 import org.openmrs.ProgramWorkflow;
 import org.openmrs.ProgramWorkflowState;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -148,7 +149,7 @@ public class ProgramStatePatientFilter extends CachingPatientFilter {
 	
 	@Override
 	public Cohort filterImpl(EvaluationContext context) {
-		PatientSetService service = Context.getPatientSetService();
+		ReportService service = Context.getService(ReportService.class);
 		return service.getPatientsByProgramAndState(program, stateList, fromDateHelper(), toDateHelper());
 	}
 	

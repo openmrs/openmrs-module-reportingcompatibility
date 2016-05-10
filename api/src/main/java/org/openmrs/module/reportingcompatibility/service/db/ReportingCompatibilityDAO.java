@@ -38,10 +38,10 @@ import org.openmrs.ProgramWorkflow;
 import org.openmrs.ProgramWorkflowState;
 import org.openmrs.Relationship;
 import org.openmrs.RelationshipType;
-import org.openmrs.api.PatientSetService;
-import org.openmrs.api.PatientSetService.PatientLocationMethod;
-import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.reportingcompatibility.service.ReportService.Modifier;
+import org.openmrs.module.reportingcompatibility.service.ReportService.PatientLocationMethod;
+import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.Report;
 
@@ -59,10 +59,10 @@ public interface ReportingCompatibilityDAO {
 	public Cohort getPatientsHavingDateObs(Integer conceptId, Date startTime, Date endTime);
 	
 	public Cohort getPatientsHavingNumericObs(Integer conceptId, TimeModifier timeModifier,
-	                                          PatientSetService.Modifier modifier, Number value, Date fromDate, Date toDate)
+	                                          Modifier modifier, Number value, Date fromDate, Date toDate)
 	                                                                                                                        throws DAOException;
 	
-	public Cohort getPatientsHavingObs(Integer conceptId, TimeModifier timeModifier, PatientSetService.Modifier modifier,
+	public Cohort getPatientsHavingObs(Integer conceptId, TimeModifier timeModifier, Modifier modifier,
 	                                   Object value, Date fromDate, Date toDate) throws DAOException;
 	
 	public Cohort getPatientsHavingEncounters(List<EncounterType> encounterTypeList, Location location, Form form,

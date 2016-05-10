@@ -17,12 +17,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptName;
 import org.openmrs.Drug;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -165,7 +167,7 @@ public class DrugOrderStopFilter extends CachingPatientFilter {
 	
 	@Override
 	public Cohort filterImpl(EvaluationContext context) {
-		return Context.getPatientSetService().getPatientsHavingDrugOrder(
+		return Context.getService(ReportService.class).getPatientsHavingDrugOrder(
 		    getDrugList(),
 		    getGenericDrugList(),
 		    null,

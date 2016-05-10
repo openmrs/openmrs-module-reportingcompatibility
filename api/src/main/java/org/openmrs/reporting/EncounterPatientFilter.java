@@ -18,13 +18,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
 import org.openmrs.Cohort;
 import org.openmrs.EncounterType;
 import org.openmrs.Form;
 import org.openmrs.Location;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -135,8 +136,7 @@ public class EncounterPatientFilter extends CachingPatientFilter {
 	
 	@Override
 	public Cohort filterImpl(EvaluationContext context) {
-		PatientSetService service = Context.getPatientSetService();
-		return service.getPatientsHavingEncounters(encounterTypeList, location, form, OpenmrsUtil.fromDateHelper(null,
+		return Context.getService(ReportService.class).getPatientsHavingEncounters(encounterTypeList, location, form, OpenmrsUtil.fromDateHelper(null,
 		    withinLastDays, withinLastMonths, untilDaysAgo, untilMonthsAgo, sinceDate, untilDate), OpenmrsUtil.toDateHelper(
 		    null, withinLastDays, withinLastMonths, untilDaysAgo, untilMonthsAgo, sinceDate, untilDate), atLeastCount,
 		    atMostCount);

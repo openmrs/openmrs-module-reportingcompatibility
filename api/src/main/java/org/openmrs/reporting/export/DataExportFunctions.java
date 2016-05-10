@@ -49,8 +49,8 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.PatientService;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.reporting.PatientFilter;
 import org.openmrs.reporting.PatientSearchReportObject;
@@ -125,7 +125,7 @@ public class DataExportFunctions {
 	// Map<key, Collection<personId>>, where key is like "Cohort.1" or "Filter.3"
 	protected Map<String, Collection<Integer>> cohortMap = new HashMap<String, Collection<Integer>>();
 	
-	protected PatientSetService patientSetService;
+	protected ReportService reportService;
 	
 	protected PatientService patientService;
 	
@@ -147,7 +147,7 @@ public class DataExportFunctions {
 	}
 	
 	public DataExportFunctions() {
-		this.patientSetService = Context.getPatientSetService();
+		this.reportService = Context.getService(ReportService.class);
 		this.patientService = Context.getPatientService();
 		this.conceptService = Context.getConceptService();
 		this.encounterService = Context.getEncounterService();
@@ -203,7 +203,7 @@ public class DataExportFunctions {
 		patientAttributeMap.clear();
 		patientAttributeMap = null;
 		
-		patientSetService = null;
+		reportService = null;
 		patientService = null;
 		conceptService = null;
 		encounterService = null;
@@ -377,7 +377,7 @@ public class DataExportFunctions {
 			type = encounterService.getEncounterType(encounterType);
 		}
 		
-		Map<Integer, ?> encounterMap = patientSetService.getEncountersByType(getPatientSetIfNotAllPatients(), type);
+		Map<Integer, ?> encounterMap = reportService.getEncountersByType(getPatientSetIfNotAllPatients(), type);
 		
 		patientEncounterMap.put(encounterType, encounterMap);
 		
@@ -424,7 +424,7 @@ public class DataExportFunctions {
 			}
 		}
 		
-		Map<Integer, Object> encounterMap = patientSetService.getEncounterAttrsByType(getPatientSetIfNotAllPatients(),
+		Map<Integer, Object> encounterMap = reportService.getEncounterAttrsByType(getPatientSetIfNotAllPatients(),
 		    encounterTypes, attr);
 		
 		patientEncounterMap.put(key, encounterMap);
@@ -449,7 +449,7 @@ public class DataExportFunctions {
 			type = encounterService.getEncounterType(encounterType);
 		}
 		
-		Map<Integer, Encounter> encounterMap = patientSetService.getFirstEncountersByType(getPatientSetIfNotAllPatients(),
+		Map<Integer, Encounter> encounterMap = reportService.getFirstEncountersByType(getPatientSetIfNotAllPatients(),
 		    type);
 		
 		patientFirstEncounterMap.put(encounterType, encounterMap);
@@ -496,7 +496,7 @@ public class DataExportFunctions {
 			}
 		}
 		
-		Map<Integer, Object> encounterMap = patientSetService.getFirstEncounterAttrsByType(getPatientSetIfNotAllPatients(),
+		Map<Integer, Object> encounterMap = reportService.getFirstEncounterAttrsByType(getPatientSetIfNotAllPatients(),
 		    encounterTypes, attr);
 		
 		patientFirstEncounterMap.put(key, encounterMap);
@@ -559,7 +559,7 @@ public class DataExportFunctions {
 		Map<Integer, List<List<Object>>> patientIdObsMap = conceptAttrObsMap.get(key);
 		if (patientIdObsMap == null) {
 			//log.debug("getting obs list for concept: " + c + " and attr: " + attr);
-			patientIdObsMap = patientSetService.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs, null, true);
+			patientIdObsMap = reportService.getObservationsValues(getPatientSetIfNotAllPatients(), c, attrs, null, true);
 			conceptAttrObsMap.put(key, patientIdObsMap);
 		}
 		return patientIdObsMap.get(patientId);
@@ -592,7 +592,7 @@ public class DataExportFunctions {
 			if (program == null) {
 				program = Context.getProgramWorkflowService().getProgramByName(programIdOrName);
 			}
-			patientIdProgramMap = patientSetService.getPatientPrograms(getPatientSetIfNotAllPatients(), program);
+			patientIdProgramMap = reportService.getPatientPrograms(getPatientSetIfNotAllPatients(), program);
 			programMap.put(programIdOrName, patientIdProgramMap);
 		}
 		return patientIdProgramMap.get(patientId);
@@ -604,7 +604,7 @@ public class DataExportFunctions {
 			patientIdDrugOrderMap = currentDrugOrderMap.get(drugSetName);
 		} else {
 			Concept drugSet = conceptService.getConceptByName(drugSetName);
-			patientIdDrugOrderMap = patientSetService.getCurrentDrugOrders(getPatientSetIfNotAllPatients(), drugSet);
+			patientIdDrugOrderMap = reportService.getCurrentDrugOrders(getPatientSetIfNotAllPatients(), drugSet);
 			currentDrugOrderMap.put(drugSetName, patientIdDrugOrderMap);
 		}
 		return patientIdDrugOrderMap.get(patientId);
@@ -636,7 +636,7 @@ public class DataExportFunctions {
 			patientIdDrugOrderMap = drugOrderMap.get(drugSetName);
 		} else {
 			Concept drugSet = conceptService.getConceptByName(drugSetName);
-			patientIdDrugOrderMap = patientSetService.getDrugOrders(getPatientSetIfNotAllPatients(), drugSet);
+			patientIdDrugOrderMap = reportService.getDrugOrders(getPatientSetIfNotAllPatients(), drugSet);
 			drugOrderMap.put(drugSetName, patientIdDrugOrderMap);
 		}
 		return patientIdDrugOrderMap.get(patientId);
@@ -663,7 +663,7 @@ public class DataExportFunctions {
 		} else {
 			//log.debug("getting relationship list for type: " + relationshipTypeName);
 			RelationshipType relType = Context.getPersonService().getRelationshipTypeByName(relationshipTypeName);
-			patientIdRelationshipMap = patientSetService.getRelationships(getPatientSetIfNotAllPatients(), relType);
+			patientIdRelationshipMap = reportService.getRelationships(getPatientSetIfNotAllPatients(), relType);
 			relationshipMap.put(relationshipTypeName, patientIdRelationshipMap);
 		}
 		return patientIdRelationshipMap.get(patientId);
@@ -760,7 +760,7 @@ public class DataExportFunctions {
 			patientIdAttrMap = patientAttributeMap.get(key);
 		} else {
 			//log.debug("getting patient attrs: " + key);
-			patientIdAttrMap = patientSetService.getPatientAttributes(getPatientSetIfNotAllPatients(), className, property,
+			patientIdAttrMap = reportService.getPatientAttributes(getPatientSetIfNotAllPatients(), className, property,
 			    returnAll);
 			patientAttributeMap.put(key, patientIdAttrMap);
 		}
@@ -781,7 +781,7 @@ public class DataExportFunctions {
 			personIdAttrMap = personAttributeMap.get(key);
 		} else {
 			//log.debug("getting patient attrs: " + key);
-			personIdAttrMap = patientSetService.getPersonAttributes(getPatientSetIfNotAllPatients(), attributeName,
+			personIdAttrMap = reportService.getPersonAttributes(getPatientSetIfNotAllPatients(), attributeName,
 			    joinClass, joinProperty, outputColumn, returnAll);
 			personAttributeMap.put(key, personIdAttrMap);
 		}
@@ -1076,7 +1076,7 @@ public class DataExportFunctions {
 				type = patientService.getPatientIdentifierTypeByName(typeName);
 			}
 			// Get identifiers by type 
-			patientIdentifiers = patientSetService.getPatientIdentifierStringsByType(getPatientSetIfNotAllPatients(), type);
+			patientIdentifiers = reportService.getPatientIdentifierStringsByType(getPatientSetIfNotAllPatients(), type);
 			
 			log.debug("Found identifiers for patient identifier " + type + " = " + patientIdentifiers);
 			

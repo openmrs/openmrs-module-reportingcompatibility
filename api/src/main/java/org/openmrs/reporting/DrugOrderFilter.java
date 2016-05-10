@@ -22,15 +22,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
-import org.openmrs.api.PatientSetService;
-import org.openmrs.api.PatientSetService.GroupMethod;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
+import org.openmrs.module.reportingcompatibility.service.ReportService.GroupMethod;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -44,7 +45,7 @@ public class DrugOrderFilter extends CachingPatientFilter {
 	
 	private List<Concept> drugSets;
 	
-	private PatientSetService.GroupMethod anyOrAll;
+	private GroupMethod anyOrAll;
 	
 	private Integer withinLastDays;
 	
@@ -156,7 +157,7 @@ public class DrugOrderFilter extends CachingPatientFilter {
 		}
 		log.debug("filtering with these ids " + drugIds);
 		Collection<Integer> patientIds = context == null ? null : context.getBaseCohort().getMemberIds();
-		return Context.getPatientSetService().getPatientsHavingDrugOrder(
+		return Context.getService(ReportService.class).getPatientsHavingDrugOrder(
 		    patientIds,
 		    drugIds,
 		    getAnyOrAll(),
@@ -195,11 +196,11 @@ public class DrugOrderFilter extends CachingPatientFilter {
 	
 	// getters and setters
 	
-	public PatientSetService.GroupMethod getAnyOrAll() {
+	public GroupMethod getAnyOrAll() {
 		return anyOrAll;
 	}
 	
-	public void setAnyOrAll(PatientSetService.GroupMethod anyOrAll) {
+	public void setAnyOrAll(GroupMethod anyOrAll) {
 		this.anyOrAll = anyOrAll;
 	}
 	

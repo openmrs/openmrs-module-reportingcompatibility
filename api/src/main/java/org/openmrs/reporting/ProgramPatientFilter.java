@@ -19,9 +19,9 @@ import java.util.Locale;
 
 import org.openmrs.Cohort;
 import org.openmrs.Program;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 
 /**
@@ -50,7 +50,7 @@ public class ProgramPatientFilter extends AbstractPatientFilter implements Patie
 		if (!isReadyToRun()) {
 			return null;
 		}
-		PatientSetService service = Context.getPatientSetService();
+		ReportService service = Context.getService(ReportService.class);
 		Cohort matches = null;
 		if (onDate != null) {
 			matches = service.getPatientsInProgram(program, onDate, onDate);

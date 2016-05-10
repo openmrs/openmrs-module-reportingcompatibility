@@ -21,7 +21,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
-import org.openmrs.api.PatientSetService.BooleanOperator;
+import org.openmrs.module.reportingcompatibility.service.ReportService.BooleanOperator;
 import org.openmrs.report.EvaluationContext;
 
 public class CompoundPatientFilter extends AbstractPatientFilter implements PatientFilter {

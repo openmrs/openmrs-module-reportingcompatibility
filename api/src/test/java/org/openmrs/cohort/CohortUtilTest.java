@@ -19,8 +19,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
-import org.openmrs.api.PatientSetService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.reportingcompatibility.service.ReportService.BooleanOperator;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
@@ -64,7 +64,7 @@ public class CohortUtilTest extends BaseModuleContextSensitiveTest {
 			assertEquals(test.getArguments().iterator().next().getValue(), "m");
 			assertEquals(test.getArguments().size(), 1);
 		}
-		assertEquals(list.get(1), PatientSetService.BooleanOperator.AND);
+		assertEquals(list.get(1), BooleanOperator.AND);
 		{
 			PatientSearch test = (PatientSearch) list.get(2);
 			assertEquals(test.getFilterClass(), ProgramStatePatientFilter.class);
