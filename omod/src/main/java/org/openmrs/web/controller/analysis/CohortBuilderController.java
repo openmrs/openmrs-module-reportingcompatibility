@@ -31,6 +31,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
+import org.openmrs.Drug;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.ConceptName;
 import org.openmrs.api.ConceptService;
@@ -168,7 +169,19 @@ public class CohortBuilderController implements Controller {
 			model.put("encounterTypes", Context.getEncounterService().getAllEncounterTypes());
 			model.put("locations", Context.getLocationService().getAllLocations());
 			model.put("forms", Context.getFormService().getAllForms());
-			model.put("drugs", Context.getConceptService().getAllDrugs());
+			List<Drug> drugs=Context.getConceptService().getAllDrugs();
+			Collections.sort(drugs, new Comparator<Drug>() {
+				public int compare(Drug d1, Drug d2) {
+					if(d1.getName().compareToIgnoreCase(d2.getName())<0){
+						return -1;
+					}else {
+						return 1;
+					}
+
+				}
+			});
+
+			model.put("drugs", drugs);
 			model.put("drugConcepts", genericDrugs);
 			model.put("drugSets", drugSets);
 			model.put("orderStopReasons", orderStopReasons);
