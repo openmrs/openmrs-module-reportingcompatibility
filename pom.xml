@@ -89,7 +89,7 @@
 	</dependencyManagement>
 
 	<properties>
-		<openMRSVersion>2.0.0-SNAPSHOT</openMRSVersion>
+		<openMRSVersion>2.0.0</openMRSVersion>
 	</properties>
 
 	<build>
