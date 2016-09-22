@@ -723,7 +723,7 @@
 				<c:if test="${column.columnType == 'simple'}">
 					selectTab(getChildById(obj, 'simpleTab'));
 					getChildByName(obj, "simpleName_" + count).value = "${column.columnName}";
-					getChildByName(obj, "simpleValue_" + count).value = "<spring:message javaScriptEscape="true" text="${column.returnValue}" />";
+					getChildByName(obj, "simpleValue_" + count).value = "<spring:message javaScriptEscape="true" htmlEscape="false" text="${column.returnValue}" />";
 				</c:if>
 				<c:if test="${column.columnType == 'concept'}">
 					selectTab(getChildById(obj, 'conceptTab'));
