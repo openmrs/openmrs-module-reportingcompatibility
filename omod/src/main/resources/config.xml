@@ -29,6 +29,17 @@
 		<class>org.openmrs.module.reportingcompatibility.extension.html.CohortBuilderHeader</class>
 	</extension>
 	
+	<dwr>
+		<allow>
+			<create creator="new" javascript="DWRPatientSetService">
+				<param name="class" value="org.openmrs.web.dwr.DWRPatientSetService"/>
+			</create>
+			<create creator="new" javascript="DWRCohortBuilderService">
+				<param name="class" value="org.openmrs.web.dwr.DWRCohortBuilderService"/>
+			</create>
+		</allow>
+	</dwr>
+	
 	<globalProperty>
 		<property>reportingcompatibility.patientLinkUrl</property>
 		<defaultValue>patientDashboard.form</defaultValue>
