@@ -61,6 +61,7 @@ import org.openmrs.PersonAttributeType;
 import org.openmrs.Program;
 import org.openmrs.ProgramWorkflow;
 import org.openmrs.ProgramWorkflowState;
+import org.openmrs.Provider;
 import org.openmrs.Relationship;
 import org.openmrs.RelationshipType;
 import org.openmrs.User;
@@ -867,7 +868,8 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 				attribute = "encounterType.name";
 			} else if (attribute.equals("provider")) {
 				classNames.add("obs.encounter");
-				attribute = "encounter.provider";
+				classNames.add("encounter.encounterProviders");
+				attribute = "encounterProviders.provider";
 			} else {
 				throw new DAOException("Attribute: " + attribute + " is not recognized. Please add reference in "
 				        + this.getClass());
@@ -933,6 +935,9 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 				List<Object> row = new Vector<Object>();
 				while (index < rowArray.length) {
 					Object value = rowArray[index++];
+					if (value instanceof Provider) {
+						value = ((Provider) value).getName();
+					}
 					if (tmpConditional) {
 						if (index == 2 && value != null) // skip null first value if we must
 							row.add(value);
