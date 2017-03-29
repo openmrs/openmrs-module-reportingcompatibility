@@ -78,7 +78,7 @@
 			var str = '<form method="post" action="cohortBuilder.form">';
 			str += '<input type="hidden" name="method" value="addDynamicFilter"/>';
 			str += '<input type="hidden" name="filterClass" value="org.openmrs.reporting.DrugOrderPatientFilter" />';
-			str += '<input type="hidden" name="vars" value="groupMethod#org.openmrs.api.PatientSetService$GroupMethod,drugConcept#org.openmrs.Concept"/>';
+			str += '<input type="hidden" name="vars" value="groupMethod#org.openmrs.module.reportingcompatibility.service.ReportService$GroupMethod,drugConcept#org.openmrs.Concept"/>';
 			str += '<select name="groupMethod"><option value="">Taking ' + concept.name + '</option><option value="NONE">Taking nothing</option></select>';
 			str += '<input type="hidden" name="drugConcept" value="' + concept.conceptId + '"/>';
 			str += ' <input type="submit" value="Search"/>';
@@ -100,7 +100,7 @@
 		var str = '<form method="post" action="cohortBuilder.form">';
 		str += '<input type="hidden" name="method" value="addDynamicFilter"/>';
 		str += '<input type="hidden" name="filterClass" value="org.openmrs.reporting.ObsPatientFilter" />';
-		str += '<input type="hidden" name="vars" value="timeModifier#org.openmrs.api.PatientSetService$TimeModifier,question#org.openmrs.Concept,modifier#org.openmrs.api.PatientSetService$Modifier,';
+		str += '<input type="hidden" name="vars" value="timeModifier#org.openmrs.module.reportingcompatibility.service.ReportService$TimeModifier,question#org.openmrs.Concept,modifier#org.openmrs.module.reportingcompatibility.service.ReportService$Modifier,';
 		if (hl7Abbrev == 'CWE')
 			str += 'value#org.openmrs.Concept';
 		else
@@ -169,7 +169,7 @@
 		var str = '<form method="post" action="cohortBuilder.form">';
 		str += '<input type="hidden" name="method" value="addDynamicFilter"/>';
 		str += '<input type="hidden" name="filterClass" value="org.openmrs.reporting.ObsPatientFilter" />';
-		str += '<input type="hidden" name="vars" value="timeModifier#org.openmrs.api.PatientSetService$TimeModifier,modifier#org.openmrs.api.PatientSetService$Modifier,value#org.openmrs.Concept,withinLastMonths#java.lang.Integer,withinLastDays#java.lang.Integer,sinceDate#java.util.Date,untilDate#java.util.Date"/>';
+		str += '<input type="hidden" name="vars" value="timeModifier#org.openmrs.module.reportingcompatibility.service.ReportService$TimeModifier,modifier#org.openmrs.module.reportingcompatibility.service.ReportService$Modifier,value#org.openmrs.Concept,withinLastMonths#java.lang.Integer,withinLastDays#java.lang.Integer,sinceDate#java.util.Date,untilDate#java.util.Date"/>';
 		str += ' <h4>Patients with observations whose <i>answer</i> is ';
 		str += '<input type="hidden" name="modifier" value="EQUAL" /> ';
 		str += '<input type="hidden" name="value" value="' + concept.conceptId + '"/>';
@@ -785,7 +785,7 @@
 				<form method="post" action="cohortBuilder.form">
 					<input type="hidden" name="method" value="addDynamicFilter"/>
 					<input type="hidden" name="filterClass" value="org.openmrs.reporting.LocationPatientFilter" />
-					<input type="hidden" name="vars" value="location#org.openmrs.Location,calculationMethod#org.openmrs.api.PatientSetService$PatientLocationMethod" />
+					<input type="hidden" name="vars" value="location#org.openmrs.Location,calculationMethod#org.openmrs.module.reportingcompatibility.service.ReportService$PatientLocationMethod" />
 					Patients belonging to
 					<select name="location">
 						<option value=""><spring:message code="general.none" /></option>
@@ -888,7 +888,7 @@
 				<form method="post" action="cohortBuilder.form" onSubmit="removeHiddenDivs()">
 					<input type="hidden" name="method" value="addDynamicFilter"/>
 					<input type="hidden" name="filterClass" value="org.openmrs.reporting.DrugOrderFilter" />
-					<input type="hidden" name="vars" value="withinLastMonths#java.lang.Integer,withinLastDays#java.lang.Integer,sinceDate#java.util.Date,untilDate#java.util.Date,anyOrAll#org.openmrs.api.PatientSetService$GroupMethod,drugList#*org.openmrs.Drug,drugSets#*org.openmrs.Concept" />
+					<input type="hidden" name="vars" value="withinLastMonths#java.lang.Integer,withinLastDays#java.lang.Integer,sinceDate#java.util.Date,untilDate#java.util.Date,anyOrAll#org.openmrs.module.reportingcompatibility.service.ReportService$GroupMethod,drugList#*org.openmrs.Drug,drugSets#*org.openmrs.Concept" />
 					<b>Patients taking specific drugs</b>
 					<br/><br/>
 					<select name="anyOrAll">
