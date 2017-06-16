@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.service.ReportService;
+import org.openmrs.report.ReportConstants;
 import org.openmrs.report.ReportSchema;
 import org.openmrs.report.ReportSchemaXml;
 import org.openmrs.web.WebConstants;
@@ -52,6 +53,7 @@ public class ReportSchemaXmlFormController extends SimpleFormController implemen
 		log.debug("Getting report schema xml with schema id: " + reportSchemaId);
 		
 		if (reportSchemaId != null) {
+            Context.requirePrivilege(ReportConstants.PRIV_EDIT_REPORTS);
 			// fetch the desired reportSchemaXml from the database
 			ReportSchemaXml reportSchemaXml = reportService.getReportSchemaXml(reportSchemaId);
 			
@@ -59,8 +61,10 @@ public class ReportSchemaXmlFormController extends SimpleFormController implemen
 			reportSchemaXml.updateXmlFromAttributes();
 			
 			return reportSchemaXml;
-		} else
-			return new ReportSchemaXml();
+		} else {
+            Context.requirePrivilege(ReportConstants.PRIV_ADD_REPORTS);
+            return new ReportSchemaXml();
+        }
 	}
 	
 	/**

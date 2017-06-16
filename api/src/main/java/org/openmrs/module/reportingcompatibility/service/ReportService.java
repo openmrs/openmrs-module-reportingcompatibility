@@ -92,6 +92,7 @@ public interface ReportService {
 	 * @return ReportSchema
 	 * @throws Exception if conversion fails
 	 */
+    @Authorized
 	public ReportSchema getReportSchema(ReportSchemaXml reportSchemaXml) throws APIException;
 	
 	/**

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <privilege privilege="Add Reports" description="This is a test privilege" uuid="e879d066-15e6-467c-9d4b-cb575ef97f0f"/>
+    <privilege privilege="Edit Reports" description="This is a test privilege" uuid="g879d066-15e6-467c-9d4b-cb575ef97f0f"/>
+    <role_privilege role="Some Role" privilege="Add Reports" />
+    <role_privilege role="Some Role" privilege="Edit Reports" />
+</dataset>
