@@ -61,7 +61,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	public Cohort getAllPatients() throws DAOException;
 	
 	@Transactional(readOnly = true)
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate) throws DAOException;
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate) throws DAOException;
 	
 	/**
 	 * Get patients by specified gender, birthdate range, age range, and alive status (all optional)
@@ -69,6 +69,8 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param gender
 	 * @param minBirthdate
 	 * @param maxBirthdate
+	 * @param minDeathdate
+	 * @param maxDeathdate
 	 * @param minAge
 	 * @param maxAge
 	 * @param aliveOnly
@@ -80,11 +82,14 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @should get patients born before date
 	 * @should get patients born after date
 	 * @should get patients born between dates
+	 * @should get patients who died before date
+	 * @should get patients who died after date
+	 * @should get patients died between dates
 	 * @should get patients who are alive
 	 * @should get patients who are dead
 	 */
 	@Transactional(readOnly = true)
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,
 	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException;
 	
 	/**
@@ -93,6 +98,8 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param gender
 	 * @param minBirthdate
 	 * @param maxBirthdate
+	 * @param minDeathdate
+	 * @param maxDeathdate
 	 * @param minAge
 	 * @param maxAge
 	 * @param aliveOnly
@@ -105,12 +112,15 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @should get patients born before date
 	 * @should get patients born after date
 	 * @should get patients born between dates
+	 * @should get patients who died before date
+	 * @should get patients who died after date
+	 * @should get patients who died between dates
 	 * @should get patients who are alive
 	 * @should get patients who are dead
 	 * @should not get patients born after effectiveDate
 	 */
 	@Transactional(readOnly = true)
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,
 	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate)
 	    throws DAOException;
 	

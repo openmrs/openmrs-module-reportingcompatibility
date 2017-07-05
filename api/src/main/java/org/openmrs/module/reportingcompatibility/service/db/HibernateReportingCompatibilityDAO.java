@@ -624,12 +624,12 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		return ret;
 	}
 	
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,
 	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException {
-		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minAge, maxAge, aliveOnly, deadOnly, null);
+		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minDeathdate, maxDeathdate, minAge, maxAge, aliveOnly, deadOnly, null);
 	}
 	
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,
 	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate)
 	                                                                                                                   throws DAOException {
 		
@@ -651,6 +651,12 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		}
 		if (maxBirthdate != null) {
 			clauses.add("patient.birthdate <= :maxBirthdate");
+		}
+		if (minDeathdate != null) {
+			clauses.add("patient.deathdate >= :minDeathdate");
+		}
+		if (maxDeathdate != null) {
+			clauses.add("patient.deathdate <= :maxDeathdate");
 		}
 		if (aliveOnly != null && aliveOnly) {
 			clauses.add("patient.dead = false"); // TODO: Should this use effectiveDate?  What if deathDate is null?
