@@ -60,6 +60,35 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	@Transactional(readOnly = true)
 	public Cohort getAllPatients() throws DAOException;
 	
+	// method to keep API compatibility
+	@Transactional(readOnly = true)
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate) throws DAOException;
+	
+	// method to keep API compatibility
+	/**
+	 * Get patients by specified gender, birthdate range, age range, and alive status (all optional)
+	 *
+	 * @param gender
+	 * @param minBirthdate
+	 * @param maxBirthdate
+	 * @param minAge
+	 * @param maxAge
+	 * @param aliveOnly
+	 * @param deadOnly
+	 * @return Cohort with all matching patients
+	 * @throws DAOException
+	 * @should get all patients when no parameters given
+	 * @should get patients of given gender
+	 * @should get patients born before date
+	 * @should get patients born after date
+	 * @should get patients born between dates
+	 * @should get patients who are alive
+	 * @should get patients who are dead
+	 */
+	@Transactional(readOnly = true)
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException;
+	
 	@Transactional(readOnly = true)
 	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate) throws DAOException;
 	

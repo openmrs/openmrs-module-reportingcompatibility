@@ -94,7 +94,18 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 		return getDao().getAllPatients();
 	}
 	
-    public Cohort getInverseOfCohort(Cohort cohort) {
+	//implementation to maintain API compatibility
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate) throws DAOException {
+		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, null, null, null, null, null, null);
+	}
+	//implementation to maintain API compatibility
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException {
+		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, null, null, minAge, maxAge,
+				aliveOnly, deadOnly);
+	}
+	
+	public Cohort getInverseOfCohort(Cohort cohort) {
 	    // TODO see if this can be sped up by delegating to the database
 		return Cohort.subtract(getAllPatients(), cohort);
     }

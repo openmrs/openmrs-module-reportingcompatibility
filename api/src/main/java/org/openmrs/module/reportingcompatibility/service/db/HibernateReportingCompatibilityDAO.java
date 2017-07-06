@@ -198,6 +198,8 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		return new Cohort("All patients", "", ids);
 	}
 	
+	
+	
 	/**
 	 * TODO: Fails to leave out patients who are voided Returns the set of patients that were in a
 	 * given program, workflow, and state, within a given date range
@@ -622,6 +624,17 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		}
 		
 		return ret;
+	}
+	// implementation to maintain API compatibility
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException {
+		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, null, null, minAge, maxAge, aliveOnly, deadOnly, null);
+	}
+	// implementation to maintain API compatibility
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate)
+			throws DAOException {
+		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, null, null, minAge, maxAge, aliveOnly, deadOnly, effectiveDate);
 	}
 	
 	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,

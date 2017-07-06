@@ -47,6 +47,14 @@ public interface ReportingCompatibilityDAO {
 	
 	public Cohort getAllPatients();
 	
+	// keep method to maintain API compatibilty
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException;
+	// keep method to maintain API compatibilty
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate)
+			throws DAOException;
+	
 	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,
 	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException;
 	
