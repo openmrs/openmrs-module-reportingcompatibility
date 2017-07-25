@@ -400,9 +400,12 @@ public interface ReportService {
 	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
 	        Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException;
 	
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,
+	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException;
+	
 	/**
 	 * Get patients by specified gender, birthdate range, age range, and alive status (all optional)
-	 * 
+	 *
 	 * @param gender
 	 * @param minBirthdate
 	 * @param maxBirthdate
@@ -422,8 +425,8 @@ public interface ReportService {
 	 * @should get patients who are dead
 	 * @should not get patients born after effectiveDate
 	 */
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
-	        Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate) throws DAOException;
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge, Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate) throws DAOException;
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge, Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate) throws DAOException;
 	
 	/**
 	 * At least one of attribute and value must be non-null

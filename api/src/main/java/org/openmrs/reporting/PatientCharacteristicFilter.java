@@ -30,6 +30,10 @@ public class PatientCharacteristicFilter extends CachingPatientFilter implements
 	
 	private Date maxBirthdate;
 	
+	private Date minDeathdate;
+	
+	private Date maxDeathdate;
+	
 	private Integer minAge;
 	
 	private Integer maxAge;
@@ -53,6 +57,17 @@ public class PatientCharacteristicFilter extends CachingPatientFilter implements
 		this.maxBirthdate = maxBirthdate;
 	}
 	
+	public PatientCharacteristicFilter(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate) {
+		super.setType("Patient Filter");
+		super.setSubType("Patient Characteristic Filter");
+		this.gender = gender == null ? null : gender.toUpperCase();
+		this.minBirthdate = minBirthdate;
+		this.maxBirthdate = maxBirthdate;
+		this.minDeathdate = minDeathdate;
+		this.maxDeathdate = maxDeathdate;
+	
+	}
+	
 	@Override
 	public String getCacheKey() {
 		StringBuilder sb = new StringBuilder();
@@ -60,6 +75,8 @@ public class PatientCharacteristicFilter extends CachingPatientFilter implements
 		sb.append(getGender()).append(".");
 		sb.append(getMinBirthdate()).append(".");
 		sb.append(getMaxBirthdate()).append(".");
+		sb.append(getMinDeathdate()).append(".");
+		sb.append(getMaxDeathdate()).append(".");
 		sb.append(getMinAge()).append(".");
 		sb.append(getMaxAge()).append(".");
 		sb.append(getAliveOnly()).append(".");
@@ -98,7 +115,7 @@ public class PatientCharacteristicFilter extends CachingPatientFilter implements
 	
 	public String getDescription() {
 		MessageSourceService msa = Context.getMessageSourceService();
-		if (gender == null && minBirthdate == null && maxBirthdate == null && minAge == null && maxAge == null
+		if (gender == null && minBirthdate == null && maxBirthdate  == null && minDeathdate == null && maxDeathdate == null && minAge == null && maxAge == null
 		        && aliveOnly == null && deadOnly == null) {
 			return msa.getMessage("reporting.allPatients");
 		}
@@ -129,6 +146,21 @@ public class PatientCharacteristicFilter extends CachingPatientFilter implements
 				ret.append(" ").append(msa.getMessage("reporting.bornBefore")).append(" ").append(df.format(maxBirthdate));
 			}
 		}
+		
+		if (minDeathdate != null) {
+			if (maxDeathdate != null) {
+				ret.append(" ").append(
+						msa.getMessage("reporting.diedBetween", new Object[] { (Object) df.format(minDeathdate),
+								(Object) df.format(maxDeathdate) }, Context.getLocale()));
+			} else {
+				ret.append(" ").append(msa.getMessage("reporting.diedAfter")).append(" ").append(df.format(minDeathdate));
+			}
+		} else {
+			if (maxDeathdate != null) {
+				ret.append(" ").append(msa.getMessage("reporting.diedBefore")).append(" ").append(df.format(maxDeathdate));
+			}
+		}
+		
 		if (minAge != null) {
 			if (maxAge != null) {
 				ret.append(" ").append(
@@ -241,9 +273,24 @@ public class PatientCharacteristicFilter extends CachingPatientFilter implements
 		this.effectiveDate = effectiveDate;
 	}
 	
+	public Date getMinDeathdate() {
+		return minDeathdate;
+	}
+	
+	public void setMinDeathdate(Date minDeathdate) {
+		this.minDeathdate = minDeathdate;
+	}
+	
+	public Date getMaxDeathdate() {
+		return maxDeathdate;
+	}
+	
+	public void setMaxDeathdate(Date maxDeathdate) {
+		this.maxDeathdate = maxDeathdate;
+	}
+	
 	@Override
 	public Cohort filterImpl(EvaluationContext context) {
-		return Context.getService(ReportService.class).getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minAge, maxAge, aliveOnly, deadOnly,
-		    effectiveDate);
+		return Context.getService(ReportService.class).getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minDeathdate, maxDeathdate, minAge, maxAge, aliveOnly, deadOnly, effectiveDate);
 	}
 }
