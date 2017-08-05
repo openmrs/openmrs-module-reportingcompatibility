@@ -99,20 +99,20 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 		return Cohort.subtract(getAllPatients(), cohort);
     }
 	
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate) throws DAOException {
-		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, null, null, null, null);
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate) throws DAOException {
+		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minDeathdate, maxDeathdate,  null, null, null, null);
 	}
 	
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate,Integer minAge,
 	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException {
-		return getDao().getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minAge, maxAge,
+		return getDao().getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minDeathdate, maxDeathdate, minAge, maxAge,
 		    aliveOnly, deadOnly);
 	}
 	
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,
 	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate)
 	                                                                                                                   throws DAOException {
-		return getDao().getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minAge, maxAge,
+		return getDao().getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, minDeathdate, maxDeathdate, minAge, maxAge,
 		    aliveOnly, deadOnly, effectiveDate);
 	}
 	
