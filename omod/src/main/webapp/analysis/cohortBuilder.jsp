@@ -622,7 +622,7 @@
 				<form name="patient_attribute" method="post" action="cohortBuilder.form">
 					<input type="hidden" name="method" value="addDynamicFilter"/>
 					<input type="hidden" name="filterClass" value="org.openmrs.reporting.PatientCharacteristicFilter" />
-					<input type="hidden" name="vars" value="gender#java.lang.String,minBirthdate#java.util.Date,maxBirthdate#java.util.Date,minAge#java.lang.Integer,maxAge#java.lang.Integer,aliveOnly#java.lang.Boolean,deadOnly#java.lang.Boolean" />
+					<input type="hidden" name="vars" value="gender#java.lang.String,minBirthdate#java.util.Date,maxBirthdate#java.util.Date,minDeathdate#java.util.Date,maxDeathdate#java.util.Date,minAge#java.lang.Integer,maxAge#java.lang.Integer,aliveOnly#java.lang.Boolean,deadOnly#java.lang.Boolean" />
 					<h4>Search by Demographics:</h4>
 					<br/>
 					<table>
@@ -646,6 +646,12 @@
 							<td align="right">Birthdate:</td>
 							<td>
 								between <input type="text" name="minBirthdate" size="10" onClick="showCalendar(this)" /> and <input type="text" name="maxBirthdate" size="10" onClick="showCalendar(this)" />
+							</td>
+						</tr>
+						<tr>
+							<td align="right">Date of death:</td>
+							<td>
+								between <input type="text" name="minDeathdate" size="10" onClick="showCalendar(this)" /> and <input type="text" name="maxDeathdate" size="10" onClick="showCalendar(this)" />
 							</td>
 						</tr>
 						<tr>
