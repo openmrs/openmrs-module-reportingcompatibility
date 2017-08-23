@@ -281,8 +281,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 */
 	@Transactional(readOnly = true)
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drug, List<Concept> drugConcept, Date startDateFrom,
-	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued,
-	                                         List<Concept> discontinuedReason);
+	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason);
 	
 	/**
 	 * At least one of attribute and value must be non-null

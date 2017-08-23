@@ -13,35 +13,16 @@
  */
 package org.openmrs.module.reportingcompatibility.service.db;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.openmrs.Cohort;
-import org.openmrs.Concept;
-import org.openmrs.Drug;
-import org.openmrs.DrugOrder;
-import org.openmrs.Encounter;
-import org.openmrs.EncounterType;
-import org.openmrs.Form;
-import org.openmrs.Location;
-import org.openmrs.Obs;
-import org.openmrs.Patient;
-import org.openmrs.PatientIdentifierType;
-import org.openmrs.PatientProgram;
-import org.openmrs.PatientState;
-import org.openmrs.Person;
-import org.openmrs.PersonAttributeType;
-import org.openmrs.Program;
-import org.openmrs.ProgramWorkflow;
-import org.openmrs.ProgramWorkflowState;
-import org.openmrs.Relationship;
-import org.openmrs.RelationshipType;
+import org.openmrs.*;
 import org.openmrs.api.PatientSetService;
 import org.openmrs.api.PatientSetService.PatientLocationMethod;
 import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.db.DAOException;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public interface ReportingCompatibilityDAO {
 	
@@ -127,8 +108,7 @@ public interface ReportingCompatibilityDAO {
 	public Cohort getPatientsHavingPersonAttribute(PersonAttributeType attribute, String value);
 	
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drugList, List<Concept> drugConceptList, Date startDateFrom,
-	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued,
-	                                         List<Concept> discontinuedReason);
+	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason);
 	
 	public List<Encounter> getEncountersByForm(Cohort patients, List<Form> forms);
 	
