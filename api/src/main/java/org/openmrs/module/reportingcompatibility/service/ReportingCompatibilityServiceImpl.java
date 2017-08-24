@@ -15,7 +15,28 @@ package org.openmrs.module.reportingcompatibility.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.*;
+import org.openmrs.Cohort;
+import org.openmrs.Concept;
+import org.openmrs.ConceptSet;
+import org.openmrs.Drug;
+import org.openmrs.DrugOrder;
+import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
+import org.openmrs.Form;
+import org.openmrs.Location;
+import org.openmrs.Obs;
+import org.openmrs.Patient;
+import org.openmrs.PatientIdentifier;
+import org.openmrs.PatientIdentifierType;
+import org.openmrs.PatientProgram;
+import org.openmrs.PatientState;
+import org.openmrs.Person;
+import org.openmrs.PersonAttributeType;
+import org.openmrs.Program;
+import org.openmrs.ProgramWorkflow;
+import org.openmrs.ProgramWorkflowState;
+import org.openmrs.Relationship;
+import org.openmrs.RelationshipType;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.PatientSetService;
 import org.openmrs.api.PatientSetService.GroupMethod;
@@ -29,7 +50,16 @@ import org.openmrs.module.reportingcompatibility.service.db.ReportingCompatibili
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implements ReportingCompatibilityService {
 	
@@ -102,7 +132,7 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	}
 	
 	public Cohort getPatientsHavingEncounters(EncounterType encounterType, Location location, Form form, Date fromDate,
-	                                          Date toDate, Integer minCount, Integer maxCount) {
+											  Date toDate, Integer minCount, Integer maxCount) {
 		List<EncounterType> list = encounterType == null ? null : Collections.singletonList(encounterType);
 		return getDao().getPatientsHavingEncounters(list, location, form, fromDate, toDate, minCount, maxCount);
 	}
@@ -114,7 +144,7 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	}
 	
 	public Cohort getPatientsByProgramAndState(Program program, List<ProgramWorkflowState> stateList, Date fromDate,
-	                                           Date toDate) {
+											   Date toDate) {
 		return getDao().getPatientsByProgramAndState(program, stateList, fromDate, toDate);
 	}
 	
@@ -235,7 +265,7 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	}
 	
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drug, List<Concept> drugConcept, Date startDateFrom,
-	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason) {
+											 Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason) {
 		return getDao().getPatientsHavingDrugOrder(drug, drugConcept, startDateFrom, startDateTo, stopDateFrom,
 		    stopDateTo, discontinuedReason);
 	}

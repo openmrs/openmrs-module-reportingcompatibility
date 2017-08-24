@@ -971,7 +971,7 @@
 					<input type="hidden" name="method" value="addDynamicFilter"/>
 					<input type="hidden" name="filterClass" value="org.openmrs.reporting.DrugOrderStopFilter" />
 					<input type="hidden" name="vars" value="withinLastMonths#java.lang.Integer,withinLastDays#java.lang.Integer,sinceDate#java.util.Date,untilDate#java.util.Date,drugList#*org.openmrs.Drug,genericDrugList#*org.openmrs.Concept,discontinuedReasonList#*org.openmrs.Concept" />
-					<b>Patients who started or stopped or changed a drug</b>
+					<b>Patients who stopped or changed a drug</b>
 					<br/><br/>
 						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
 						<spring:message code="reportingcompatibility.CohortBuilder.whenPrefix" />
@@ -983,7 +983,7 @@
 					<br/>
 					<table><tr valign="top"><td style="padding-right: 20px">
 						<spring:message code="reportingcompatibility.CohortBuilder.optionalPrefix" htmlEscape="false"/>
-						Reason for add/stop/change: <br/>
+						Reason for stop/change: <br/>
 						(leave blank for <spring:message code="general.allOptions" />)
 						<br/>
 						<select name="discontinuedReasonList" size="10" multiple="true">

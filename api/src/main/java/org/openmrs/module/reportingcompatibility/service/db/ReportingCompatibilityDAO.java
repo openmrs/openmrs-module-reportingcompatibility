@@ -13,43 +13,59 @@
  */
 package org.openmrs.module.reportingcompatibility.service.db;
 
-import org.openmrs.*;
+import org.openmrs.Cohort;
+import org.openmrs.Concept;
+import org.openmrs.Drug;
+import org.openmrs.DrugOrder;
+import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
+import org.openmrs.Form;
+import org.openmrs.Location;
+import org.openmrs.Obs;
+import org.openmrs.Patient;
+import org.openmrs.PatientIdentifierType;
+import org.openmrs.PatientProgram;
+import org.openmrs.PatientState;
+import org.openmrs.Person;
+import org.openmrs.PersonAttributeType;
+import org.openmrs.Program;
+import org.openmrs.ProgramWorkflow;
+import org.openmrs.ProgramWorkflowState;
+import org.openmrs.Relationship;
+import org.openmrs.RelationshipType;
 import org.openmrs.api.PatientSetService;
 import org.openmrs.api.PatientSetService.PatientLocationMethod;
 import org.openmrs.api.PatientSetService.TimeModifier;
 import org.openmrs.api.db.DAOException;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public interface ReportingCompatibilityDAO {
 	
 	public Cohort getAllPatients();
 	
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate,Integer minAge,
-	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException;
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,
+											   Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException;
 	
-	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate,Integer minAge,
-	                                           Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate)
+	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge,
+														   Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate)
 	                                                                                                                   throws DAOException;
 	
 	public Cohort getPatientsHavingDateObs(Integer conceptId, Date startTime, Date endTime);
 	
 	public Cohort getPatientsHavingNumericObs(Integer conceptId, TimeModifier timeModifier,
-	                                          PatientSetService.Modifier modifier, Number value, Date fromDate, Date toDate)
+											  PatientSetService.Modifier modifier, Number value, Date fromDate, Date toDate)
 	                                                                                                                        throws DAOException;
 	
 	public Cohort getPatientsHavingObs(Integer conceptId, TimeModifier timeModifier, PatientSetService.Modifier modifier,
-	                                   Object value, Date fromDate, Date toDate) throws DAOException;
+												   Object value, Date fromDate, Date toDate) throws DAOException;
 	
 	public Cohort getPatientsHavingEncounters(List<EncounterType> encounterTypeList, Location location, Form form,
-	                                          Date fromDate, Date toDate, Integer minCount, Integer maxCount)
+											  Date fromDate, Date toDate, Integer minCount, Integer maxCount)
 	                                                                                                         throws DAOException;
 	
 	public Cohort getPatientsByProgramAndState(Program program, List<ProgramWorkflowState> stateList, Date fromDate,
-	                                           Date toDate) throws DAOException;
+											   Date toDate) throws DAOException;
 	
 	public Cohort getPatientsInProgram(Integer programId, Date fromDate, Date toDate) throws DAOException;
 	
@@ -69,7 +85,7 @@ public interface ReportingCompatibilityDAO {
 	public Map<Integer, Encounter> getEncountersByType(Cohort patients, List<EncounterType> encType);
 	
 	public Map<Integer, Object> getEncounterAttrsByType(Cohort patients, List<EncounterType> encTypes, String attr,
-	                                                    Boolean earliestFirst);
+														Boolean earliestFirst);
 	
 	public Map<Integer, Encounter> getEncounters(Cohort patients);
 	
@@ -91,7 +107,7 @@ public interface ReportingCompatibilityDAO {
 	public Map<Integer, PatientState> getCurrentStates(Cohort ps, ProgramWorkflow wf) throws DAOException;
 	
 	public Map<Integer, PatientProgram> getPatientPrograms(Cohort ps, Program program, boolean includeVoided,
-	                                                       boolean includePast) throws DAOException;
+														   boolean includePast) throws DAOException;
 	
 	public Map<Integer, List<DrugOrder>> getCurrentDrugOrders(Cohort ps, List<Concept> drugConcepts) throws DAOException;
 	
@@ -103,12 +119,12 @@ public interface ReportingCompatibilityDAO {
 	                                                                                                     throws DAOException;
 	
 	public Map<Integer, Object> getPersonAttributes(Cohort patients, String attributeName, String joinClass,
-	                                                String joinProperty, String outputColumn, boolean returnAll);
+													String joinProperty, String outputColumn, boolean returnAll);
 	
 	public Cohort getPatientsHavingPersonAttribute(PersonAttributeType attribute, String value);
 	
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drugList, List<Concept> drugConceptList, Date startDateFrom,
-	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason);
+											 Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason);
 	
 	public List<Encounter> getEncountersByForm(Cohort patients, List<Form> forms);
 	
