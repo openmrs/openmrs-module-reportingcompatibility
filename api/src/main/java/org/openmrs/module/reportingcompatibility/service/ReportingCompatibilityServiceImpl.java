@@ -13,17 +13,6 @@
  */
 package org.openmrs.module.reportingcompatibility.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
@@ -60,6 +49,17 @@ import org.openmrs.api.impl.PatientSetServiceImpl;
 import org.openmrs.module.reportingcompatibility.service.db.ReportingCompatibilityDAO;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implements ReportingCompatibilityService {
 	
@@ -132,7 +132,7 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	}
 	
 	public Cohort getPatientsHavingEncounters(EncounterType encounterType, Location location, Form form, Date fromDate,
-	                                          Date toDate, Integer minCount, Integer maxCount) {
+											  Date toDate, Integer minCount, Integer maxCount) {
 		List<EncounterType> list = encounterType == null ? null : Collections.singletonList(encounterType);
 		return getDao().getPatientsHavingEncounters(list, location, form, fromDate, toDate, minCount, maxCount);
 	}
@@ -144,7 +144,7 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	}
 	
 	public Cohort getPatientsByProgramAndState(Program program, List<ProgramWorkflowState> stateList, Date fromDate,
-	                                           Date toDate) {
+											   Date toDate) {
 		return getDao().getPatientsByProgramAndState(program, stateList, fromDate, toDate);
 	}
 	
@@ -265,10 +265,9 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	}
 	
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drug, List<Concept> drugConcept, Date startDateFrom,
-	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued,
-	                                         List<Concept> discontinuedReason) {
+											 Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason) {
 		return getDao().getPatientsHavingDrugOrder(drug, drugConcept, startDateFrom, startDateTo, stopDateFrom,
-		    stopDateTo, discontinued, discontinuedReason);
+		    stopDateTo, discontinuedReason);
 	}
 	
 	public Cohort getPatientsHavingPersonAttribute(PersonAttributeType attribute, String value) {

@@ -606,7 +606,7 @@ public class DataExportFunctions {
                 ret.append(o.getDrug().getName());
             else
                 ret.append(o.getConcept().getBestName(Context.getLocale()).getName());
-            ret.append("(" + (o.getStartDate() != null ? sdf.format(o.getStartDate()) : "") + " " + o.getDose()+" " /*+ o.getUnits() + " "*/ + o.getFrequency() + ")");
+            ret.append("(" + (o.getEffectiveStartDate() != null ? sdf.format(o.getEffectiveStartDate()) : "") + " " + o.getDose()+" " /*+ o.getUnits() + " "*/ + o.getFrequency() + ")");
             if (i.hasNext())
                 ret.append("\n");
         }
@@ -631,8 +631,8 @@ public class DataExportFunctions {
 			return null;
 		Date earliest = null;
 		for (DrugOrder o : patientOrders) {
-			if (earliest == null || OpenmrsUtil.compareWithNullAsLatest(o.getStartDate(), earliest) < 0)
-				earliest = o.getStartDate();
+			if (earliest == null || OpenmrsUtil.compareWithNullAsLatest(o.getEffectiveStartDate(), earliest) < 0)
+				earliest = o.getEffectiveStartDate();
 		}
 		return earliest;
 	}
@@ -643,9 +643,9 @@ public class DataExportFunctions {
             return null;
         Date latest = null;
         for (DrugOrder o : patientOrders) {
-            System.out.println(o.getStartDate());
-            if (OpenmrsUtil.compareWithNullAsEarliest(o.getStartDate(), latest) > 0)
-                latest = o.getStartDate();
+            System.out.println(o.getEffectiveStartDate());
+            if (OpenmrsUtil.compareWithNullAsEarliest(o.getEffectiveStartDate(), latest) > 0)
+                latest = o.getEffectiveStartDate();
         }
         return latest;
     }

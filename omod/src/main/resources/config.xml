@@ -12,7 +12,7 @@
 	<description>Provides access to the deprecated reporting web components from OpenMRS version 1.5 and earlier</description>
 	<activator>@MODULE_PACKAGE@.ModuleActivator</activator>	
 	<updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL>
-	<require_version>1.7.0</require_version>
+	<require_version>${openMRSVersion}</require_version>
 
 	<!-- Internationalization -->
 	

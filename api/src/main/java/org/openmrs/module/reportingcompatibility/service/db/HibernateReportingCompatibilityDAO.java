@@ -1474,10 +1474,10 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		List<String> whereClauses = new ArrayList<String>();
 		whereClauses.add("o.voided = false");
 		if (toDate != null)
-			whereClauses.add("o.start_date <= :toDate");
+			whereClauses.add("coalesce(o.date_activated, o.date_scheduled) <= :toDate");
 		if (fromDate != null) {
 			whereClauses.add("(o.auto_expire_date is null or o.auto_expire_date > :fromDate)");
-			whereClauses.add("(o.discontinued_date is null or o.discontinued_date > :fromDate)");
+			whereClauses.add("(o.date_stopped is null or o.date_stopped > :fromDate)");
 		}
 		
 		String sql = "select o.patient_id, d.drug_inventory_id "
@@ -1594,12 +1594,8 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Map<Integer, List<DrugOrder>> getCurrentDrugOrders(Cohort patients, List<Concept> drugConcepts)
-	                                                                                                      throws DAOException {
+	public Map<Integer, List<DrugOrder>> getCurrentDrugOrders(Cohort patients, List<Concept> drugConcepts) throws DAOException {
 		Map<Integer, List<DrugOrder>> ret = new HashMap<Integer, List<DrugOrder>>();
-		
-		Date now = new Date();
-		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugOrder.class);
 		criteria.setFetchMode("patient", FetchMode.JOIN);
 		criteria.setCacheMode(CacheMode.IGNORE);
@@ -1613,11 +1609,9 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		if (drugConcepts != null)
 			criteria.add(Restrictions.in("concept", drugConcepts));
 		criteria.add(Restrictions.eq("voided", false));
-		criteria.add(Restrictions.le("startDate", now));
-		criteria.add(Restrictions.or(Restrictions.and(Restrictions.eq("discontinued", false), Restrictions.or(Restrictions
-		        .isNull("autoExpireDate"), Restrictions.gt("autoExpireDate", now))), Restrictions.and(Restrictions.eq(
-		    "discontinued", true), Restrictions.gt("discontinuedDate", now))));
-		criteria.addOrder(org.hibernate.criterion.Order.asc("startDate"));
+		criteria.add(Restrictions.sqlRestriction("coalesce(dateActivated, scheduledDate) <= current_date()"));
+		criteria.add(Restrictions.sqlRestriction("coalesce(dateStopped, autoExpireDate) >= current_date()"));
+		criteria.addOrder(org.hibernate.criterion.Order.asc("coalesce(dateActivated, scheduledDate)"));
 		log.debug("criteria: " + criteria);
 		List<DrugOrder> temp = criteria.list();
 		for (DrugOrder regimen : temp) {
@@ -1657,7 +1651,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 			criteria.add(Restrictions.in("concept", drugConcepts));
 		}
 		criteria.add(Restrictions.eq("voided", false));
-		criteria.addOrder(org.hibernate.criterion.Order.asc("startDate"));
+		criteria.addOrder(org.hibernate.criterion.Order.asc("coalesce(dateActivated, scheduledDate)"));
 		log.debug("criteria: " + criteria);
 		List<DrugOrder> temp = criteria.list();
 		
@@ -1771,8 +1765,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 	
 
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drugList, List<Concept> drugConceptList, Date startDateFrom,
-	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued,
-	                                         List<Concept> discontinuedReason) {
+	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason) {
 		if (drugList != null && drugList.size() == 0)
 			drugList = null;
 		if (drugConceptList != null && drugConceptList.size() == 0)
@@ -1784,47 +1777,24 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		if (drugConceptList != null)
 			sb.append(" and concept.id in (:drugConceptIdList) ");
 		if (startDateFrom != null && startDateTo != null) {
-			sb.append(" and startDate between :startDateFrom and :startDateTo ");
+			sb.append(" and coalesce(dateActivated, scheduledDate) between :startDateFrom and :startDateTo ");
 		} else {
 			if (startDateFrom != null)
-				sb.append(" and startDate >= :startDateFrom ");
+				sb.append(" and coalesce(dateActivated, scheduledDate) >= :startDateFrom ");
 			if (startDateTo != null)
-				sb.append(" and startDate <= :startDateTo ");
+				sb.append(" and coalesce(dateActivated, scheduledDate) <= :startDateTo ");
 		}
+		if (stopDateFrom != null && stopDateTo != null) {
+			sb.append(" and coalesce(dateStopped, autoExpireDate) between :stopDateFrom and :stopDateTo ");
+		} else {
+			if (stopDateFrom != null)
+				sb.append(" and coalesce(dateStopped, autoExpireDate) >= :stopDateFrom ");
+			if (stopDateTo != null)
+				sb.append(" and coalesce(dateStopped, autoExpireDate) <= :stopDateTo ");
+		}
+
 		if (discontinuedReason != null && discontinuedReason.size() > 0)
-			sb.append(" and discontinuedReason.id in (:discontinuedReasonIdList) ");
-		if (discontinued != null) {
-			sb.append(" and discontinued = :discontinued ");
-			if (discontinued == true) {
-				if (stopDateFrom != null && stopDateTo != null) {
-					sb.append(" and discontinuedDate between :stopDateFrom and :stopDateTo ");
-				} else {
-					if (stopDateFrom != null)
-						sb.append(" and discontinuedDate >= :stopDateFrom ");
-					if (stopDateTo != null)
-						sb.append(" and discontinuedDate <= :stopDateTo ");
-				}
-			} else { // discontinued == false
-				if (stopDateFrom != null && stopDateTo !=
-					null) {
-					sb.append(" and autoExpireDate between :stopDateFrom and :stopDateTo ");
-				} else {
-					if (stopDateFrom != null)
-						sb.append(" and autoExpireDate >= :stopDateFrom ");
-					if (stopDateTo != null)
-						sb.append(" and autoExpireDate <= :stopDateTo ");
-				}
-			}
-		} else { // discontinued == null, so we need either
-			if (stopDateFrom != null && stopDateTo != null) {
-				sb.append(" and coalesce(discontinuedDate, autoExpireDate) between :stopDateFrom and :stopDateTo ");
-			} else {
-				if (stopDateFrom != null)
-					sb.append(" and coalesce(discontinuedDate, autoExpireDate) >= :stopDateFrom ");
-				if (stopDateTo != null)
-					sb.append(" and coalesce(discontinuedDate, autoExpireDate) <= :stopDateTo ");
-			}
-		}
+			sb.append(" and orderReason.id in (:discontinuedReasonIdList) ");
 		log.debug("sql = " + sb);
 		Query query = sessionFactory.getCurrentSession().createQuery(sb.toString());
 		
@@ -1848,8 +1818,6 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 			query.setDate("stopDateFrom", stopDateFrom);
 		if (stopDateTo != null)
 			query.setDate("stopDateTo", stopDateTo);
-		if (discontinued != null)
-			query.setBoolean("discontinued", discontinued);
 		if (discontinuedReason != null && discontinuedReason.size() > 0) {
 			List<Integer> ids = new ArrayList<Integer>();
 			for (Concept c : discontinuedReason)
