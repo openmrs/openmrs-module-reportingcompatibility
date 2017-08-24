@@ -1474,7 +1474,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		List<String> whereClauses = new ArrayList<String>();
 		whereClauses.add("o.voided = false");
 		if (toDate != null)
-			whereClauses.add("o.date_activated <= :toDate");
+			whereClauses.add("coalesce(o.date_activated, o.date_scheduled) <= :toDate");
 		if (fromDate != null) {
 			whereClauses.add("(o.auto_expire_date is null or o.auto_expire_date > :fromDate)");
 			whereClauses.add("(o.date_stopped is null or o.date_stopped > :fromDate)");
