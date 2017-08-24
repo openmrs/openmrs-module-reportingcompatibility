@@ -189,8 +189,7 @@ public class HibernateReportDAO implements ReportDAO {
 	}
 	
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drugList, List<Concept> drugConceptList, Date startDateFrom,
-	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued,
-	                                         List<Concept> orderReason) {
+	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> orderReason) {
 		if (drugList != null && drugList.size() == 0) {
 			drugList = null;
 		}
@@ -218,40 +217,14 @@ public class HibernateReportDAO implements ReportDAO {
 		if (orderReason != null && orderReason.size() > 0) {
 			sb.append(" and orderReason.id in (:orderReasonIdList) ");
 		}
-		if (discontinued != null) {
-			if (discontinued) {
-				if (stopDateFrom != null && stopDateTo != null) {
-					sb.append(" and dateStopped between :stopDateFrom and :stopDateTo ");
-				} else {
-					if (stopDateFrom != null) {
-						sb.append(" and dateStopped >= :stopDateFrom ");
-					}
-					if (stopDateTo != null) {
-						sb.append(" and dateStopped <= :stopDateTo ");
-					}
-				}
-			} else { // discontinued == false
-				if (stopDateFrom != null && stopDateTo != null) {
-					sb.append(" and autoExpireDate between :stopDateFrom and :stopDateTo ");
-				} else {
-					if (stopDateFrom != null) {
-						sb.append(" and autoExpireDate >= :stopDateFrom ");
-					}
-					if (stopDateTo != null) {
-						sb.append(" and autoExpireDate <= :stopDateTo ");
-					}
-				}
+		if (stopDateFrom != null && stopDateTo != null) {
+			sb.append(" and coalesce(dateStopped, autoExpireDate) between :stopDateFrom and :stopDateTo ");
+		} else {
+			if (stopDateFrom != null) {
+				sb.append(" and coalesce(dateStopped, autoExpireDate) >= :stopDateFrom ");
 			}
-		} else { // discontinued == null, so we need either
-			if (stopDateFrom != null && stopDateTo != null) {
-				sb.append(" and coalesce(dateStopped, autoExpireDate) between :stopDateFrom and :stopDateTo ");
-			} else {
-				if (stopDateFrom != null) {
-					sb.append(" and coalesce(dateStopped, autoExpireDate) >= :stopDateFrom ");
-				}
-				if (stopDateTo != null) {
-					sb.append(" and coalesce(dateStopped, autoExpireDate) <= :stopDateTo ");
-				}
+			if (stopDateTo != null) {
+				sb.append(" and coalesce(dateStopped, autoExpireDate) <= :stopDateTo ");
 			}
 		}
 		log.debug("sql = " + sb);
@@ -282,9 +255,6 @@ public class HibernateReportDAO implements ReportDAO {
 		}
 		if (stopDateTo != null) {
 			query.setDate("stopDateTo", stopDateTo);
-		}
-		if (discontinued != null) {
-			query.setBoolean("discontinued", discontinued);
 		}
 		if (orderReason != null && orderReason.size() > 0) {
 			List<Integer> ids = new ArrayList<Integer>();
