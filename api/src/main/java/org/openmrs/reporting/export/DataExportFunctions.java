@@ -649,8 +649,8 @@ public class DataExportFunctions {
 		}
 		Date earliest = null;
 		for (DrugOrder o : patientOrders) {
-			if (earliest == null || OpenmrsUtil.compareWithNullAsLatest(o.getDateActivated(), earliest) < 0) {
-				earliest = o.getDateActivated();
+			if (earliest == null || OpenmrsUtil.compareWithNullAsLatest(o.getEffectiveStartDate(), earliest) < 0) {
+				earliest = o.getEffectiveStartDate();
 			}
 		}
 		return earliest;

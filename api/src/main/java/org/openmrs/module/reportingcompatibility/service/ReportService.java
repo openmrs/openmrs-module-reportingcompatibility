@@ -296,7 +296,7 @@ public interface ReportService {
 	 *         discontinuation.
 	 */
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drug, List<Concept> drugConcept, Date startDateFrom,
-	        Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued, List<Concept> discontinuedReason);
+	        Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason);
 	
 	/**
 	 * Equivalent to Cohort.subtract(PatientSetService.getAllPatients(), cohort) but may eventually

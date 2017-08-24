@@ -72,7 +72,7 @@ public interface ReportDAO {
 	        throws DAOException;
 	
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drugList, List<Concept> drugConceptList, Date startDateFrom,
-	                             	        Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued, List<Concept> discontinuedReason);
+	                             	        Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason);
 	
 	public Cohort getPatientsHavingEncounters(List<EncounterType> encounterTypeList, Location location, Form form,
 	                              	        Date fromDate, Date toDate, Integer minCount, Integer maxCount) throws DAOException;

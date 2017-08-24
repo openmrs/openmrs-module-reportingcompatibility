@@ -268,10 +268,9 @@ public class ReportingCompatibilityServiceImpl extends BaseOpenmrsService implem
 	}
 	
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drug, List<Concept> drugConcept, Date startDateFrom,
-	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued,
-	                                         List<Concept> discontinuedReason) {
+	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason) {
 		return getDao().getPatientsHavingDrugOrder(drug, drugConcept, startDateFrom, startDateTo, stopDateFrom,
-		    stopDateTo, discontinued, discontinuedReason);
+		    stopDateTo, discontinuedReason);
 	}
 	
 	public Cohort getPatientsHavingPersonAttribute(PersonAttributeType attribute, String value) {

@@ -13,11 +13,6 @@
  */
 package org.openmrs.module.reportingcompatibility.service.db;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
@@ -44,6 +39,11 @@ import org.openmrs.module.reportingcompatibility.service.ReportService.PatientLo
 import org.openmrs.module.reportingcompatibility.service.ReportService.TimeModifier;
 import org.openmrs.reporting.AbstractReportObject;
 import org.openmrs.reporting.Report;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public interface ReportingCompatibilityDAO {
 	
@@ -129,8 +129,7 @@ public interface ReportingCompatibilityDAO {
 	public Cohort getPatientsHavingPersonAttribute(PersonAttributeType attribute, String value);
 	
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drugList, List<Concept> drugConceptList, Date startDateFrom,
-	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued,
-	                                         List<Concept> discontinuedReason);
+	                                         Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason);
 	
 	public List<Encounter> getEncountersByForm(Cohort patients, List<Form> forms);
 	

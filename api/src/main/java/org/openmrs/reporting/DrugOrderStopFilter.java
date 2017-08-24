@@ -13,11 +13,6 @@
  */
 package org.openmrs.reporting;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptName;
@@ -27,6 +22,11 @@ import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.util.OpenmrsUtil;
+
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 
 public class DrugOrderStopFilter extends CachingPatientFilter {
 	
@@ -175,7 +175,7 @@ public class DrugOrderStopFilter extends CachingPatientFilter {
 		    OpenmrsUtil.fromDateHelper(null, withinLastDays, withinLastMonths, untilDaysAgo, untilMonthsAgo, sinceDate,
 		        untilDate),
 		    OpenmrsUtil.toDateHelper(null, withinLastDays, withinLastMonths, untilDaysAgo, untilMonthsAgo, sinceDate,
-		        untilDate), discontinued, getDiscontinuedReasonList());
+		        untilDate), getDiscontinuedReasonList());
 	}
 	
 	public boolean isReadyToRun() {

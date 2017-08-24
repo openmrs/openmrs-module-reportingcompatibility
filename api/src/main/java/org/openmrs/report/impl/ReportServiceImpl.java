@@ -511,9 +511,9 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	public Cohort getPatientsHavingDrugOrder(List<Drug> drug, List<Concept> drugConcept, Date startDateFrom,
-	        Date startDateTo, Date stopDateFrom, Date stopDateTo, Boolean discontinued, List<Concept> discontinuedReason) {
+	        Date startDateTo, Date stopDateFrom, Date stopDateTo, List<Concept> discontinuedReason) {
 		return dao.getPatientsHavingDrugOrder(drug, drugConcept, startDateFrom, startDateTo, stopDateFrom,
-		    stopDateTo, discontinued, discontinuedReason);
+		    stopDateTo, discontinuedReason);
 	}
 	
 	public Cohort getPatientsHavingEncounters(EncounterType encounterType, Location location, Form form, Date fromDate,
