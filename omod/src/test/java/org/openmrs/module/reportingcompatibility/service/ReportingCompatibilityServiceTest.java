@@ -13,14 +13,11 @@
  */
 package org.openmrs.module.reportingcompatibility.service;
 
-import java.util.List;
-import java.util.Map;
-
 import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.Cohort;
+import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Patient;
@@ -28,6 +25,9 @@ import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.test.Verifies;
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
+
+import java.util.List;
+import java.util.Map;
 
 public class ReportingCompatibilityServiceTest extends
 		BaseModuleWebContextSensitiveTest {
@@ -121,5 +121,12 @@ public class ReportingCompatibilityServiceTest extends
 		for (Encounter encounter : patientEncountersMap.values()) {
 			Assert.assertFalse(encounter.isVoided());
 		}
+	}
+
+	@Test
+	public void test_getCurrentDrugOrders() {
+		Map<Integer, List<DrugOrder>> orders = rcs.getCurrentDrugOrders(null, null);
+
+		Assert.assertNotNull(orders);
 	}
 }
