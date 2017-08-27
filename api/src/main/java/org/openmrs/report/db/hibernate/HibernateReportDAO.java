@@ -218,13 +218,13 @@ public class HibernateReportDAO implements ReportDAO {
 			sb.append(" and orderReason.id in (:orderReasonIdList) ");
 		}
 		if (stopDateFrom != null && stopDateTo != null) {
-			sb.append(" and coalesce(dateStopped, autoExpireDate) between :stopDateFrom and :stopDateTo ");
+			sb.append(" and coalesce(date_stopped, auto_expire_date) between :stopDateFrom and :stopDateTo ");
 		} else {
 			if (stopDateFrom != null) {
-				sb.append(" and coalesce(dateStopped, autoExpireDate) >= :stopDateFrom ");
+				sb.append(" and coalesce(date_stopped, auto_expire_date) >= :stopDateFrom ");
 			}
 			if (stopDateTo != null) {
-				sb.append(" and coalesce(dateStopped, autoExpireDate) <= :stopDateTo ");
+				sb.append(" and coalesce(date_stopped, auto_expire_date) <= :stopDateTo ");
 			}
 		}
 		log.debug("sql = " + sb);

@@ -1600,9 +1600,9 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		if (drugConcepts != null)
 			criteria.add(Restrictions.in("concept", drugConcepts));
 		criteria.add(Restrictions.eq("voided", false));
-		criteria.add(Restrictions.sqlRestriction("coalesce(dateActivated, scheduledDate) <= current_date()"));
-		criteria.add(Restrictions.sqlRestriction("coalesce(dateStopped, autoExpireDate) >= current_date()"));
-		criteria.addOrder(org.hibernate.criterion.Order.asc("coalesce(dateActivated, scheduledDate)"));
+		criteria.add(Restrictions.sqlRestriction("coalesce(date_activated, scheduled_date) <= current_date()"));
+		criteria.add(Restrictions.sqlRestriction("coalesce(date_stopped, auto_expire_date) >= current_date()"));
+		criteria.addOrder(org.hibernate.criterion.Order.asc("dateActivated"));
 		log.debug("criteria: " + criteria);
 		List<DrugOrder> temp = criteria.list();
 		for (DrugOrder regimen : temp) {
@@ -1642,7 +1642,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 			criteria.add(Restrictions.in("concept", drugConcepts));
 		}
 		criteria.add(Restrictions.eq("voided", false));
-		criteria.addOrder(org.hibernate.criterion.Order.asc("coalesce(dateActivated, scheduledDate)"));
+		criteria.addOrder(org.hibernate.criterion.Order.asc("dateActivated"));
 		log.debug("criteria: " + criteria);
 		List<DrugOrder> temp = criteria.list();
 		
@@ -1768,22 +1768,22 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		if (drugConceptList != null)
 			sb.append(" and concept.id in (:drugConceptIdList) ");
 		if (startDateFrom != null && startDateTo != null) {
-			sb.append(" and coalesce(dateActivated, scheduledDate) between :startDateFrom and :startDateTo ");
+			sb.append(" and coalesce(date_activated, scheduled_date) between :startDateFrom and :startDateTo ");
 		} else {
 			if (startDateFrom != null)
-				sb.append(" and coalesce(dateActivated, scheduledDate) >= :startDateFrom ");
+				sb.append(" and coalesce(date_activated, scheduled_date) >= :startDateFrom ");
 			if (startDateTo != null)
-				sb.append(" and coalesce(dateActivated, scheduledDate) <= :startDateTo ");
+				sb.append(" and coalesce(date_activated, scheduled_date) <= :startDateTo ");
 		}
 		if (discontinuedReason != null && discontinuedReason.size() > 0)
 			sb.append(" and orderReason.id in (:discontinuedReasonIdList) ");
 		if (stopDateFrom != null && stopDateTo != null) {
-			sb.append(" and coalesce(dateStopped, autoExpireDate) between :stopDateFrom and :stopDateTo ");
+			sb.append(" and coalesce(date_stopped, auto_expire_date) between :stopDateFrom and :stopDateTo ");
 		} else {
 			if (stopDateFrom != null)
-				sb.append(" and coalesce(dateStopped, autoExpireDate) >= :stopDateFrom ");
+				sb.append(" and coalesce(date_stopped, auto_expire_date) >= :stopDateFrom ");
 			if (stopDateTo != null)
-				sb.append(" and coalesce(dateStopped, autoExpireDate) <= :stopDateTo ");
+				sb.append(" and coalesce(date_stopped, auto_expire_date) <= :stopDateTo ");
 		}
 		log.debug("sql = " + sb);
 		Query query = sessionFactory.getCurrentSession().createQuery(sb.toString());
