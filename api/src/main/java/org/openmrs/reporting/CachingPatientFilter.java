@@ -13,6 +13,11 @@
  */
 package org.openmrs.reporting;
 
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
@@ -72,7 +77,47 @@ public abstract class CachingPatientFilter extends AbstractPatientFilter impleme
 				input = Context.getService(ReportService.class).getAllPatients();
 			}
 		}
+		
+		if (isTwoPointOneOrAbove()) {
+			Date date = new Date();
+			makeStartDateAndUuidTheSame(input, date);
+			makeStartDateAndUuidTheSame(cached, date);
+		}
+		
 		return Cohort.intersect(input, cached);
+	}
+	
+	private void makeStartDateAndUuidTheSame(Cohort cohort, Date date) {
+		if (cohort == null) {
+			return;
+		}
+		
+		try {
+			Method method = cohort.getClass().getMethod("getMemberships", null);
+			Collection memberships = (Collection)method.invoke(cohort, null);
+			Iterator iterator = memberships.iterator();
+			while (iterator.hasNext()) {
+				Object membership = iterator.next();
+				
+				method = membership.getClass().getMethod("setStartDate", new Class[] { Date.class });
+				method.invoke(membership, new Object[] { date });
+				
+				method = membership.getClass().getMethod("setUuid", new Class[] { String.class });
+				method.invoke(membership, new Object[] { "6f0c9a92-6f24-11e3-af88-005056821db0" });
+			}
+		}
+		catch (Exception e) {
+			log.error(e);
+		}
+	}
+	
+	private static boolean isTwoPointOneOrAbove() {
+		try {
+			Context.loadClass("org.openmrs.CohortMembership");
+			return true;
+		}
+		catch (ClassNotFoundException e) {}
+		return false;
 	}
 	
 	/**
