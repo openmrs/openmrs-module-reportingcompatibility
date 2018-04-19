@@ -199,7 +199,16 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		
 		return new Cohort("All patients", "", ids);
 	}
-	
+
+	public List<Integer> getAllPatientsWithDiagnosis() {
+		List<Integer> allPatients = new ArrayList<Integer>();
+
+		Query query = sessionFactory.getCurrentSession().createQuery(
+				"select distinct patient_id from Patient p where p.voided = 0 and p.patient_id in(select distinct person_id from obs)");
+		allPatients.addAll(query.list());
+
+		return allPatients;
+	}
 	/**
 	 * TODO: Fails to leave out patients who are voided Returns the set of patients that were in a
 	 * given program, workflow, and state, within a given date range
