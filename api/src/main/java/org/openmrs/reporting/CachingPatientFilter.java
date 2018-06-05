@@ -78,7 +78,7 @@ public abstract class CachingPatientFilter extends AbstractPatientFilter impleme
 			}
 		}
 		
-		if (supportsCohortMemberships()) {
+		if (isTwoPointOneOrAbove()) {
 			Date date = new Date();
 			makeStartDateAndUuidTheSame(input, date);
 			makeStartDateAndUuidTheSame(cached, date);
@@ -87,13 +87,6 @@ public abstract class CachingPatientFilter extends AbstractPatientFilter impleme
 		return Cohort.intersect(input, cached);
 	}
 	
-	/**
-	 * Sets the cohort membership start date and uuid to the same value.
-	 * This is just a hack to fix what was reported on TRUNK-5331
-	 * 
-	 * @param cohort the cohort
-	 * @param date the value to set for start date
-	 */
 	private void makeStartDateAndUuidTheSame(Cohort cohort, Date date) {
 		if (cohort == null) {
 			return;
@@ -110,7 +103,6 @@ public abstract class CachingPatientFilter extends AbstractPatientFilter impleme
 				method.invoke(membership, new Object[] { date });
 				
 				method = membership.getClass().getMethod("setUuid", new Class[] { String.class });
-				//The value of the uuid does not matter. The point is ensuring that all have the same uuid
 				method.invoke(membership, new Object[] { "6f0c9a92-6f24-11e3-af88-005056821db0" });
 			}
 		}
@@ -119,12 +111,7 @@ public abstract class CachingPatientFilter extends AbstractPatientFilter impleme
 		}
 	}
 	
-	/**
-	 * Checks if we are running on a platform that supports cohort membership
-	 * 
-	 * @return true if we are running on such a platform, else false
-	 */
-	private static boolean supportsCohortMemberships() {
+	private static boolean isTwoPointOneOrAbove() {
 		try {
 			Context.loadClass("org.openmrs.CohortMembership");
 			return true;
