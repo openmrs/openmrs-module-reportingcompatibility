@@ -37,6 +37,7 @@
 			<create creator="new" javascript="DWRCohortBuilderService">
 				<param name="class" value="org.openmrs.web.dwr.DWRCohortBuilderService"/>
 			</create>
+			<convert match="org.openmrs.cohort.Cohort" converter="bean"/>
 		</allow>
 	</dwr>
 	

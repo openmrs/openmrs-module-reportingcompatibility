@@ -22,7 +22,7 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.cohort.CohortSearchHistory;
@@ -39,6 +39,7 @@ import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObject;
 import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.util.ReportingcompatibilityUtil;
 import org.openmrs.web.controller.analysis.CohortBuilderController;
 
 public class DWRCohortBuilderService {
@@ -135,9 +136,10 @@ public class DWRCohortBuilderService {
 	 */
 	public List<ListItem> getSavedCohorts() {
 		List<ListItem> ret = new ArrayList<ListItem>();
-		List<Cohort> cohorts = Context.getCohortService().getAllCohorts();
-		for (Cohort c : cohorts) {
+		List<org.openmrs.Cohort> cohorts = Context.getCohortService().getAllCohorts();
+		for (org.openmrs.Cohort cht : cohorts) {
 			ListItem li = new ListItem();
+			Cohort c = ReportingcompatibilityUtil.convert(cht);
 			li.setId(c.getCohortId());
 			li.setName(c.getName());
 			li.setDescription(c.getDescription());
@@ -168,7 +170,7 @@ public class DWRCohortBuilderService {
 	 * @return
 	 */
 	public String getCohortAsCommaSeparatedIds(Integer cohortId) {
-		Cohort c = Context.getCohortService().getCohort(cohortId);
+		Cohort c = ReportingcompatibilityUtil.convert(Context.getCohortService().getCohort(cohortId));
 		if (c == null)
 			return "";
 		else
@@ -259,7 +261,7 @@ public class DWRCohortBuilderService {
 	 */
 	public void saveCohort(String name, String description, String commaSeparatedIds) {
 		Set<Integer> ids = new HashSet<Integer>(OpenmrsUtil.delimitedStringToIntegerList(commaSeparatedIds, ","));
-		Cohort cohort = new Cohort();
+		org.openmrs.Cohort cohort = new org.openmrs.Cohort();
 		cohort.setName(name);
 		cohort.setDescription(description);
 		cohort.setMemberIds(ids);

@@ -16,7 +16,7 @@ package org.openmrs.module.reportingcompatibility.service;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Patient;

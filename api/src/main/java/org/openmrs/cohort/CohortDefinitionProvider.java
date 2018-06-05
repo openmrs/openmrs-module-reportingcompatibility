@@ -15,7 +15,7 @@ package org.openmrs.cohort;
 
 import java.util.List;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.cohort.impl.StaticCohortDefinitionProvider;
 import org.openmrs.report.EvaluationContext;
 

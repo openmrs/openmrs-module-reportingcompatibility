@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.Program;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.service.CohortService;

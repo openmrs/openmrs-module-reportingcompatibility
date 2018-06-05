@@ -17,7 +17,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.Program;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;

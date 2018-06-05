@@ -25,7 +25,7 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.Obs;
 import org.openmrs.api.ObsService;

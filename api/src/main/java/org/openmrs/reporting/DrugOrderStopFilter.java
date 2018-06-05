@@ -13,7 +13,7 @@
  */
 package org.openmrs.reporting;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptName;
 import org.openmrs.Drug;

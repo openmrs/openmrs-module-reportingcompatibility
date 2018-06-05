@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.Location;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.service.ReportService;
@@ -215,7 +215,7 @@ public class RowPerObsDataExportReportObject extends DataExportReportObject impl
 		
 		if (cohortId != null) {
 			// hack to hydrate this
-			Cohort cohort = Context.getCohortService().getCohort(cohortId);
+			Cohort cohort = ReportingcompatibilityUtil.convert(Context.getCohortService().getCohort(cohortId));
 			if (cohort != null) {
 				patientIdSet.retainAll(cohort.getMemberIds());
 			}
@@ -236,7 +236,7 @@ public class RowPerObsDataExportReportObject extends DataExportReportObject impl
 			PatientSearchReportObject search = (PatientSearchReportObject) Context.getService(ReportObjectService.class).getReportObject(
 			    patientSearchId);
 			PatientFilter cohortDefinition = ReportingcompatibilityUtil.toPatientFilter(search.getPatientSearch(), null);
-			org.openmrs.Cohort c = new Cohort("Cohort from patientSearch",
+			org.openmrs.cohort.Cohort c = new Cohort("Cohort from patientSearch",
 			        "cohort from patientSearchId: " + patientSearchId, patientIdSet);
 			c = cohortDefinition.filter(c, context);
 			patientIdSet = c.getMemberIds();

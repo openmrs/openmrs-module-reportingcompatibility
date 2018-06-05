@@ -16,7 +16,7 @@ package org.openmrs.cohort.impl;
 import java.util.List;
 import java.util.Vector;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortDefinition;
@@ -24,6 +24,7 @@ import org.openmrs.cohort.CohortDefinitionItemHolder;
 import org.openmrs.cohort.CohortDefinitionProvider;
 import org.openmrs.cohort.StaticCohortDefinition;
 import org.openmrs.report.EvaluationContext;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 /**
  * This class provides access to {@link org.openmrs.Cohort} objects that are saved in the cohort
@@ -60,7 +61,8 @@ public class StaticCohortDefinitionProvider implements CohortDefinitionProvider 
 	 */
 	public List<CohortDefinitionItemHolder> getAllCohortDefinitions() {
 		List<CohortDefinitionItemHolder> ret = new Vector<CohortDefinitionItemHolder>();
-		for (Cohort cohort : Context.getCohortService().getAllCohorts()) {
+		for (org.openmrs.Cohort c : Context.getCohortService().getAllCohorts()) {
+			Cohort cohort = ReportingcompatibilityUtil.convert(c);
 			CohortDefinitionItemHolder item = new CohortDefinitionItemHolder();
 			CohortDefinition cohortDefinition = new StaticCohortDefinition(cohort);
 			item.setKey(cohort.getCohortId() + ":" + cohortDefinition.getClass().getCanonicalName());
@@ -75,7 +77,7 @@ public class StaticCohortDefinitionProvider implements CohortDefinitionProvider 
 	 * @see org.openmrs.cohort.CohortDefinitionProvider#getCohortDefinition(java.lang.Integer)
 	 */
 	public CohortDefinition getCohortDefinition(Integer id) {
-		return new StaticCohortDefinition(Context.getCohortService().getCohort(id));
+		return new StaticCohortDefinition(ReportingcompatibilityUtil.convert(Context.getCohortService().getCohort(id)));
 	}
 	
 	/**
@@ -91,7 +93,7 @@ public class StaticCohortDefinitionProvider implements CohortDefinitionProvider 
 	public CohortDefinition saveCohortDefinition(CohortDefinition cohortDefinition) {
 		StaticCohortDefinition def = (StaticCohortDefinition) cohortDefinition;
 		Cohort c = def.getCohort();
-		Context.getCohortService().saveCohort(c);
+		Context.getCohortService().saveCohort(ReportingcompatibilityUtil.convert(c));
 		return def;
 	}
 	

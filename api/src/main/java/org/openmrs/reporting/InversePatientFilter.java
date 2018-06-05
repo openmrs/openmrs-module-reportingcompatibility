@@ -15,7 +15,7 @@ package org.openmrs.reporting;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.report.EvaluationContext;

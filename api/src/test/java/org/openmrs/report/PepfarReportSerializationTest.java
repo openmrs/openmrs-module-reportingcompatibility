@@ -23,7 +23,7 @@ import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.ConceptClass;
 import org.openmrs.Location;
 import org.openmrs.User;

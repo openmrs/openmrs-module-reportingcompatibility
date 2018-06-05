@@ -23,7 +23,7 @@ import java.util.GregorianCalendar;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.util.OpenmrsUtil;
@@ -565,7 +565,7 @@ public class DataExportTest extends BaseModuleContextSensitiveTest {
 	@Test
 	public void shouldExportCohortColumns() throws Exception {
 		// First create a cohort. TODO maybe move this to xml
-		Cohort cohort = new Cohort();
+		org.openmrs.Cohort cohort = new org.openmrs.Cohort();
 		cohort.setName("A Cohort");
 		cohort.setDescription("Just for testing");
 		cohort.addMember(2);

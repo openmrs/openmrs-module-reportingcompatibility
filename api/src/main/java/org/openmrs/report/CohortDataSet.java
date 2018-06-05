@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 
 /**
  * A dataset which represents a list of cohorts, each of which has a name. For example a

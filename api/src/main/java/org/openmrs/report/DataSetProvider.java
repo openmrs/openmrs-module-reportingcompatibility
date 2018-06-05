@@ -13,7 +13,7 @@
  */
 package org.openmrs.report;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 
 /**
  * Implementations of this interface perform the work of converting from a {@link DataSetDefinition}

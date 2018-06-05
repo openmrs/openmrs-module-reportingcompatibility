@@ -1,12 +1,11 @@
 package org.openmrs.module.reportingcompatibility.reporting;
  
-import org.openmrs.Cohort;
 import org.openmrs.api.context.Context;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.module.reportingcompatibility.service.ReportingCompatibilityService;
 import org.openmrs.report.EvaluationContext;
-import org.openmrs.reporting.CachingPatientFilter;
-import org.springframework.util.StringUtils; 
+import org.openmrs.reporting.CachingPatientFilter; 
 /**
  * This class implements a simple patient filter using a SQL query
  */

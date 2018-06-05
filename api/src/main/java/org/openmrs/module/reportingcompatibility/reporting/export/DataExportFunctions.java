@@ -31,7 +31,7 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.DrugOrder;
@@ -305,7 +305,7 @@ public class DataExportFunctions {
 		//PatientSet ps = null;
 		Cohort ps = null;
 		if (key.startsWith("C.")) {
-			ps = Context.getCohortService().getCohort(Integer.valueOf(key.substring(2)));
+			ps = ReportingcompatibilityUtil.convert(Context.getCohortService().getCohort(Integer.valueOf(key.substring(2))));
 		} else if (key.startsWith("F.")) {
 			PatientFilter pf = Context.getService(ReportObjectService.class).getPatientFilterById(Integer.valueOf(key.substring(2)));
 			ps = pf.filter(getPatientSet(), context);

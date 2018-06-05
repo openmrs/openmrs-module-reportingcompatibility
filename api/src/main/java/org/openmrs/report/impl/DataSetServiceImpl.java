@@ -18,7 +18,7 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.APIException;
 import org.openmrs.module.reportingcompatibility.service.DataSetService;
 import org.openmrs.report.DataSet;

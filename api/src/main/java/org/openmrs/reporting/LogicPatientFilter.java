@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.context.Context;
 import org.openmrs.logic.LogicCriteria;
 import org.openmrs.logic.LogicException;
@@ -25,6 +25,7 @@ import org.openmrs.logic.result.Result;
 import org.openmrs.report.EvaluationContext;
 import org.openmrs.report.Parameter;
 import org.openmrs.report.Parameterizable;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 public class LogicPatientFilter extends AbstractPatientFilter implements PatientFilter, Parameterizable {
 	
@@ -53,7 +54,7 @@ public class LogicPatientFilter extends AbstractPatientFilter implements Patient
 	 */
 	public Cohort filter(Cohort input, EvaluationContext context) {
 		try {
-			Map<Integer, Result> results = Context.getLogicService().eval(input, criteria);
+			Map<Integer, Result> results = Context.getLogicService().eval(ReportingcompatibilityUtil.convert(input), criteria);
 			// Assume these results are booleans
 			Cohort matches = new Cohort();
 			for (Map.Entry<Integer, Result> e : results.entrySet()) {
@@ -74,7 +75,7 @@ public class LogicPatientFilter extends AbstractPatientFilter implements Patient
 	 */
 	public Cohort filterInverse(Cohort input, EvaluationContext context) {
 		try {
-			Map<Integer, Result> results = Context.getLogicService().eval(input, criteria);
+			Map<Integer, Result> results = Context.getLogicService().eval(ReportingcompatibilityUtil.convert(input), criteria);
 			// Assume these results are booleans
 			Cohort matches = new Cohort();
 			for (Map.Entry<Integer, Result> e : results.entrySet()) {

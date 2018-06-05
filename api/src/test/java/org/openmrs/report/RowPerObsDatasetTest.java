@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.service.CohortService;
 import org.openmrs.module.reportingcompatibility.service.ReportService;

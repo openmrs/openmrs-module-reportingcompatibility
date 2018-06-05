@@ -16,7 +16,7 @@ package org.openmrs.cohort;
 import java.util.List;
 import java.util.Vector;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.report.Parameter;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

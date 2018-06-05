@@ -29,7 +29,7 @@ import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.EncounterType;
@@ -80,7 +80,7 @@ public class ReportingcompatibilityUtil {
 		} else if (search.isSavedFilterReference()) {
 			return Context.getService(ReportObjectService.class).getPatientFilterById(search.getSavedFilterId());
 		} else if (search.isSavedCohortReference()) {
-			Cohort c = Context.getCohortService().getCohort(search.getSavedCohortId());
+			Cohort c = convert(Context.getCohortService().getCohort(search.getSavedCohortId()));
 			// to prevent lazy loading exceptions, cache the member ids here
 			if (c != null) {
 				c.getMemberIds().size();
@@ -280,5 +280,23 @@ public class ReportingcompatibilityUtil {
 			log.debug("Returning " + pf);
 			return pf;
 		}
+	}
+	
+	public static org.openmrs.cohort.Cohort convert(org.openmrs.Cohort cohort) {
+		org.openmrs.cohort.Cohort c = new org.openmrs.cohort.Cohort();
+		c.setCohortId(cohort.getCohortId());
+		c.setName(cohort.getName());
+		c.setDescription(cohort.getDescription());
+		c.setMemberIds(cohort.getMemberIds());
+		return c;
+	}
+	
+	public static org.openmrs.Cohort convert(org.openmrs.cohort.Cohort cohort) {
+		org.openmrs.Cohort c = new org.openmrs.Cohort();
+		c.setCohortId(cohort.getCohortId());
+		c.setName(cohort.getName());
+		c.setDescription(cohort.getDescription());
+		c.setMemberIds(cohort.getMemberIds());
+		return c;
 	}
 }

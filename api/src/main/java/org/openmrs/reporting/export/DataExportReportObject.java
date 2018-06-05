@@ -19,7 +19,7 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.Location;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reportingcompatibility.service.ReportService;
@@ -196,7 +196,7 @@ public class DataExportReportObject extends AbstractReportObject implements Seri
 		
 		if (cohortId != null) {
 			// hack to hydrate this
-			Cohort loadedCohort = Context.getCohortService().getCohort(cohortId);
+			Cohort loadedCohort = ReportingcompatibilityUtil.convert(Context.getCohortService().getCohort(cohortId));
 			if (loadedCohort != null) {
 				cohort = intersectFast(cohort, loadedCohort);
 			}

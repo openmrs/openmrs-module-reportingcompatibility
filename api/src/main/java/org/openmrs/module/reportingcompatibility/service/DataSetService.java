@@ -15,7 +15,7 @@ package org.openmrs.module.reportingcompatibility.service;
 
 import java.util.List;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.APIException;
 import org.openmrs.report.DataSet;
 import org.openmrs.report.DataSetDefinition;

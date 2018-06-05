@@ -18,11 +18,12 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Cohort;
 import org.openmrs.PatientProgram;
 import org.openmrs.Program;
 import org.openmrs.api.context.Context;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.module.reportingcompatibility.service.CohortService;
+import org.openmrs.util.ReportingcompatibilityUtil;
 
 public class RowPerProgramEnrollmentDataSetProvider implements DataSetProvider {
 	
@@ -59,7 +60,7 @@ public class RowPerProgramEnrollmentDataSetProvider implements DataSetProvider {
 		ret.setDefinition(definition);
 		ret.setEvaluationContext(evalContext);
 		List<Program> programs = new ArrayList<Program>(definition.getPrograms());
-		List<PatientProgram> list = Context.getProgramWorkflowService().getPatientPrograms(patients, programs);
+		List<PatientProgram> list = Context.getProgramWorkflowService().getPatientPrograms(ReportingcompatibilityUtil.convert(patients), programs);
 		ret.setData(list);
 		return ret;
 	}

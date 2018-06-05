@@ -19,7 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.EncounterType;
 import org.openmrs.Form;
 import org.openmrs.Location;

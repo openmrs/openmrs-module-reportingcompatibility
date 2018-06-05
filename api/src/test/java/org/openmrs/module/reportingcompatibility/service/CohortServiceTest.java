@@ -16,7 +16,7 @@ package org.openmrs.module.reportingcompatibility.service;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.reporting.PatientCharacteristicFilter;

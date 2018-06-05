@@ -16,7 +16,7 @@ package org.openmrs.reporting;
 import java.text.DateFormat;
 import java.util.Date;
 
-import org.openmrs.Cohort;
+import org.openmrs.cohort.Cohort;
 import org.openmrs.api.context.Context;
 import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.module.reportingcompatibility.service.ReportService;
