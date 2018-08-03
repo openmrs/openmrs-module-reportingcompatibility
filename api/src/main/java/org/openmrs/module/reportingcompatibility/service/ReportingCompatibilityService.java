@@ -594,12 +594,14 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @return
 	 * @since 1.8
 	 */
+	@Transactional(readOnly = true)
 	public Cohort getInverseOfCohort(Cohort cohort);
 	
 	/**
 	 * @return number of unvoided patients in the database
 	 * @since 1.8
 	 */
+	@Transactional(readOnly = true)
 	public Integer getCountOfPatients();
 	
 	/**
@@ -610,6 +612,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @return a Cohort with patient ids
 	 * @since 1.8
 	 */
+	@Transactional(readOnly = true)
 	public Cohort getPatients(Integer start, Integer size);
 	
 	/**
@@ -618,6 +621,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param report Report to create
 	 * @throws org.openmrs.api.APIException
 	 */
+	@Transactional
 	public void createReport(Report report) throws APIException;
 	
 	/**
@@ -626,6 +630,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param report Report to update
 	 * @throws APIException
 	 */
+	@Transactional
 	public void updateReport(Report report) throws APIException;
 	
 	/**
@@ -634,6 +639,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param report Report to delete
 	 * @throws APIException
 	 */
+	@Transactional
 	public void deleteReport(Report report) throws APIException;
 	
 	/**
@@ -642,6 +648,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param reportObject Report Object to create
 	 * @throws APIException
 	 */
+	@Transactional
 	public void createReportObject(AbstractReportObject reportObject) throws APIException;
 	
 	/**
@@ -650,6 +657,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param reportObject the Report Object to update
 	 * @throws APIException
 	 */
+	@Transactional
 	public void updateReportObject(AbstractReportObject reportObject) throws APIException;
 	
 	/**
@@ -658,6 +666,7 @@ public interface ReportingCompatibilityService extends OpenmrsService {
 	 * @param reportObjectId Internal identifier for the Report Object to delete
 	 * @throws APIException
 	 */
+	@Transactional
 	public void deleteReportObject(Integer reportObjectId) throws APIException;
 	
 }
