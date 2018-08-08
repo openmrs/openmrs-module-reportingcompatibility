@@ -511,6 +511,10 @@
 	.evenRow .box, .evenRow .tabBar .selectedTab {
 		background-color: whitesmoke;
 	}
+
+	div.column {
+		float: none;
+	}
 </style>
 
 <h2><spring:message code="reportingcompatibility.DataExport.title"/></h2>
