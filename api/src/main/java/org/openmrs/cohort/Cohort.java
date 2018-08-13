@@ -67,7 +67,7 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 		this.name = name;
 		this.description = description;
 		if (ids != null) {
-			memberIds.addAll(Arrays.asList(ids));
+			memberIds.addAll(CohortUtil.removeNullPatients(Arrays.asList(ids)));
 		}
 	}
 	
@@ -83,7 +83,9 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 		this(name, description, (Integer[]) null);
 		if (patients != null) {
 			for (Patient p : patients) {
-				memberIds.add(p.getPatientId());
+				if(CohortUtil.doesPatientExist(p.getPatientId())) {
+					memberIds.add(p.getPatientId());
+				}
 			}
 		}
 	}
@@ -112,6 +114,7 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 	@SuppressWarnings("unchecked")
 	public Cohort(String name, String description, Collection patientsOrIds) {
 		this(name, description, (Integer[]) null);
+		patientsOrIds = CohortUtil.removeNullPatients(patientsOrIds);
 		if (patientsOrIds != null) {
 			for (Object o : patientsOrIds) {
 				if (o instanceof Patient) {
@@ -135,7 +138,10 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 		this();
 		for (StringTokenizer st = new StringTokenizer(commaSeparatedIds, ","); st.hasMoreTokens();) {
 			String id = st.nextToken();
-			memberIds.add(Integer.valueOf(id.trim()));
+			Integer patientId = Integer.valueOf(id.trim());
+			if(CohortUtil.doesPatientExist(patientId)) {
+				memberIds.add(patientId);
+			}
 		}
 	}
 	
@@ -173,7 +179,9 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 	}
 	
 	public void addMember(Integer memberId) {
-		getMemberIds().add(memberId);
+		if(CohortUtil.doesPatientExist(memberId)) {
+			getMemberIds().add(memberId);
+		}
 	}
 	
 	public void removeMember(Integer memberId) {
@@ -282,7 +290,7 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 	}
 	
 	public void setMemberIds(Set<Integer> memberIds) {
-		this.memberIds = memberIds;
+		this.memberIds = CohortUtil.removeNullPatients(memberIds);
 	}
 	
 	/**

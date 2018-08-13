@@ -19,13 +19,17 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.StringTokenizer;
-
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Collection;
+import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.ReportObjectService;
 
 public class CohortUtil {
-	
+
+	private static final String COHORT_CHECK_NULLPATIENTS_GLOBAL_PROPERTY_NAME = "cohort.checknullpatients";
 	/**
 	 * Parses an input string like: [Male] and [Adult] and
 	 * [EnrolledInHivOnDate|program="1"|untilDate="${report.startDate}"] Names between brackets are
@@ -120,5 +124,59 @@ public class CohortUtil {
 		
 		return PatientSearch.createCompositionSearch(tokens);
 	}
-	
+
+	/**
+	 * This method will be used to check for the patient object by the given patientId to confirm the patient is not null.
+	 * Some modules (eg : location based access control) may block the access of the certain patient objects when accessing from
+	 * other locations.
+	 * @param patientId patientId
+	 * @return the patient is exist for the access or not
+	 */
+	public static Boolean doesPatientExist(Integer patientId) {
+		if (!doesNeedToCheckForNullPatients())
+			return true;
+		PatientService patientService = Context.getPatientService();
+		if(patientId != null && patientService.getPatient(patientId) != null) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * This method will be used to check for the patients object by the given patientIds to confirm the patients are not null.
+	 * Some modules (eg : location based access control) may block the access of the certain patient objects when accessing from
+	 * other locations.
+	 * @param patientIds Set of all patientIds
+	 * @return Set of patientIds with only accessible patients
+	 */
+	public static Set<Integer> removeNullPatients(Set<Integer> patientIds) {
+		return (Set<Integer>)removeNullPatients((Collection<Integer>)patientIds);
+	}
+
+	/**
+	 * This method will be used to check for the patients object by the given patientIds to confirm the patients are not null.
+	 * Some modules (eg : location based access control) may block the access of the certain patient objects when accessing from
+	 * other locations.
+	 * @param patientIds Collection of all patientIds
+	 * @return Collection of patientIds with only accessible patients
+	 */
+	public static Collection<Integer> removeNullPatients(Collection<Integer> patientIds) {
+		if(patientIds == null || !doesNeedToCheckForNullPatients()) {
+			return patientIds;
+		}
+		PatientService patientService = Context.getPatientService();
+		Iterator<Integer> iterator = patientIds.iterator();
+		while (iterator.hasNext()) {
+			Integer patientId = iterator.next();
+			if (patientService.getPatient(patientId) == null) {
+				iterator.remove();
+			}
+		}
+		return patientIds;
+	}
+
+	private static Boolean doesNeedToCheckForNullPatients() {
+		String gpValue = Context.getAdministrationService().getGlobalProperty("COHORT_CHECK_NULLPATIENTS_GLOBAL_PROPERTY_NAME");
+		return (gpValue != null && gpValue.toLowerCase().equals("true"));
+	}
 }
