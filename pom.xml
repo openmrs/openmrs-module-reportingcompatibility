@@ -3,7 +3,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>reportingcompatibility</artifactId>
-	<version>2.0.6-SNAPSHOT</version>
+	<version>2.0.6</version>
 	<packaging>pom</packaging>
 	<name>Reporting Compatibility</name>
 	<description>Parent project for Reporting Compatibility</description>
@@ -14,7 +14,7 @@
 		<connection>scm:git:https://github.com/openmrs/openmrs-module-reportingcompatibility.git</connection>
 		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-reportingcompatibility.git</developerConnection>
 		<url>https://github.com/openmrs/openmrs-module-reportingcompatibility</url>
-	  <tag>HEAD</tag>
+	  <tag>2.0.6</tag>
   </scm>
 
 	<distributionManagement>
