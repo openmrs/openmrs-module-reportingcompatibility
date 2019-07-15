@@ -503,8 +503,8 @@ public class DataExportFunctions {
 	public List<List<Object>> getObsWithValues(Concept c, List<String> attrs, Integer size, boolean mostRecentFirst) {
 		if (attrs == null)
 			attrs = new Vector<String>();
-		
-		String key = c.getConceptId() + "";
+
+		String key = (mostRecentFirst ? "mostRecent_" : "") + c.getConceptId();
 		Map<Integer, List<List<Object>>> patientIdObsMap = conceptAttrObsMap.get(key);
 		if (patientIdObsMap == null) {
 			long start = System.currentTimeMillis();
