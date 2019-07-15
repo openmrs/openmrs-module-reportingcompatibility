@@ -912,7 +912,7 @@
 								<br/>
 								<select name="drugList" multiple="true" size="10">
 									<c:forEach var="drug" items="${model.drugs}">
-										<option value="${drug.drugId}"/>${drug.displayName}</option>
+										<option value="${drug.drugId}"/>${drug.name}</option>
 									</c:forEach>
 								</select>			
 							</td>

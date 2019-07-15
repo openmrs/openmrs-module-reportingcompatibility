@@ -26,7 +26,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.NullComparator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,7 +33,6 @@ import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.ConceptName;
-import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
 import org.openmrs.cohort.CohortSearchHistory;
@@ -163,9 +161,6 @@ public class CohortBuilderController implements Controller {
 					}
 				}
 			}
-
-			List<Drug> allDrugs = Context.getConceptService().getAllDrugs();
-			Collections.sort(allDrugs, new BeanComparator("displayName"));
 			
 			model.put("searchHistory", history);
 			model.put("links", linkHelper());
@@ -173,7 +168,7 @@ public class CohortBuilderController implements Controller {
 			model.put("encounterTypes", Context.getEncounterService().getAllEncounterTypes());
 			model.put("locations", Context.getLocationService().getAllLocations());
 			model.put("forms", Context.getFormService().getAllForms());
-			model.put("drugs", allDrugs);
+			model.put("drugs", Context.getConceptService().getAllDrugs());
 			model.put("drugConcepts", genericDrugs);
 			model.put("drugSets", drugSets);
 			model.put("orderStopReasons", orderStopReasons);
