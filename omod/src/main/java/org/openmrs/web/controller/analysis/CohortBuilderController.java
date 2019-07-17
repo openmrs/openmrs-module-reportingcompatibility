@@ -7,6 +7,7 @@
  * Software distributed under the License is distributed on an "AS IS"
  * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
  * License for the specific language governing rights and limitations
+ * 
  * under the License.
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.WeakHashMap;
+import java.util.function.BiFunction;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -205,10 +207,16 @@ public class CohortBuilderController implements Controller {
 			model.put("orderStopReasons", orderStopReasons);
 			model.put("personAttributeTypes", Context.getPersonService().getAllPersonAttributeTypes());
 			model.put("shortcuts", shortcuts);
+			model.put("drugType",getAllDrugTypes());//returning the drug types
 		}
 		return new ModelAndView(formView, "model", model);
 	}
 	
+	private BiFunction<? super String, ? super Object, ? extends Object> getAllDrugTypes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public class Shortcut {
 		
 		private String label;
