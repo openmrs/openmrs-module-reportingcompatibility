@@ -20,9 +20,14 @@
 	<distributionManagement>
 		<repository>
 			<id>openmrs-repo-modules</id>
-			<name>Modules</name>
+			<name>OpenMRS Modules</name>
 			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/modules/</url>
 		</repository>
+		<snapshotRepository>
+			<id>openmrs-repo-snapshots</id>
+			<name>OpenMRS Snapshots</name>
+			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 	<modules>
