@@ -3,7 +3,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>reportingcompatibility</artifactId>
-	<version>1.5.14-SNAPSHOT</version>
+	<version>1.6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Reporting Compatibility</name>
 	<description>Parent project for Reporting Compatibility</description>
