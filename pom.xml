@@ -12,7 +12,7 @@
 
 	<scm>
 		<connection>scm:git:git@github.com:openmrs/openmrs-module-reportingcompatibility.git</connection>
-		<developerConnection>scm:git:git@github.com/openmrs/openmrs-module-reportingcompatibility.git</developerConnection>
+		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-reportingcompatibility.git</developerConnection>
 		<url>https://github.com/openmrs/openmrs-module-reportingcompatibility</url>
 	    <tag>HEAD</tag>
   	</scm>
