@@ -202,7 +202,7 @@
                 <prop key="/admin/reports/reportMacros.form">reportMacrosForm</prop>
                 <prop key="/admin/reports/cohortReport.form">cohortReportForm</prop>
 				<prop key="cohortBuilder.list">cohortBuilderController</prop>
-				<prop key="cohortBuilder.form">cohortBuilderActionController</prop>
+				<prop key="cohortBuilder.form">cohortBuilderController</prop>
 				<prop key="**/patientSet.portlet">patientSetPortletController</prop>
 			</props>
 		</property>
@@ -333,11 +333,6 @@
 	<bean id="cohortBuilderController" class="org.openmrs.web.controller.analysis.CohortBuilderController">
 		<property name="formView"><value>/module/@MODULE_ID@/analysis/cohortBuilder</value></property>
 		<property name="successView"><value>cohortBuilder.list</value></property>
-	</bean>
-
-	<bean id="cohortBuilderActionController" class="org.springframework.web.servlet.mvc.multiaction.MultiActionController">
-		<property name="methodNameResolver"><ref bean="defaultMethodParamResolver"/></property>
-		<property name="delegate"><ref bean="cohortBuilderController"/></property>
 	</bean>
 
 </beans>

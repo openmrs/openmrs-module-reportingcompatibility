@@ -133,8 +133,41 @@ public class CohortBuilderController implements Controller {
 		return null;
 	}
 	
+	private ModelAndView handleMethod(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		ModelAndView modelAndView = null;
+		
+		String method = request.getParameter("method");
+		
+		if ("addFilter".equals(method)) {
+			modelAndView = addFilter(request, response);
+		}
+		else if ("addDynamicFilter".equals(method)) {
+			try {
+				modelAndView = addDynamicFilter(request, response);
+			}
+			catch (ClassNotFoundException ex) {
+				throw new IllegalArgumentException(ex);
+			}
+		}
+		else if ("saveHistory".equals(method)) {
+			modelAndView = saveHistory(request, response);
+		}
+		else if ("clearHistory".equals(method)) {
+			modelAndView = clearHistory(request, response);
+		}
+		
+		return modelAndView;
+	}
+	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 	                                                                                           IOException {
+		
+		ModelAndView modelAndView = handleMethod(request, response);
+		if (modelAndView != null) {
+			return modelAndView;
+		}
+		
 		Map<String, Object> model = new HashMap<String, Object>();
 		if (Context.isAuthenticated()) {
 			CohortSearchHistory history = getMySearchHistory(request);
