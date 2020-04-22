@@ -280,13 +280,13 @@ public interface ReportService {
 	 * @param toDate End of date range to look at (NULL defaults to fromDate if that isn't null, or
 	 *            now() if it is.)
 	 * @return Cohort with matching Patients
-	 * @should get all patients with drug orders given null parameters
-	 * @should get patients with no drug orders
-	 * @should get patients with drug orders for drugs
-	 * @should get patients with no drug orders for drugs
-	 * @should get patients with drug orders from date
-	 * @should get patients with drug orders to date
-	 * @should get patients with drug order for drug between dates
+	 * <strong>Should</strong> get all patients with drug orders given null parameters
+	 * <strong>Should</strong> get patients with no drug orders
+	 * <strong>Should</strong> get patients with drug orders for drugs
+	 * <strong>Should</strong> get patients with no drug orders for drugs
+	 * <strong>Should</strong> get patients with drug orders from date
+	 * <strong>Should</strong> get patients with drug orders to date
+	 * <strong>Should</strong> get patients with drug order for drug between dates
 	 */
 	public Cohort getPatientsHavingDrugOrder(Collection<Integer> patientIds, Collection<Integer> drugIds,
 	        GroupMethod groupMethod, Date fromDate, Date toDate);
@@ -321,7 +321,7 @@ public interface ReportService {
 	 * @param minCount
 	 * @param maxCount
 	 * @return all patients with encounters matching the arguments to this method
-	 * @should get all patients with encounters when no parameters specified
+	 * <strong>Should</strong> get all patients with encounters when no parameters specified
 	 */
 	public Cohort getPatientsHavingEncounters(EncounterType encounterType, Location location, Form form, Date fromDate,
 	        Date toDate, Integer minCount, Integer maxCount);
@@ -337,17 +337,17 @@ public interface ReportService {
 	 * @param minCount
 	 * @param maxCount
 	 * @return Cohort with matching Patients
-	 * @should get all patients with encounters when no parameters specified
-	 * @should get patients with encounters of type
-	 * @should get patients with encounters of multiple types
-	 * @should get patients with encounters at location
-	 * @should get patients with encounters from form
-	 * @should get patients with encounters before date
-	 * @should get patients with encounters after date
-	 * @should get patients with encounters between dates
-	 * @should get patients with at least n encounters
-	 * @should get patients with at most n encounters
-	 * @should get all patients with encounters when passed an empty encounterTypeList
+	 * <strong>Should</strong> get all patients with encounters when no parameters specified
+	 * <strong>Should</strong> get patients with encounters of type
+	 * <strong>Should</strong> get patients with encounters of multiple types
+	 * <strong>Should</strong> get patients with encounters at location
+	 * <strong>Should</strong> get patients with encounters from form
+	 * <strong>Should</strong> get patients with encounters before date
+	 * <strong>Should</strong> get patients with encounters after date
+	 * <strong>Should</strong> get patients with encounters between dates
+	 * <strong>Should</strong> get patients with at least n encounters
+	 * <strong>Should</strong> get patients with at most n encounters
+	 * <strong>Should</strong> get all patients with encounters when passed an empty encounterTypeList
 	 */
 	public Cohort getPatientsHavingEncounters(List<EncounterType> encounterTypeList, Location location, Form form,
 	        Date fromDate, Date toDate, Integer minCount, Integer maxCount);
@@ -370,8 +370,8 @@ public interface ReportService {
 	 * @param fromDate
 	 * @param toDate
 	 * @return all patients with observations matching the arguments to this method
-	 * @should get patients by concept and true boolean value
-	 * @should get patients by concept and false boolean value
+	 * <strong>Should</strong> get patients by concept and true boolean value
+	 * <strong>Should</strong> get patients by concept and false boolean value
 	 */
 	public Cohort getPatientsHavingObs(Integer conceptId, TimeModifier timeModifier, Modifier modifier, Object value,
 	        Date fromDate, Date toDate);
@@ -390,13 +390,13 @@ public interface ReportService {
 	 * @param deadOnly
 	 * @return Cohort with all matching patients
 	 * @throws DAOException
-	 * @should get all patients when no parameters given
-	 * @should get patients of given gender
-	 * @should get patients born before date
-	 * @should get patients born after date
-	 * @should get patients born between dates
-	 * @should get patients who are alive
-	 * @should get patients who are dead
+	 * <strong>Should</strong> get all patients when no parameters given
+	 * <strong>Should</strong> get patients of given gender
+	 * <strong>Should</strong> get patients born before date
+	 * <strong>Should</strong> get patients born after date
+	 * <strong>Should</strong> get patients born between dates
+	 * <strong>Should</strong> get patients who are alive
+	 * <strong>Should</strong> get patients who are dead
 	 */
 	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge,
 	        Integer maxAge, Boolean aliveOnly, Boolean deadOnly) throws DAOException;
@@ -417,14 +417,14 @@ public interface ReportService {
 	 * @param effectiveDate
 	 * @return Cohort with all matching patients
 	 * @throws DAOException
-	 * @should get all patients when no parameters given
-	 * @should get patients of given gender
-	 * @should get patients born before date
-	 * @should get patients born after date
-	 * @should get patients born between dates
-	 * @should get patients who are alive
-	 * @should get patients who are dead
-	 * @should not get patients born after effectiveDate
+	 * <strong>Should</strong> get all patients when no parameters given
+	 * <strong>Should</strong> get patients of given gender
+	 * <strong>Should</strong> get patients born before date
+	 * <strong>Should</strong> get patients born after date
+	 * <strong>Should</strong> get patients born between dates
+	 * <strong>Should</strong> get patients who are alive
+	 * <strong>Should</strong> get patients who are dead
+	 * <strong>Should</strong> not get patients born after effectiveDate
 	 */
 	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Integer minAge, Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate) throws DAOException;
 	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate, Date minDeathdate, Date maxDeathdate, Integer minAge, Integer maxAge, Boolean aliveOnly, Boolean deadOnly, Date effectiveDate) throws DAOException;
@@ -450,16 +450,16 @@ public interface ReportService {
 	 * @param fromDate
 	 * @param toDate
 	 * @return Cohort with matching Patients
-	 * @should get all patients in any program given null parameters
-	 * @should get patients in program
-	 * @should get patients in program from date
-	 * @should get patients in program to date
-	 * @should get patients in program between dates
-	 * @should get patients in state
-	 * @should get patients in states
-	 * @should get patients in state from date
-	 * @should get patients in state to date
-	 * @should get patients in state between dates
+	 * <strong>Should</strong> get all patients in any program given null parameters
+	 * <strong>Should</strong> get patients in program
+	 * <strong>Should</strong> get patients in program from date
+	 * <strong>Should</strong> get patients in program to date
+	 * <strong>Should</strong> get patients in program between dates
+	 * <strong>Should</strong> get patients in state
+	 * <strong>Should</strong> get patients in states
+	 * <strong>Should</strong> get patients in state from date
+	 * <strong>Should</strong> get patients in state to date
+	 * <strong>Should</strong> get patients in state between dates
 	 */
 	public Cohort getPatientsByProgramAndState(Program program, List<ProgramWorkflowState> stateList, Date fromDate,
 	        Date toDate);
@@ -475,7 +475,7 @@ public interface ReportService {
 	/**
 	 * @return all active or finished drug orders whose drug concept is in the given set (or all
 	 *         drugs if that's null)
-	 * @should return an empty list if cohort is empty
+	 * <strong>Should</strong> return an empty list if cohort is empty
 	 */
 	public Map<Integer, List<DrugOrder>> getDrugOrders(Cohort ps, Concept drugSet);
 	
@@ -595,7 +595,7 @@ public interface ReportService {
 	public Map<Integer, String> getPatientIdentifierStringsByType(Cohort patients, PatientIdentifierType type);
 	
 	/**
-	 * @should return person attributes of type Location
+	 * <strong>Should</strong> return person attributes of type Location
 	 * @param patients
 	 * @param attributeName
 	 * @param joinClass
@@ -614,7 +614,7 @@ public interface ReportService {
 	 * @param ps the cohort to get data for
 	 * @param program the program to look for enrollments in
 	 * @return a Map from patientId to PatientProgram
-	 * @should get program enrollments for the given cohort
+	 * <strong>Should</strong> get program enrollments for the given cohort
 	 */
 	public Map<Integer, PatientProgram> getPatientPrograms(Cohort ps, Program program);
 	

@@ -552,7 +552,7 @@ public class ReportServiceImpl implements ReportService {
 	/**
 	 * @see org.openmrs.api.PatientSetService#getPatientsByCharacteristics(java.lang.String, java.util.Date, java.util.Date)
 	 * @return cohort of patients given gender and birth date range
-	 * @should return cohort that contains patients with given gender and birth date range
+	 * <strong>Should</strong> return cohort that contains patients with given gender and birth date range
 	 */
 	public Cohort getPatientsByCharacteristics(String gender, Date minBirthdate, Date maxBirthdate) throws DAOException {
 		return getPatientsByCharacteristics(gender, minBirthdate, maxBirthdate, null, null, null, null);
@@ -586,7 +586,7 @@ public class ReportServiceImpl implements ReportService {
 	/**
 	 * @see org.openmrs.api.PatientSetService#getPatientsHavingPersonAttribute(org.openmrs.PersonAttributeType, java.lang.String)
 	 * @return cohort that contains patients given person attribute type and value
-	 * @should return cohort that contains patients given person attribute type and value
+	 * <strong>Should</strong> return cohort that contains patients given person attribute type and value
 	 */
 	public Cohort getPatientsHavingPersonAttribute(PersonAttributeType attribute, String value) {
 		return dao.getPatientsHavingPersonAttribute(attribute, value);
@@ -595,7 +595,7 @@ public class ReportServiceImpl implements ReportService {
 	/**
 	 * @see org.openmrs.api.PatientSetService#getPatientsInProgram(org.openmrs.Program, java.util.Date, java.util.Date)
 	 * @return cohort of patients currently in the program within the date range
-	 * @should get cohort of patients currently in the program with the date range
+	 * <strong>Should</strong> get cohort of patients currently in the program with the date range
 	 */
 	public Cohort getPatientsInProgram(Program program, Date fromDate, Date toDate) {
 		return dao.getPatientsInProgram(program.getProgramId(), fromDate, toDate);

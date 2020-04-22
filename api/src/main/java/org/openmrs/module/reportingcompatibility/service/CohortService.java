@@ -37,7 +37,7 @@ public interface CohortService extends OpenmrsService {
 	 * this method with their own providers
 	 *
 	 * @param providerClassMap mapping from CohortDefinition to its provider
-	 * @should not overwrite previously set providers if called twice
+	 * <strong>Should</strong> not overwrite previously set providers if called twice
 	 */
 	public void setCohortDefinitionProviders(
 			Map<Class<? extends CohortDefinition>, CohortDefinitionProvider> providerClassMap) throws APIException;
@@ -48,7 +48,7 @@ public interface CohortService extends OpenmrsService {
 	 * @param cohortDefClass the type of cohort definition that this provider works on
 	 * @param cohortDef the provider
 	 * @throws APIException
-	 * @should overwrite provider if duplicate CcohortDefinition class
+	 * <strong>Should</strong> overwrite provider if duplicate CcohortDefinition class
 	 */
 	public void registerCohortDefinitionProvider(Class<? extends CohortDefinition> cohortDefClass,
 												 CohortDefinitionProvider cohortDef) throws APIException;
@@ -59,7 +59,7 @@ public interface CohortService extends OpenmrsService {
 	 * @return this service's providers
 	 * @throws APIException
 	 * @see #setCohortDefinitionProviders(Map)
-	 * @should not return null if not providers have been set
+	 * <strong>Should</strong> not return null if not providers have been set
 	 */
 	public Map<Class<? extends CohortDefinition>, CohortDefinitionProvider> getCohortDefinitionProviders()
 			throws APIException;
@@ -71,7 +71,7 @@ public interface CohortService extends OpenmrsService {
 	 *
 	 * @param providerClass the provider to remove
 	 * @throws APIException
-	 * @should not fail if providerClass not set
+	 * <strong>Should</strong> not fail if providerClass not set
 	 */
 	public void removeCohortDefinitionProvider(Class<? extends CohortDefinitionProvider> providerClass) throws APIException;
 
@@ -103,7 +103,7 @@ public interface CohortService extends OpenmrsService {
 	 * @param evalContext
 	 * @return Cohort determined by the given CohortDefinition and EvaluationContext
 	 * @throws APIException
-	 * @should return all patients with blank patient search cohort definition provider
+	 * <strong>Should</strong> return all patients with blank patient search cohort definition provider
 	 */
 	public Cohort evaluate(CohortDefinition definition, EvaluationContext evalContext) throws APIException;
 

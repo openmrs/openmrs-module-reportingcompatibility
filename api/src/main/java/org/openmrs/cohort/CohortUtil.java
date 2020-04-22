@@ -35,7 +35,7 @@ public class CohortUtil {
 	 *
 	 * @param spec
 	 * @return A CohortDefinition (currently always a PatientSearch) parsed from the spec string.
-	 * @should parse specification with and in it
+	 * <strong>Should</strong> parse specification with and in it
 	 */
 	public static CohortDefinition parse(String spec) {
 		List<Object> tokens = new ArrayList<Object>();
