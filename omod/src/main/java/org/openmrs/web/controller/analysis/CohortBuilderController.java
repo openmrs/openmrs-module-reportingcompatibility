@@ -156,6 +156,9 @@ public class CohortBuilderController implements Controller {
 		else if ("clearHistory".equals(method)) {
 			modelAndView = clearHistory(request, response);
 		}
+		else if ("removeFilter".equals(method)) {
+			modelAndView = removeFilter(request, response);
+		}
 		
 		return modelAndView;
 	}
