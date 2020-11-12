@@ -1601,7 +1601,7 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 			criteria.add(Restrictions.in("concept", drugConcepts));
 		criteria.add(Restrictions.eq("voided", false));
 		criteria.add(Restrictions.sqlRestriction("coalesce(date_activated, scheduled_date) <= current_date()"));
-		criteria.add(Restrictions.sqlRestriction("coalesce(date_stopped, auto_expire_date) >= current_date()"));
+		criteria.add(Restrictions.sqlRestriction("(coalesce(date_stopped, auto_expire_date) is null) or (coalesce(date_stopped, auto_expire_date) >= current_date())"));
 		criteria.addOrder(org.hibernate.criterion.Order.asc("dateActivated"));
 		log.debug("criteria: " + criteria);
 		List<DrugOrder> temp = criteria.list();
