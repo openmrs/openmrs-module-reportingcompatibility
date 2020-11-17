@@ -1059,6 +1059,9 @@ public class HibernateReportingCompatibilityDAO implements ReportingCompatibilit
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Encounter.class);
 		criteria.setCacheMode(CacheMode.IGNORE);
 		
+		criteria.createAlias("encounterProviders", "encounterProvider");
+		criteria.createAlias("encounterProvider.provider", "provider");
+		
 		// this "where clause" is only necessary if patients were specified
 		if (patients != null)
 			criteria.add(Restrictions.in("patient.personId", patients.getMemberIds()));
