@@ -66,7 +66,17 @@
  			<groupId>org.openmrs.simpleframework</groupId>
  			<artifactId>simple-xml</artifactId>
  			<version>1.6.1-mod</version>
- 		</dependency>
+ 			<exclusions>
+ 				<exclusion>
+ 					<groupId>stax</groupId>
+ 					<artifactId>stax-api</artifactId>
+ 				</exclusion>
+ 				<exclusion>
+ 					<groupId>stax</groupId>
+ 					<artifactId>stax</artifactId>
+ 				</exclusion>
+ 			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<build>
