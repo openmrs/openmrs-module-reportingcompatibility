@@ -315,6 +315,11 @@ public class CohortReportFormController extends SimpleFormController implements 
 		Document xml = db.parse(new InputSource(new StringReader(
 		        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + data)));
 		Node node = findChild(xml, "reportSchema");
+		
+		if (node == null) {
+		   return null;
+		}
+		
 		node = findChild(node, "dataSets");
 		Element dsd = xml.createElement("dataSetDefinition");
 		dsd.setAttribute("name", "cohorts");
