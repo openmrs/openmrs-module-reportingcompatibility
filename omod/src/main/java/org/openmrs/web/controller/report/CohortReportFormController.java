@@ -316,8 +316,8 @@ public class CohortReportFormController extends SimpleFormController implements 
 		        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + data)));
 		Node node = findChild(xml, "reportSchema");
 		
-		if(node == null) {
-			return null;
+		if (node == null) {
+		   return null;
 		}
 		
 		node = findChild(node, "dataSets");
