@@ -64,6 +64,7 @@
 	function classFilterTemplate(concept) {
 		if (concept.className == 'Program') {
 			var str = '<form method="post" action="cohortBuilder.form">';
+			str += '<input type="hidden" name="${model.csrfGuardTokenName}" value="${model.csrfGuardTokenValue}"/>';
 			str += '<input type="hidden" name="method" value="addDynamicFilter"/>';
 			str += '<input type="hidden" name="filterClass" value="org.openmrs.reporting.ProgramPatientFilter" />';
 			str += '<input type="hidden" name="vars" value="program#org.openmrs.Program,fromDate#java.util.Date,toDate#java.util.Date"/>';
@@ -76,6 +77,7 @@
 			return 'Workflow/State filter not yet implemented';
 		else if (concept.className == 'Drug') {
 			var str = '<form method="post" action="cohortBuilder.form">';
+			str += '<input type="hidden" name="${model.csrfGuardTokenName}" value="${model.csrfGuardTokenValue}"/>';
 			str += '<input type="hidden" name="method" value="addDynamicFilter"/>';
 			str += '<input type="hidden" name="filterClass" value="org.openmrs.reporting.DrugOrderPatientFilter" />';
 			str += '<input type="hidden" name="vars" value="groupMethod#org.openmrs.module.reportingcompatibility.service.ReportService$GroupMethod,drugConcept#org.openmrs.Concept"/>';
@@ -98,6 +100,7 @@
 		}
 		var lookupAnswers = false;
 		var str = '<form method="post" action="cohortBuilder.form">';
+		str += '<input type="hidden" name="${model.csrfGuardTokenName}" value="${model.csrfGuardTokenValue}"/>';
 		str += '<input type="hidden" name="method" value="addDynamicFilter"/>';
 		str += '<input type="hidden" name="filterClass" value="org.openmrs.reporting.ObsPatientFilter" />';
 		str += '<input type="hidden" name="vars" value="timeModifier#org.openmrs.module.reportingcompatibility.service.ReportService$TimeModifier,question#org.openmrs.Concept,modifier#org.openmrs.module.reportingcompatibility.service.ReportService$Modifier,';
@@ -167,6 +170,7 @@
 	
 	function obsValueFilterTemplate(concept) {
 		var str = '<form method="post" action="cohortBuilder.form">';
+		str += '<input type="hidden" name="${model.csrfGuardTokenName}" value="${model.csrfGuardTokenValue}"/>';
 		str += '<input type="hidden" name="method" value="addDynamicFilter"/>';
 		str += '<input type="hidden" name="filterClass" value="org.openmrs.reporting.ObsPatientFilter" />';
 		str += '<input type="hidden" name="vars" value="timeModifier#org.openmrs.module.reportingcompatibility.service.ReportService$TimeModifier,modifier#org.openmrs.module.reportingcompatibility.service.ReportService$Modifier,value#org.openmrs.Concept,withinLastMonths#java.lang.Integer,withinLastDays#java.lang.Integer,sinceDate#java.util.Date,untilDate#java.util.Date"/>';
@@ -340,6 +344,7 @@
 					else {
 						for (var i = 0; i < cohorts.length; ++i) {
 							str += '<form id="load_cohort_' + cohorts[i].id + '" method="post" action="cohortBuilder.form">';
+							str += '<input type="hidden" name="${model.csrfGuardTokenName}" value="${model.csrfGuardTokenValue}"/>';
 							str += '<input type="hidden" name="method" value="addFilter"/>';
 							str += '<input type="hidden" name="cohort_id" value="' + cohorts[i].id + '"/>';
 							str += '<li><a href="javascript:document.getElementById(\'load_cohort_' + cohorts[i].id + '\').submit()">' + cohorts[i].name + '</a> <small>' + cohorts[i].description + '</small></li>';

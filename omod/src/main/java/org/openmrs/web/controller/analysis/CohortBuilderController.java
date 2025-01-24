@@ -48,6 +48,9 @@ import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.util.HandlerUtil;
 import org.openmrs.web.WebConstants;
+import org.owasp.csrfguard.CsrfGuard;
+import org.owasp.csrfguard.session.LogicalSession;
+import org.owasp.csrfguard.token.storage.LogicalSessionExtractor;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -244,8 +247,28 @@ public class CohortBuilderController implements Controller {
 			model.put("orderStopReasons", orderStopReasons);
 			model.put("personAttributeTypes", Context.getPersonService().getAllPersonAttributeTypes());
 			model.put("shortcuts", shortcuts);
+			
+			addCsrfGuardToken(request, model);
 		}
 		return new ModelAndView(formView, "model", model);
+	}
+	
+	private void addCsrfGuardToken(HttpServletRequest request, Map<String, Object> model) {
+		try {
+			CsrfGuard csrfGuard = CsrfGuard.getInstance();
+			
+			model.put("csrfGuardTokenName", csrfGuard.getTokenName());
+			
+			LogicalSessionExtractor sessionKeyExtractor = csrfGuard.getLogicalSessionExtractor();
+	        LogicalSession logicalSession = sessionKeyExtractor.extractOrCreate(request);
+	        
+	        model.put("csrfGuardTokenValue", csrfGuard.getTokenService().getMasterToken(logicalSession.getKey()));
+	        
+		}
+		catch (Exception ex) {
+			//Probably running an older version before CSRF protection was added.
+			log.error(ex.getMessage(), ex);
+		}
 	}
 	
 	public class Shortcut {
