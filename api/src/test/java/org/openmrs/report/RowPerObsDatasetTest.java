@@ -21,7 +21,6 @@ import java.util.GregorianCalendar;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openmrs.cohort.Cohort;
@@ -32,6 +31,7 @@ import org.openmrs.report.impl.TsvReportRenderer;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
+import org.xmlunit.assertj.XmlAssert;
 
 /**
  *
@@ -77,10 +77,9 @@ public class RowPerObsDatasetTest extends BaseModuleContextSensitiveTest {
 		String xmlOutput = Context.getSerializationService().getDefaultSerializer().serialize(rs);
 		
 		String expectedOutput = "<reportSchema id=\"1\">\n   <description id=\"2\"><![CDATA[Tesing RowPerObsDataSet*]]></description>\n   <dataSets class=\"java.util.Vector\" id=\"3\">\n      <dataSetDefinition class=\"org.openmrs.report.RowPerObsDataSetDefinition\" id=\"4\" name=\"Row per Obs\">\n         <questions class=\"java.util.HashSet\" id=\"5\">\n            <concept id=\"6\" conceptId=\"5089\"/>\n         </questions>\n      </dataSetDefinition>\n   </dataSets>\n   <name id=\"7\"><![CDATA[Testing row-per-obs]]></name>\n</reportSchema>";
-		
-		XMLAssert.assertXpathEvaluatesTo("5089", "//reportSchema/dataSets/dataSetDefinition/questions/concept/@conceptId",
-		    xmlOutput);
-		
+
+		XmlAssert.assertThat(xmlOutput).valueByXPath("//reportSchema/dataSets/dataSetDefinition/questions/concept/@conceptId").isEqualTo("5089");
+
 		//log.error("xmlOutput: " + xmlOutput);
 		
 		rs = Context.getSerializationService().getDefaultSerializer().deserialize(xmlOutput, ReportSchema.class);
