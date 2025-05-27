@@ -16,7 +16,7 @@ package org.openmrs.report;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.openmrs.cohort.Cohort;
 import org.openmrs.Program;
 import org.openmrs.api.context.Context;
@@ -24,7 +24,7 @@ import org.openmrs.module.reportingcompatibility.service.CohortService;
 import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
-import org.openmrs.test.jupiter.BaseModuleContextSensitiveTest;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 /**
  * TODO: create a test database and test against that
