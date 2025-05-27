@@ -57,6 +57,8 @@ import org.openmrs.reporting.PatientSearch;
 import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.reporting.SearchArgument;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 public class ReportingcompatibilityUtil {
@@ -112,15 +114,16 @@ public class ReportingcompatibilityUtil {
 					if (log.isDebugEnabled()) {
 						log.debug("Looking at (" + sa.getPropertyClass() + ") " + sa.getName() + " -> " + sa.getValue());
 					}
-					PropertyDescriptor pd = null;
+
+					BeanWrapper wrapper = new BeanWrapperImpl(pf);
+					Class<?> realPropertyType;
 					try {
-						pd = new PropertyDescriptor(sa.getName(), clz);
-					}
-					catch (IntrospectionException ex) {
+						realPropertyType = wrapper.getPropertyType(sa.getName());
+					} catch (Exception ex) {
 						log.error("Error while examining property " + sa.getName(), ex);
 						continue;
 					}
-					Class<?> realPropertyType = pd.getPropertyType();
+
 					
 					// instantiate the value of the search argument
 					String valueAsString = sa.getValue();
@@ -229,7 +232,7 @@ public class ReportingcompatibilityUtil {
 						if (realPropertyType.isAssignableFrom(valueClass)) {
 							log.debug("setting value of " + sa.getName() + " to " + value);
 							try {
-								pd.getWriteMethod().invoke(pf, value);
+								wrapper.setPropertyValue(sa.getName(), value);
 							}
 							catch (Exception ex) {
 								log.error(
@@ -241,8 +244,7 @@ public class ReportingcompatibilityUtil {
 							// if realPropertyType is a collection, add this
 							// value to it (possibly after instantiating)
 							try {
-								Collection collection = (Collection) pd.getReadMethod().invoke(pf, (Object[]) null);
-								if (collection == null) {
+								Collection collection = (Collection) wrapper.getPropertyValue(sa.getName());								if (collection == null) {
 									// we need to instantiate this collection.
 									// I'm going with the following rules, which
 									// should be rethought:
@@ -252,16 +254,13 @@ public class ReportingcompatibilityUtil {
 									if (SortedSet.class.isAssignableFrom(realPropertyType)) {
 										collection = new TreeSet();
 										log.debug("instantiated a TreeSet");
-										pd.getWriteMethod().invoke(pf, collection);
-									} else if (Set.class.isAssignableFrom(realPropertyType)) {
+										wrapper.setPropertyValue(sa.getName(), value);									} else if (Set.class.isAssignableFrom(realPropertyType)) {
 										collection = new HashSet();
 										log.debug("instantiated a HashSet");
-										pd.getWriteMethod().invoke(pf, collection);
-									} else {
+										wrapper.setPropertyValue(sa.getName(), value);									} else {
 										collection = new ArrayList();
 										log.debug("instantiated an ArrayList");
-										pd.getWriteMethod().invoke(pf, collection);
-									}
+										wrapper.setPropertyValue(sa.getName(), value);									}
 								}
 								collection.add(value);
 							}
