@@ -22,13 +22,11 @@ import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
-import org.openmrs.test.SkipBaseSetup;
 import org.openmrs.test.Verifies;
 
 import java.sql.SQLException;
 
 
-@SkipBaseSetup
 public class CohortServiceTest extends BaseModuleContextSensitiveTest {
 	
 	protected static final String CREATE_PATIENT_XML = "org/openmrs/api/include/PatientServiceTest-createPatient.xml";
@@ -40,7 +38,7 @@ public class CohortServiceTest extends BaseModuleContextSensitiveTest {
 	 *
      */
 	@Before
-	public void runBeforeAllTests() throws SQLException {
+	public void setup() throws SQLException {
 		initializeInMemoryDatabase();
 		authenticate();
 		executeDataSet(CREATE_PATIENT_XML);
@@ -55,6 +53,6 @@ public class CohortServiceTest extends BaseModuleContextSensitiveTest {
 		CohortDefinition def = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 		Cohort result = service.evaluate(def, null);
 		Assert.assertNotNull("Should not return null", result);
-		Assert.assertEquals("Should return one member", 1, result.size());
+		Assert.assertEquals("Should return one member", 4, result.size());
 	}
 }
