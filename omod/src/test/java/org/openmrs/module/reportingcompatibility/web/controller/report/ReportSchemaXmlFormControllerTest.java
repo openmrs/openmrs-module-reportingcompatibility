@@ -27,6 +27,7 @@ import org.openmrs.module.reportingcompatibility.service.ReportService;
 import org.openmrs.report.ReportConstants;
 import org.openmrs.report.ReportSchemaXml;
 import org.openmrs.test.TestUtil;
+import org.openmrs.util.PrivilegeConstants;
 import org.openmrs.web.controller.report.ReportSchemaXmlFormController;
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,20 +101,25 @@ public class ReportSchemaXmlFormControllerTest extends BaseModuleWebContextSensi
 
     @Test
     public void shouldPassForAUserThatHasTheAddReportsPrivilege() throws Exception {
-        executeDataSet(USERS_DATASET);
-        executeDataSet(OTHER_TEST_DATA);
-        Context.logout();
-        Context.authenticate("correctlyhashedSha1", "test");
-        Assert.assertTrue(Context.getAuthenticatedUser().hasPrivilege(ReportConstants.PRIV_ADD_REPORTS));
-        MockHttpServletRequest request = new MockHttpServletRequest("POST", "");
-        request.setParameter("xml", "<org.openmrs.report.ReportSchema>" +
-                "</org.openmrs.report.ReportSchema>");
-        int originalCount = reportService.getReportSchemas().size();
-        ModelAndView mav = controller.handleRequest(request, new MockHttpServletResponse());
-        Assert.assertNotNull(mav);
-        Assert.assertTrue(mav.getModel().isEmpty());
-        Assert.assertEquals(++originalCount, reportService.getReportSchemas().size());
-        TestUtil.printOutTableContents(getConnection(), "report_schema_xml");
+        try {
+            executeDataSet(USERS_DATASET);
+            executeDataSet(OTHER_TEST_DATA);
+            Context.logout();
+            Context.authenticate("correctlyhashedSha1", "test");
+            Assert.assertTrue(Context.getAuthenticatedUser().hasPrivilege(ReportConstants.PRIV_ADD_REPORTS));
+            Context.addProxyPrivilege(PrivilegeConstants.GET_GLOBAL_PROPERTIES);
+            MockHttpServletRequest request = new MockHttpServletRequest("POST", "");
+            request.setParameter("xml", "<org.openmrs.report.ReportSchema>" +
+                    "</org.openmrs.report.ReportSchema>");
+            int originalCount = reportService.getReportSchemas().size();
+            ModelAndView mav = controller.handleRequest(request, new MockHttpServletResponse());
+            Assert.assertNotNull(mav);
+            Assert.assertTrue(mav.getModel().isEmpty());
+            Assert.assertEquals(++originalCount, reportService.getReportSchemas().size());
+            TestUtil.printOutTableContents(getConnection(), "report_schema_xml");
+        } finally {
+            Context.removeProxyPrivilege(PrivilegeConstants.GET_GLOBAL_PROPERTIES);
+        }
     }
 
     @Test

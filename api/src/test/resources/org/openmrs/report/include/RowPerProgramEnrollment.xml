@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
+  <global_property property="reportingcompatibility.serializer.whitelist.types" property_value="org.openmrs.report.RowPerProgramEnrollmentDataSetDefinition, org.hibernate.proxy.pojo.bytebuddy.SerializableProxy" description="Add whitelisting for components loaded via XStream TRUNK-6188" />
   <concept concept_id="1" retired="false" datatype_id="1" class_id="1" is_set="false" creator="1" date_created="2005-01-01 00:00:00.0" uuid="22f57541-548a-4ed2-b0b5-6da72f48bde0"/>
   <concept_description concept_description_id="1" concept_id="1" description="concept/name program for hiv" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" uuid="5dc8bcc6-5ea2-49ae-9a06-92306322bed9"/>
   <concept_name concept_id="1" name="HIV PROGRAM" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" concept_name_id="1" voided="false" uuid="86815701-96c0-4deb-93be-c7132c22dc3b" concept_name_type="FULLY_SPECIFIED" locale_preferred="0"/>

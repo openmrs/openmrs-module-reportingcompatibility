@@ -15,8 +15,8 @@
   <patient patient_id="3" creator="1" date_created="2005-01-01 00:00:00.0" voided="false"/>
   <patient_identifier patient_identifier_id="1" patient_id="2" identifier="1234" identifier_type="1" preferred="1" location_id="1" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="0b7cf2fa-b377-455c-8750-231cf34a21ac"/>
   <patient_identifier patient_identifier_id="2" patient_id="3" identifier="12345" identifier_type="1" preferred="1" location_id="1" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="94d07935-a336-45e1-9b24-93b8f781966c"/>
-  <encounter encounter_id="1" patient_id="2" location_id="1" encounter_datetime="2005-01-01 00:00:00.0" creator="1" date_created="2005-02-01 00:00:00.0" voided="false" uuid="6b0295b6-df79-485f-a1de-d0beb49079af"/>
-  <encounter encounter_id="2" patient_id="2" location_id="1" encounter_datetime="2005-02-01 00:00:00.0" creator="1" date_created="2005-03-01 00:00:00.0" voided="false" uuid="a0ff6aff-a092-44c1-8bdc-770e21e85347"/>
-  <obs obs_id="1" person_id="2" concept_id="1" encounter_id="1" obs_datetime="2007-05-01 00:00:00.0" location_id="1" value_numeric="100.0" creator="1" date_created="2005-03-01 00:00:00.0" voided="false" uuid="be41b0b2-e853-4ba3-aaf2-1d3292d0b02a"/>
-  <obs obs_id="2" person_id="3" concept_id="1" encounter_id="2" obs_datetime="2007-03-01 00:00:00.0" location_id="2" value_numeric="200.0" creator="1" date_created="2005-05-01 00:00:00.0" voided="false" uuid="c954942a-37d2-4b36-aff9-b7926944269f"/>
+  <encounter encounter_id="1" ENCOUNTER_TYPE="1" patient_id="2" location_id="1" encounter_datetime="2005-01-01 00:00:00.0" creator="1" date_created="2005-02-01 00:00:00.0" voided="false" uuid="6b0295b6-df79-485f-a1de-d0beb49079af"/>
+  <encounter encounter_id="2" ENCOUNTER_TYPE="1" patient_id="2" location_id="1" encounter_datetime="2005-02-01 00:00:00.0" creator="1" date_created="2005-03-01 00:00:00.0" voided="false" uuid="a0ff6aff-a092-44c1-8bdc-770e21e85347"/>
+  <obs obs_id="1" person_id="2" concept_id="1" encounter_id="1" status="FINAL" obs_datetime="2007-05-01 00:00:00.0" location_id="1" value_numeric="100.0" creator="1" date_created="2005-03-01 00:00:00.0" voided="false" uuid="be41b0b2-e853-4ba3-aaf2-1d3292d0b02a"/>
+  <obs obs_id="2" person_id="3" concept_id="1" encounter_id="2" status="FINAL" obs_datetime="2007-03-01 00:00:00.0" location_id="2" value_numeric="200.0" creator="1" date_created="2005-05-01 00:00:00.0" voided="false" uuid="c954942a-37d2-4b36-aff9-b7926944269f"/>
 </dataset>

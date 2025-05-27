@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,6 +31,7 @@ import org.openmrs.cohort.StaticCohortDefinition;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.TestUtil;
+import org.xmlunit.assertj.XmlAssert;
 
 /**
  * Test class that tests the serialization and deserialization of the a very simple pepfar report
@@ -111,13 +111,12 @@ public class PepfarReportSerializationTest extends BaseModuleContextSensitiveTes
 		        + "   <description id=\"18\"><![CDATA[The PEPFAR description is(n't) here.]]></description>\n"
 		        + "   <dataSets class=\"java.util.ArrayList\" id=\"19\"/>\n"
 		        + "   <name id=\"20\"><![CDATA[PEPFAR report]]></name>\n" + "</reportSchema>";
-		
-		XMLAssert.assertXpathEvaluatesTo("org.openmrs.cohort.StaticCohortDefinition", "//reportSchema/filter/@class",
-		    xmlOutput);
-		
+
+		XmlAssert.assertThat(xmlOutput).valueByXPath("//reportSchema/filter/@class").isEqualTo("org.openmrs.cohort.StaticCohortDefinition");
+
 		// TODO how to just test to see if 1001, 1002, and 1003 all exist as values in memberIds/integer?
-		XMLAssert.assertXpathEvaluatesTo("1001", "//reportSchema/filter/cohort/memberIds/integer", xmlOutput);
-		
+		XmlAssert.assertThat(xmlOutput).valueByXPath("//reportSchema/filter/cohort/memberIds/integer").isEqualTo("1001");
+
 		// check some simple deserialized value
 		ReportSchema deserializedSchema = Context.getSerializationService().getDefaultSerializer().deserialize(correctOutput, ReportSchema.class);
 		assertTrue("The # of params shouldn't be: " + deserializedSchema.getReportParameters().size(), deserializedSchema

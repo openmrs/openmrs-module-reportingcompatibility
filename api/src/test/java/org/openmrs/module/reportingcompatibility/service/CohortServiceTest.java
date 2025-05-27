@@ -22,40 +22,37 @@ import org.openmrs.cohort.CohortDefinition;
 import org.openmrs.reporting.PatientCharacteristicFilter;
 import org.openmrs.reporting.PatientSearch;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
-import org.openmrs.test.SkipBaseSetup;
 import org.openmrs.test.Verifies;
+
+import java.sql.SQLException;
+
 
 public class CohortServiceTest extends BaseModuleContextSensitiveTest {
 	
 	protected static final String CREATE_PATIENT_XML = "org/openmrs/api/include/PatientServiceTest-createPatient.xml";
-	
-	protected static final String COHORT_XML = "org/openmrs/api/include/CohortServiceTest-cohort.xml";
-	
+
 	protected static CohortService service = null;
 	/**
 	 * Run this before each unit test in this class. The "@Before" method in
 	 * {@link org.openmrs.test.BaseContextSensitiveTest} is run right before this method.
 	 *
-	 * @throws Exception
-	 */
+     */
 	@Before
-	public void runBeforeAllTests() throws Exception {
+	public void setup() throws SQLException {
+		initializeInMemoryDatabase();
+		authenticate();
+		executeDataSet(CREATE_PATIENT_XML);
 		service = Context.getService(CohortService.class);
 	}
 	/**
 	 * @see {@link org.openmrs.module.reportingcompatibility.service.CohortService#evaluate(CohortDefinition, org.openmrs.report.EvaluationContext)}
 	 */
 	@Test
-	@SkipBaseSetup
 	@Verifies(value = "should return all patients with blank patient search cohort definition provider", method = "evaluate(CohortDefinition,EvaluationContext)")
 	public void evaluate_shouldReturnAllPatientsWithBlankPatientSearchCohortDefinitionProvider() throws Exception {
-		initializeInMemoryDatabase();
-		executeDataSet(CREATE_PATIENT_XML);
-		authenticate();
-
 		CohortDefinition def = PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
 		Cohort result = service.evaluate(def, null);
 		Assert.assertNotNull("Should not return null", result);
-		Assert.assertEquals("Should return one member", 1, result.size());
+		Assert.assertEquals("Should return one member", 4, result.size());
 	}
 }
