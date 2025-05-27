@@ -53,12 +53,6 @@
 		<description>The number of patients to export at a time in a data export.  The larger this number the faster and more memory that is used.  The smaller this number the slower and less memory is used.</description>
 	</globalProperty>
 
-	<globalProperty>
-		<property>reportingcompatibility.serializer.whitelist.types</property>
-		<defaultValue>org.openmrs.report.RowPerProgramEnrollmentDataSetDefinition</defaultValue>
-		<description>Add whitelisting for components loaded via XStream TRUNK-6188</description>
-	</globalProperty>
-	
 	<dwr>
 		<allow>
 			<convert converter="bean" match="org.openmrs.report.Parameter"/>
