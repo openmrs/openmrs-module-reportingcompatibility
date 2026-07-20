@@ -18,11 +18,15 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Patient;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
+import org.openmrs.util.PrivilegeConstants;
+import org.openmrs.web.security.RequirePrivilege;
 
 public class DWRPatientSetService {
-	
+
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
+	// matches PatientService#getPatient's own @Authorized requirement
+	@RequirePrivilege(PrivilegeConstants.GET_PATIENTS)
 	public Vector<PatientListItem> getPatients(String patientIds) {
 		Vector<PatientListItem> ret = new Vector<PatientListItem>();
 		List<Integer> ptIds = new ArrayList<Integer>();

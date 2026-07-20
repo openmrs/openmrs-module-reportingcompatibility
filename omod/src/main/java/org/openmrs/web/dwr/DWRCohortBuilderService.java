@@ -39,13 +39,19 @@ import org.openmrs.reporting.PatientSearchReportObject;
 import org.openmrs.reporting.ReportObject;
 import org.openmrs.reporting.ReportObjectService;
 import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.util.PrivilegeConstants;
 import org.openmrs.util.ReportingcompatibilityUtil;
 import org.openmrs.web.controller.analysis.CohortBuilderController;
+import org.openmrs.web.security.RequirePrivilege;
 
 public class DWRCohortBuilderService {
-	
+
+	// matches the privilege cohortBuilder.jsp itself requires via <openmrs:require>
+	private static final String VIEW_PATIENT_COHORTS = "View Patient Cohorts";
+
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public Integer getResultCountForFilterId(Integer filterId) {
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 		PatientFilter pf = rs.getPatientFilterById(filterId);
@@ -64,30 +70,35 @@ public class DWRCohortBuilderService {
 	 * @param index
 	 * @return the number of patients in the resulting PatientSet
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public Integer getResultCountForSearch(int index) {
 		CohortSearchHistory history = getMySearchHistory();
 		Cohort ps = history.getPatientSet(index, null);
 		return ps.size();
 	}
 	
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public Cohort getResultForSearch(int index) {
 		CohortSearchHistory history = getMySearchHistory();
 		Cohort ps = history.getPatientSet(index, null);
 		return ps;
 	}
 	
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public Cohort getResultCombineWithAnd() {
 		CohortSearchHistory history = getMySearchHistory();
 		Cohort ps = history.getPatientSetCombineWithAnd(new EvaluationContext());
 		return ps;
 	}
 	
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public Cohort getResultCombineWithOr() {
 		CohortSearchHistory history = getMySearchHistory();
 		Cohort ps = history.getPatientSetCombineWithOr(new EvaluationContext());
 		return ps;
 	}
 	
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public Cohort getLastResult() {
 		CohortSearchHistory history = getMySearchHistory();
 		if (history != null) {
@@ -98,6 +109,7 @@ public class DWRCohortBuilderService {
 			new Cohort();
 	}
 	
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public List<ListItem> getSavedSearches(boolean includeParameterized) {
 		List<ListItem> ret = new ArrayList<ListItem>();
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
@@ -115,6 +127,7 @@ public class DWRCohortBuilderService {
 		return ret;
 	}
 	
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public List<ListItem> getSavedFilters() {
 		List<ListItem> ret = new ArrayList<ListItem>();
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
@@ -134,6 +147,7 @@ public class DWRCohortBuilderService {
 	 * 
 	 * @return
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public List<ListItem> getSavedCohorts() {
 		List<ListItem> ret = new ArrayList<ListItem>();
 		List<org.openmrs.Cohort> cohorts = Context.getCohortService().getAllCohorts();
@@ -154,6 +168,7 @@ public class DWRCohortBuilderService {
 	 * @param filterId
 	 * @return
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public String getFilterResultAsCommaSeparatedIds(Integer filterId) {
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 		PatientFilter pf = rs.getPatientFilterById(filterId);
@@ -169,6 +184,7 @@ public class DWRCohortBuilderService {
 	 * @param cohortId
 	 * @return
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public String getCohortAsCommaSeparatedIds(Integer cohortId) {
 		Cohort c = ReportingcompatibilityUtil.convert(Context.getCohortService().getCohort(cohortId));
 		if (c == null)
@@ -182,6 +198,7 @@ public class DWRCohortBuilderService {
 	 * 
 	 * @return
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public List<ListItem> getSearchHistories() {
 		List<ListItem> ret = new ArrayList<ListItem>();
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
@@ -202,6 +219,7 @@ public class DWRCohortBuilderService {
 	 * @param name
 	 * @param description
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public void saveSearchHistory(String name, String description) {
 		CohortSearchHistory history = getMySearchHistory();
 		if (history.getReportObjectId() != null)
@@ -217,6 +235,7 @@ public class DWRCohortBuilderService {
 	 * 
 	 * @param id
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public void loadSearchHistory(Integer id) {
 		ReportObjectService rs = (ReportObjectService) Context.getService(ReportObjectService.class);
 		CohortBuilderController.setVolatileUserData("CohortBuilderSearchHistory", rs.getSearchHistory(id));
@@ -229,6 +248,7 @@ public class DWRCohortBuilderService {
 	 * @param description The description to give the saved filter
 	 * @param indexInHistory The index into the authenticated user's search history
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public Boolean saveHistoryElement(String name, String description, Integer indexInHistory) {
 		CohortSearchHistory history = getMySearchHistory();
 		try {
@@ -259,6 +279,8 @@ public class DWRCohortBuilderService {
 	 * @param description
 	 * @param commaSeparatedIds
 	 */
+	// matches CohortService#saveCohort's own @Authorized requirement
+	@RequirePrivilege({ PrivilegeConstants.ADD_COHORTS, PrivilegeConstants.EDIT_COHORTS })
 	public void saveCohort(String name, String description, String commaSeparatedIds) {
 		Set<Integer> ids = new HashSet<Integer>(OpenmrsUtil.delimitedStringToIntegerList(commaSeparatedIds, ","));
 		org.openmrs.Cohort cohort = new org.openmrs.Cohort();
@@ -272,6 +294,7 @@ public class DWRCohortBuilderService {
 	 * This isn't really useful because most of the properties don't have DWR converters. I'm
 	 * leaving it here in case I get to work on it later.
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public CohortSearchHistory getUserSearchHistory() {
 		return getMySearchHistory();
 	}
@@ -289,6 +312,7 @@ public class DWRCohortBuilderService {
 	 * @return Vector<Parameter> containing all Parameters that need to be provided to evaluate the
 	 *         input cohortSpecification
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public Vector<Parameter> getMissingParameters(String cohortSpecification) {
 		Vector<Parameter> ret = new Vector<Parameter>();
 		CohortDefinition def = CohortUtil.parse(cohortSpecification);
@@ -306,6 +330,7 @@ public class DWRCohortBuilderService {
 	 * @param cohortSpecification - This input String represents the Cohort Definition to evaluate
 	 * @return Cohort - The Cohort of patients that are returned
 	 */
+	@RequirePrivilege(VIEW_PATIENT_COHORTS)
 	public Cohort evaluateCohortDefinition(String cohortSpecification, Map<Parameter, Object> parameterValues) {
 		CohortDefinition def = CohortUtil.parse(cohortSpecification);
 		EvaluationContext evalContext = new EvaluationContext();
