@@ -33,37 +33,12 @@
 		<allow>
 			<create creator="new" javascript="DWRPatientSetService">
 				<param name="class" value="org.openmrs.web.dwr.DWRPatientSetService"/>
-			</create>
-			<create creator="new" javascript="DWRCohortBuilderService">
-				<param name="class" value="org.openmrs.web.dwr.DWRCohortBuilderService"/>
+				<include method="getPatients"/>
 			</create>
 			<convert match="org.openmrs.cohort.Cohort" converter="bean"/>
-		</allow>
-	</dwr>
-	
-	<globalProperty>
-		<property>reportingcompatibility.patientLinkUrl</property>
-		<defaultValue>patientDashboard.form</defaultValue>
-		<description>The link url for a particular patient to view from the cohort builder</description>
-	</globalProperty>
-	
-	<globalProperty>
-		<property>reportingcompatibility.data_export_batch_size</property>
-		<defaultValue>7500</defaultValue>
-		<description>The number of patients to export at a time in a data export.  The larger this number the faster and more memory that is used.  The smaller this number the slower and less memory is used.</description>
-	</globalProperty>
-
-	<globalProperty>
-		<property>reportingcompatibility.serializer.whitelist.types</property>
-		<defaultValue>org.openmrs.report.RowPerProgramEnrollmentDataSetDefinition</defaultValue>
-		<description>Add whitelisting for components loaded via XStream TRUNK-6188</description>
-	</globalProperty>
-
-	<dwr>
-		<allow>
 			<convert converter="bean" match="org.openmrs.report.Parameter"/>
 			<convert converter="bean" match="org.openmrs.cohort.CohortSearchHistory"/>
-			
+
 			<create creator="new" javascript="DWRCohortBuilderService">
 				<param name="class" value="org.openmrs.web.dwr.DWRCohortBuilderService" />
 				<include method="getMissingParameters"/>
@@ -88,7 +63,25 @@
 			</create>
 		</allow>
 	</dwr>
-	
+
+	<globalProperty>
+		<property>reportingcompatibility.patientLinkUrl</property>
+		<defaultValue>patientDashboard.form</defaultValue>
+		<description>The link url for a particular patient to view from the cohort builder</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>reportingcompatibility.data_export_batch_size</property>
+		<defaultValue>7500</defaultValue>
+		<description>The number of patients to export at a time in a data export.  The larger this number the faster and more memory that is used.  The smaller this number the slower and less memory is used.</description>
+	</globalProperty>
+
+    <globalProperty>
+        <property>reportingcompatibility.serializer.whitelist.types</property>
+        <defaultValue>org.openmrs.report.RowPerProgramEnrollmentDataSetDefinition</defaultValue>
+        <description>Add whitelisting for components loaded via XStream TRUNK-6188</description>
+    </globalProperty>
+
 	<servlet>
 		<servlet-name>dataExportServlet</servlet-name>
 		<servlet-class>org.openmrs.web.servlet.DataExportServlet</servlet-class>
